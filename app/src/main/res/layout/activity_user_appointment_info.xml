@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <include
+            android:layout_alignParentTop="true"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            layout="@layout/title"/>
+        <View
+            android:id="@+id/divider1"
+            android:layout_below="@id/title_Layout"
+            style="@style/divider_3"/>
+        <LinearLayout
+            android:layout_below="@id/divider1"
+            android:id="@+id/title1"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:paddingLeft="14dp"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_marginTop="14dp"
+                    android:text="基本信息"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:textColor="#3DBFE8"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <View
+                    android:background="#3DBFE8"
+                    android:layout_marginTop="11dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"/>
+            </LinearLayout>
+
+            <View style="@style/divider_1"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/grid1"
+            android:paddingLeft="21dp"
+            android:layout_below="@id/title1"
+            android:orientation="vertical"
+            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="关联订单："
+                android:layout_gravity="right"
+                style="@style/form_info_text"/>
+            <TextView
+                android:text="预约状态："
+                android:layout_gravity="right"
+                style="@style/form_info_text"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/grid2"
+            android:layout_below="@id/title1"
+            android:orientation="vertical"
+            android:layout_toRightOf="@id/grid1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/form_id"
+                android:layout_gravity="left"
+                android:text="form_id"
+                style="@style/form_info_text" />
+            <TextView
+                android:id="@+id/form_state"
+                android:text="form_state"
+                android:layout_gravity="left"
+                style="@style/form_info_text" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/grid3"
+            android:paddingLeft="100dp"
+            android:layout_below="@id/title1"
+            android:orientation="vertical"
+            android:layout_toRightOf="@id/grid2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="会员名："
+                android:layout_gravity="right"
+                style="@style/form_info_text"/>
+
+            <TextView
+                android:text="创建时间："
+                android:layout_gravity="right"
+                style="@style/form_info_text"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/grid4"
+            android:layout_below="@id/title1"
+            android:orientation="vertical"
+            android:layout_toRightOf="@id/grid3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_gravity="left"
+                android:id="@+id/name"
+                android:text="name"
+                style="@style/form_info_text"/>
+
+            <TextView
+                android:layout_gravity="left"
+                android:id="@+id/time"
+                android:text="time"
+                style="@style/form_info_text"/>
+        </LinearLayout>
+
+        <View
+            android:layout_marginTop="17dp"
+            android:layout_below="@id/grid1"
+            android:id="@+id/divider2"
+            style="@style/divider_1"/>
+
+        <LinearLayout
+            android:id="@+id/grid5"
+            android:paddingLeft="21dp"
+            android:layout_below="@id/divider2"
+            android:layout_width="wrap_content"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="联系电话："
+                android:layout_gravity="right"
+                style="@style/form_info_text"/>
+
+            <TextView
+                android:text="联系地址："
+                android:layout_gravity="right"
+                style="@style/form_info_text"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/grid6"
+            android:layout_below="@id/divider2"
+            android:layout_toRightOf="@id/grid5"
+            android:layout_width="wrap_content"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/form_tel"
+                android:text="form_tel"
+                android:layout_gravity="left"
+                style="@style/form_info_text"/>
+
+            <TextView
+                android:id="@+id/form_add"
+                android:text="form_add"
+                android:layout_gravity="left"
+                style="@style/form_info_text"/>
+        </LinearLayout>
+
+
+        <View
+            android:layout_below="@id/grid6"
+            style="@style/divider_3"
+            android:layout_marginTop="10dp"
+            android:id="@+id/divider4"
+            />
+
+        <LinearLayout
+            android:layout_below="@id/divider4"
+            android:id="@+id/title2"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:paddingLeft="14dp"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:text="项目信息"
+                    android:textColor="#3DBFE8"
+                    android:textSize="14sp" />
+
+                <View
+                    android:background="#3DBFE8"
+                    android:layout_marginTop="11dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"/>
+            </LinearLayout>
+
+            <View style="@style/divider_1"/>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/title2"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="18dp"
+            android:src="@mipmap/default_image"
+            android:layout_width="75dp"
+            android:layout_marginBottom="21dp"
+            android:layout_height="75dp" />
+
+        <TextView
+            android:text="预约时间："
+            android:layout_alignBottom="@id/image"
+            android:layout_marginBottom="3dp"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@id/image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/order_time"
+            android:text="order_time"
+            android:layout_alignBottom="@id/image"
+            android:layout_marginBottom="3dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="51dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/project_name"
+            android:layout_toRightOf="@id/image"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="3dp"
+            android:layout_alignTop="@id/image"
+            android:text="project_name"
+            android:textColor="#000000"
+            android:textSize="14sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <View
+            android:layout_below="@id/image"
+            style="@style/divider_3"
+            />
+    </RelativeLayout>
+</ScrollView>

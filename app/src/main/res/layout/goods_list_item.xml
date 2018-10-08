@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="280px"
+    android:background="@drawable/list_item_bg">
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="200px"
+        android:layout_height="200px"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="40px"
+        app:layout_auto_baseheight="width" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/image"
+        android:layout_marginLeft="44px"
+        android:layout_marginRight="44px"
+        android:layout_toRightOf="@id/image"
+        android:maxLines="1"
+        android:textColor="#000000"
+        android:textSize="28px" />
+
+    <TextView
+        android:id="@+id/title2_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/title"
+        android:layout_below="@id/title"
+        android:layout_marginTop="12px"
+        android:text="规格："
+        android:textColor="#666666"
+        android:textSize="28px" />
+
+    <TextView
+        android:id="@+id/title2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/title2_title"
+        android:layout_toRightOf="@id/title2_title"
+        android:textColor="#666666"
+        android:textSize="28px" />
+
+    <TextView
+        android:id="@+id/count_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/title2_title"
+        android:layout_below="@id/title2_title"
+        android:layout_marginTop="12px"
+        android:text="已售："
+        android:textColor="#666666"
+        android:textSize="28px" />
+
+    <TextView
+        android:id="@+id/count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/count_title"
+        android:layout_toRightOf="@id/count_title"
+        android:textColor="#666666"
+        android:textSize="28px" />
+
+    <cn.ehanmy.hospital.mvp.ui.widget.MoneyView
+        android:id="@+id/price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/image"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="40px"
+        android:layout_toRightOf="@id/image"
+        app:cent_size="30px"
+        app:money_color="#FFFF0000"
+        app:point_padding_left="2px"
+        app:point_padding_right="10px"
+        app:prefix_padding="4px"
+        app:prefix_size="30px"
+        app:yuan_size="42px" />
+
+    <TextView
+        android:id="@+id/buy"
+        android:layout_width="180px"
+        android:layout_height="50px"
+        android:layout_alignBottom="@id/image"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="56px"
+        android:layout_toLeftOf="@id/price"
+        android:background="@drawable/buy_btn"
+        android:gravity="center"
+        android:text="立即下单"
+        android:textColor="@color/white"
+        android:textSize="26px"
+        app:layout_auto_baseheight="width" />
+
+</RelativeLayout>

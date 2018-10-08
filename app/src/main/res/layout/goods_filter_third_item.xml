@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="66px"
+    android:background="@drawable/list_item_bg"
+    android:gravity="center">
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="#FF000000"
+        android:textSize="28px" />
+
+    <View
+        android:id="@+id/choice"
+        android:layout_width="27px"
+        android:layout_height="19px"
+        android:layout_marginLeft="14px"
+        android:background="@mipmap/goods_choice"
+        android:visibility="invisible"
+        app:layout_auto_baseheight="width" />
+</LinearLayout>

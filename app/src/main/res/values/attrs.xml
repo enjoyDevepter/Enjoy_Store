@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ShapeImageView">
+        <attr name="shape_type">
+            <enum name="circle" value="0" />
+            <enum name="round" value="1" />
+        </attr>
+        <attr name="radius" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="a_zhon">
+        <!--填充图片-->
+        <attr name="star_img" format="reference" />
+        <!--默认图片-->
+        <attr name="unstar_img" format="reference" />
+        <!--图片宽度-->
+        <attr name="image_width" format="dimension" />
+        <!--图片高度-->
+        <attr name="image_height" format="dimension" />
+        <!--图片之间的间距-->
+        <attr name="image_padding" format="dimension" />
+        <!--图片总数-->
+        <attr name="star_count" format="integer" />
+        <!--填充的图片数量-->
+        <attr name="star" format="integer" />
+        <!--是否可以点击-->
+        <attr name="clickable" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="labels_view">
+        <attr name="selectType" format="enum">
+            <enum name="NONE" value="1" />
+            <enum name="SINGLE" value="2" />
+            <enum name="SINGLE_IRREVOCABLY" value="3" />
+            <enum name="MULTI" value="4" />
+        </attr>
+        <attr name="maxSelect" format="integer" />
+        <attr name="labelTextColor" format="reference|color" />
+        <attr name="labelTextSize" format="dimension" />
+        <attr name="labelTextPaddingLeft" format="dimension" />
+        <attr name="labelTextPaddingTop" format="dimension" />
+        <attr name="labelTextPaddingRight" format="dimension" />
+        <attr name="labelTextPaddingBottom" format="dimension" />
+        <attr name="lineMargin" format="dimension" />
+        <attr name="wordMargin" format="dimension" />
+        <attr name="labelBackground" format="reference|color" />
+    </declare-styleable>
+
+    <declare-styleable name="MaterialLayout">
+        <attr name="alpha_start" format="integer" />
+        <attr name="alpha_step" format="integer" />
+        <attr name="framerate" format="integer" />
+        <attr name="duration" format="integer" />
+        <attr name="color" format="color" />
+        <attr name="scale" format="float" />
+    </declare-styleable>
+
+    <!--金额 样式  元大 角分小 $25.33-->
+    <declare-styleable name="MoneyView">
+        <!--金额-->
+        <attr name="money_text" format="string" />
+        <!--金额颜色-->
+        <attr name="money_color" format="color" />
+        <!--元大小-->
+        <attr name="yuan_size" format="dimension" />
+        <!--分大小-->
+        <attr name="cent_size" format="dimension" />
+        <!--前缀文本-->
+        <attr name="prefix_text" format="string" />
+        <!--前缀大小-->
+        <attr name="prefix_size" format="dimension" />
+        <!--前缀颜色-->
+        <attr name="prefix_color" format="color" />
+        <!--前缀右边距-->
+        <attr name="prefix_padding" format="dimension" />
+        <!--小数点左边距-->
+        <attr name="point_padding_left" format="dimension" />
+        <!--小数点右边距-->
+        <attr name="point_padding_right" format="dimension" />
+        <!--是否使用千分符-->
+        <attr name="grouping" format="boolean" />
+    </declare-styleable>
+</resources>

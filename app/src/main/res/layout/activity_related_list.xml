@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/title"/>
+    <View
+        style="@style/divider_3"/>
+    <LinearLayout
+        android:layout_below="@id/divider1"
+        android:id="@+id/title1"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:paddingLeft="14dp"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_marginTop="14dp"
+                android:text="关联列表"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:textColor="#3DBFE8"
+                android:textSize="14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <View
+                android:background="#3DBFE8"
+                android:layout_marginTop="11dp"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"/>
+        </LinearLayout>
+
+        <View style="@style/divider_1"/>
+    </LinearLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        >
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_marginLeft="19px"
+                android:layout_marginRight="19px"
+                android:layout_marginTop="16px"
+                android:layout_marginBottom="16px"
+                android:id="@+id/contentList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none"
+                tools:listitem="@layout/recycle_list" />
+
+            <LinearLayout
+                android:id="@+id/no_date"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <View
+                    android:layout_width="188px"
+                    android:layout_height="120px"
+                    android:layout_marginTop="20px"
+                    android:background="@mipmap/nodata" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30px"
+                    android:text="暂无数据"
+                    android:textColor="#FF666666"
+                    android:textSize="26px" />
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+
+</LinearLayout>

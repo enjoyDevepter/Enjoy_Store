@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/order_center_bg"
+    android:orientation="vertical"
+    app:layout_anchorGravity="center_horizontal">
+
+    <View style="@style/divider_1"/>
+
+    <LinearLayout
+        android:id="@+id/line1"
+        android:layout_width="match_parent"
+        android:layout_height="56px"
+        android:background="#F5F5F5"
+        android:visibility="gone"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="25px"
+        android:paddingRight="29px">
+
+        <TextView
+            style="@style/recycler_item_style"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="订单号："
+            app:layout_auto_baseheight="width" />
+
+        <TextView
+            android:id="@+id/order_id"
+            style="@style/recycler_item_style"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="12345"
+            app:layout_auto_baseheight="width" />
+
+        <TextView
+            android:id="@+id/order_status"
+            style="@style/recycler_item_style"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="24px"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:text="未支付"
+            android:textColor="#0096FF"
+            app:layout_auto_baseheight="width" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/detail"
+                style="@style/btn_in_list"
+                android:text="详情"
+                app:layout_auto_baseheight="width" />
+
+            <TextView
+                android:id="@+id/pay"
+                style="@style/btn_in_list"
+                android:layout_marginRight="0dp"
+                android:text="支付"
+                app:layout_auto_baseheight="width" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:background="@drawable/order_list_title_back"
+        android:id="@+id/line2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="25px"
+        android:paddingRight="29px">
+
+
+        <TextView
+            android:id="@+id/order_project"
+            style="@style/recycler_item_style"
+            android:layout_width="0dp"
+            android:text="项目"
+            android:maxLines="2"
+            android:layout_marginTop="14px"
+            android:layout_marginBottom="14px"
+            android:gravity="center_vertical|left"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_marginLeft="20px"
+            android:id="@+id/order_phone"
+            android:text="手机"
+            style="@style/recycler_item_style"
+            android:layout_width="146px"
+            android:layout_height="match_parent"
+            app:layout_auto_baseheight="width" />
+
+
+        <FrameLayout
+            android:layout_width="110px"
+            android:gravity="center"
+            android:layout_marginLeft="5px"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:text="金额"
+                android:id="@+id/order_price_title"
+                style="@style/recycler_item_style"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <cn.ehanmy.hospital.mvp.ui.widget.MoneyView
+                android:id="@+id/order_price"
+                android:layout_width="110px"
+                android:layout_height="match_parent"
+                app:cent_size="22px"
+                android:visibility="gone"
+                android:gravity="center"
+                app:layout_auto_baseheight="width"
+                app:money_color="#FF333333"
+                app:money_text="0.00"
+                app:point_padding_left="2px"
+                app:point_padding_right="10px"
+                app:prefix_color="#FF333333"
+                app:prefix_padding="4px"
+                app:prefix_size="22px"
+                app:yuan_size="22px" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/order_secend_parent"
+            android:layout_width="110px"
+            android:gravity="center"
+            android:layout_marginLeft="5px"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:text="尾款"
+                android:id="@+id/order_secend_price_title"
+                style="@style/recycler_item_style"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <cn.ehanmy.hospital.mvp.ui.widget.MoneyView
+                android:id="@+id/order_secend_price"
+                android:layout_width="110px"
+                android:visibility="gone"
+                android:layout_height="match_parent"
+                app:cent_size="22px"
+                android:gravity="center"
+                app:layout_auto_baseheight="width"
+                app:money_color="#FF333333"
+                app:money_text="0.00"
+                app:point_padding_left="2px"
+                app:point_padding_right="10px"
+                app:prefix_color="#FF333333"
+                app:prefix_padding="4px"
+                app:prefix_size="22px"
+                app:yuan_size="22px" />
+        </FrameLayout>
+
+
+        <TextView
+            android:id="@+id/order_time"
+            android:text="时间"
+            android:layout_marginLeft="5px"
+            style="@style/recycler_item_style"
+            android:layout_width="120px"
+            android:layout_height="match_parent"
+            app:layout_auto_baseheight="width" />
+
+    </LinearLayout>
+
+
+    <View style="@style/divider_1"/>
+</LinearLayout>

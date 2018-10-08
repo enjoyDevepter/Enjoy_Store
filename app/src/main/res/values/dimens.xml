@@ -1,0 +1,12 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="main_item_space">35dp</dimen>
+    <dimen name="main_padding_space">50dp</dimen>
+    <dimen name="dialog_height">100dp</dimen>
+    <dimen name="dialog_width">220dp</dimen>
+    <dimen name="image_upload_width">160dp</dimen>
+    <dimen name="image_upload_height">120dp</dimen>
+    <dimen name="modify_hospital_width">304dp</dimen>
+    <dimen name="modify_hospital_height">226dp</dimen>
+
+</resources>

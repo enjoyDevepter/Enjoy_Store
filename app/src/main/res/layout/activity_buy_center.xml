@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/title" />
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/search_layout"
+        android:layout_width="match_parent"
+        android:layout_height="92px"
+        android:layout_marginTop="6px"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="50px"
+        android:paddingRight="50px">
+
+        <TextView
+            android:id="@+id/code"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="26px"
+            android:gravity="center"
+            android:text="会员编号"
+            android:textSize="26px"
+            android:visibility="visible" />
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="42px"
+            >
+        <EditText
+            android:id="@+id/search_key"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/search_edit_bg"
+            android:imeOptions="actionSearch"
+            android:paddingLeft="10px"
+            android:textSize="26px" />
+
+            <FrameLayout
+                android:layout_width="42px"
+                android:id="@+id/qr_code"
+                android:layout_gravity="right|center_vertical"
+                android:layout_height="match_parent">
+            <View
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="14px"
+                android:background="@mipmap/qr_code_input_btn"
+                android:layout_width="22px"
+                android:layout_height="22px"/>
+            </FrameLayout>
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/search_btn"
+            style="@style/search_btn_style"
+            android:layout_marginLeft="10px"
+            app:layout_auto_baseheight="width" />
+
+
+        <TextView
+            android:id="@+id/clear_btn"
+            style="@style/search_btn_style"
+            android:layout_marginLeft="6px"
+            android:background="@drawable/search_clear_btn_bg"
+            android:text="重置"
+            android:textColor="#FFFA6767"
+            app:layout_auto_baseheight="width" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="6px"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="88px"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <View
+                android:id="@+id/image"
+                android:layout_width="104px"
+                android:layout_height="104px"
+                android:visibility="gone"
+                app:layout_auto_baseheight="width" />
+
+            <TextView
+                android:id="@+id/hide"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="38px"
+                android:text="请查询您的会员编号"
+                android:textColor="#FF333333"
+                android:textSize="28px" />
+
+            <TextView
+                android:id="@+id/buy"
+                android:layout_width="176px"
+                android:layout_height="46px"
+                android:layout_marginTop="60px"
+                android:background="@drawable/search_btn_bg"
+                android:gravity="center"
+                android:text="开始下单"
+                android:textColor="@color/white"
+                android:textSize="22px"
+                android:visibility="gone"
+                app:layout_auto_baseheight="width" />
+
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

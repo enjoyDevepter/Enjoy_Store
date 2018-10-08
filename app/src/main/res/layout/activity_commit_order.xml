@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:money="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <include layout="@layout/title" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="236px"
+                android:layout_marginTop="6px"
+                android:background="@color/white">
+
+                <cn.ehanmy.hospital.mvp.ui.widget.ShapeImageView
+                    android:id="@+id/head_image"
+                    android:layout_width="128px"
+                    android:layout_height="128px"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="44px"
+                    android:layout_marginTop="36px"
+                    money:layout_auto_baseheight="width" />
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/head_image"
+                    android:layout_marginLeft="44px"
+                    android:layout_toRightOf="@id/head_image"
+                    android:textColor="#ff333333"
+                    android:textSize="26px" />
+
+                <TextView
+                    android:id="@+id/phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/name"
+                    android:layout_marginLeft="30px"
+                    android:layout_toRightOf="@id/name"
+                    android:textColor="#ff333333"
+                    android:textSize="26px" />
+
+                <TextView
+                    android:id="@+id/hospital"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/name"
+                    android:layout_below="@id/name"
+                    android:layout_marginTop="14px"
+                    android:textColor="#ff666666"
+                    android:textSize="24px" />
+
+                <TextView
+                    android:id="@+id/member_code_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/hospital"
+                    android:layout_below="@id/hospital"
+                    android:layout_marginTop="14px"
+                    android:text="会员编号："
+                    android:textColor="#ff666666"
+                    android:textSize="24px" />
+
+                <TextView
+                    android:id="@+id/member_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/member_code_title"
+                    android:layout_toRightOf="@id/member_code_title"
+                    android:textColor="#ff666666"
+                    android:textSize="24px" />
+
+                <TextView
+                    android:id="@+id/addr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/name"
+                    android:layout_below="@id/member_code_title"
+                    android:layout_marginTop="14px"
+                    android:drawableLeft="@mipmap/location_icon"
+                    android:drawablePadding="5dp"
+                    android:textColor="#ff333333"
+                    android:textSize="24px" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="288px"
+                android:layout_marginTop="6px"
+                android:background="@color/white">
+
+                <ImageView
+                    android:id="@+id/image"
+                    android:layout_width="200px"
+                    android:layout_height="200px"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="44px"
+                    android:layout_marginTop="44px"
+                    money:layout_auto_baseheight="width" />
+
+                <TextView
+                    android:id="@+id/order_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/image"
+                    android:layout_marginLeft="44px"
+                    android:layout_toRightOf="@id/image"
+                    android:textColor="#FF000000"
+                    android:textSize="28px" />
+
+                <TextView
+                    android:id="@+id/price_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/image"
+                    android:layout_marginLeft="44px"
+                    android:layout_toRightOf="@id/image"
+                    android:text="订单金额 "
+                    android:textColor="#FF666666"
+                    android:textSize="28px" />
+
+                <cn.ehanmy.hospital.mvp.ui.widget.MoneyView
+                    android:id="@+id/price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/price_title"
+                    android:layout_marginLeft="20px"
+                    android:layout_toRightOf="@id/price_title"
+                    money:cent_size="26px"
+                    money:money_color="#FF666666"
+                    money:money_text="0.00"
+                    money:point_padding_left="2px"
+                    money:point_padding_right="10px"
+                    money:prefix_color="#FF666666"
+                    money:prefix_padding="4px"
+                    money:prefix_size="26px"
+                    money:yuan_size="32px" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/pay_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6px"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="72px"
+                    android:layout_marginBottom="26px"
+                    android:background="@drawable/list_item_bg"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="44px"
+                    android:text="二维码支付"
+                    android:textColor="#ff000000"
+                    android:textSize="26px" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/arList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                </android.support.v7.widget.RecyclerView>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/pay"
+                android:layout_width="match_parent"
+                android:layout_height="76px"
+                android:layout_marginBottom="32px"
+                android:layout_marginLeft="60px"
+                android:layout_marginRight="60px"
+                android:layout_marginTop="32px"
+                android:background="@drawable/make_sure_btn"
+                android:gravity="center"
+                android:text="确认支付"
+                android:textColor="@color/white"
+                android:textSize="24px" />
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+</LinearLayout>
