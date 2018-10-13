@@ -5,7 +5,7 @@ import java.util.List;
 import cn.ehanmy.hospital.mvp.model.entity.request.BaseRequest;
 
 public class ChangeActivityInfoRequest extends BaseRequest {
-    private final int cmd = 5253;
+    private final int cmd = 10253;
     private String activityId;
     private String title;
     private String content;

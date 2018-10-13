@@ -3,7 +3,7 @@ package cn.ehanmy.hospital.mvp.model.entity.activity;
 import cn.ehanmy.hospital.mvp.model.entity.request.BaseRequest;
 
 public class GetActivityInfoRequest extends BaseRequest {
-    private final int cmd = 5252;
+    private final int cmd = 10252;
     private String token;
     private int pageIndex;
     private int pageSize;

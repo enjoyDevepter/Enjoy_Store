@@ -10,7 +10,7 @@ public class GoodsPageRequest extends BaseRequest {
     private int pageSize = 10;
     private OrderBy orderBy;
     private String token;
-    private int cmd = 5101;
+    private int cmd = 10151;
 
     @Override
     public String toString() {

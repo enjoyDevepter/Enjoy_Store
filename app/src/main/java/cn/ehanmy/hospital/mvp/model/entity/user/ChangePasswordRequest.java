@@ -12,7 +12,7 @@ public class ChangePasswordRequest extends BaseRequest {
         return cmd;
     }
 
-    private final int cmd = 5002;
+    private final int cmd = 10002;
 
     @Override
     public String toString() {

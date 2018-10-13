@@ -7,8 +7,8 @@ public class GoodsConfirmRequest extends BaseRequest {
     private String token;
     private GoodsConfirmBean goods;
     private String memberId;
-    private long money;
-    private final int cmd = 5102;
+    private long money;  // 单位分
+    private final int cmd = 10152;
 
     @Override
     public String toString() {

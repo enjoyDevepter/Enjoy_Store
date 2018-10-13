@@ -5,7 +5,7 @@ import cn.ehanmy.hospital.mvp.model.entity.request.BaseRequest;
 
 // 2.3.3	医美项目下单
 public class GoodsBuyRequest extends BaseRequest {
-    private final int cmd = 5103;
+    private final int cmd = 10153;
     private String token;
     private GoodsConfirmBean goods;
     private String memberId;

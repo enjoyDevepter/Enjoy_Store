@@ -3,7 +3,7 @@ package cn.ehanmy.hospital.mvp.model.entity.user;
 import cn.ehanmy.hospital.mvp.model.entity.request.BaseRequest;
 
 public class ProjectSettingRequest extends BaseRequest {
-    private final int cmd = 5202;
+    private final int cmd = 10202;
     private String token;
 
     @Override

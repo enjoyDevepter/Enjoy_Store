@@ -8,7 +8,7 @@ import cn.ehanmy.hospital.mvp.model.entity.request.BaseRequest;
 
 // 2.3.4	获取医美商品分类列表
 public class CategoryRequest extends BaseRequest {
-    private final int cmd = 5201;
+    private final int cmd = 10201;
 
     public int getCmd() {
         return cmd;

@@ -3,7 +3,7 @@ package cn.ehanmy.hospital.mvp.model.entity.activity;
 import java.util.List;
 
 public class AddActivityRequest {
-    private final int cmd = 5251;
+    private final int cmd = 10251;
     private String title;
     private String content;
     private List<String> imageList;

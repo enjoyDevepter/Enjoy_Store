@@ -3,7 +3,7 @@ package cn.ehanmy.hospital.mvp.model.entity.activity;
 import cn.ehanmy.hospital.mvp.model.entity.request.BaseRequest;
 
 public class DeleteActivityInfoRequest extends BaseRequest {
-    private final int cmd = 5254;
+    private final int cmd = 10254;
     private String activityId;
     private String token;
 

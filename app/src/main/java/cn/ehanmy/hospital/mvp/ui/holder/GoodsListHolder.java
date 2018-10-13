@@ -1,5 +1,6 @@
 package cn.ehanmy.hospital.mvp.ui.holder;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,6 +14,7 @@ import com.jess.arms.utils.ArmsUtils;
 import butterknife.BindView;
 import cn.ehanmy.hospital.R;
 import cn.ehanmy.hospital.mvp.model.entity.goods_list.GoodsListBean;
+import cn.ehanmy.hospital.mvp.model.entity.goods_list.GoodsSpecValueBean;
 import cn.ehanmy.hospital.mvp.ui.adapter.GoodsListAdapter;
 import cn.ehanmy.hospital.mvp.ui.widget.MoneyView;
 import io.reactivex.Observable;
@@ -59,8 +61,12 @@ public class GoodsListHolder extends BaseHolder<GoodsListBean> {
                         .build());
         Observable.just(data.getName())
                 .subscribe(s -> title.setText(s));
-        Observable.just(data.getGoodsSpecValue().getSpecValueName())
-                .subscribe(s -> title2.setText(s));
+        GoodsSpecValueBean goodsSpecValue = data.getGoodsSpecValue();
+        String specValueName = goodsSpecValue.getSpecValueName();
+        if(goodsSpecValue != null && !TextUtils.isEmpty(specValueName)){
+            Observable.just(specValueName)
+                    .subscribe(s -> title2.setText(s));
+        }
         Observable.just(data.getSales())
                 .subscribe(s -> count.setText(String.valueOf(s)));
         Observable.just(data.getSalePrice())

@@ -4,7 +4,7 @@ public class GoodsConfirmBean {
     private String goodsId;
     private String merchId;
     private int nums;
-    private double salePrice;
+    private double salePrice;  // 单位元
 
     @Override
     public String toString() {
