@@ -9,6 +9,8 @@ import com.jess.arms.mvp.BaseModel;
 
 import javax.inject.Inject;
 
+import cn.ehanmy.hospital.mvp.model.entity.store.GetStoreInfoRequest;
+import cn.ehanmy.hospital.mvp.model.entity.store.GetStoreInfoResponse;
 import io.reactivex.Observable;
 import cn.ehanmy.hospital.mvp.contract.LoginContract;
 import cn.ehanmy.hospital.mvp.model.api.service.InterfaceService;
@@ -38,8 +40,8 @@ public class LoginModel extends BaseModel implements LoginContract.Model {
     }
 
     @Override
-    public Observable<HospitalInfoResponse> requestHospitalInfo(HospitalInfoRequest request) {
+    public Observable<GetStoreInfoResponse> getStroeInfo(GetStoreInfoRequest request) {
         return mRepositoryManager.obtainRetrofitService(InterfaceService.class)
-                .requestHosptialInfo(request);
+                .getStoreInfo(request);
     }
 }

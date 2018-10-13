@@ -67,7 +67,7 @@ public class HospitalInfoPresenter extends BasePresenter<HospitalInfoContract.Mo
                     public void onNext(HospitalInfoResponse response) {
                         if (response.isSuccess()) {
                             mRootView.updateUI(response);
-                            CacheUtil.saveConstant(CacheUtil.CACHE_KEY_USER_HOSPITAL_INFO, response.getHospital());
+//                            CacheUtil.saveConstant(CacheUtil.CACHE_KEY_USER_HOSPITAL_INFO, response.getHospital());
                         } else {
                             mRootView.showMessage(response.getRetDesc());
                         }

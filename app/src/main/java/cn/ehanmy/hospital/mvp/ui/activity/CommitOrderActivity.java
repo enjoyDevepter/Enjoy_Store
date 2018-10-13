@@ -128,11 +128,11 @@ public class CommitOrderActivity extends BaseActivity<CommitOrderPresenter> impl
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         new TitleUtil(title, this, "提交订单");
-        HospitaInfoBean hospitaInfoBean = CacheUtil.getConstant(CacheUtil.CACHE_KEY_USER_HOSPITAL_INFO);
+//        HospitaInfoBean hospitaInfoBean = CacheUtil.getConstant(CacheUtil.CACHE_KEY_USER_HOSPITAL_INFO);
         MemberBean memberBean = CacheUtil.getConstant(CacheUtil.CACHE_KEY_MEMBER);
         updateMember(memberBean);
-        hospital.setText(hospitaInfoBean.getName());
-        addr.setText(hospitaInfoBean.getAddress());
+//        hospital.setText(hospitaInfoBean.getName());
+//        addr.setText(hospitaInfoBean.getAddress());
         ArmsUtils.configRecyclerView(mRecyclerView, mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
     }

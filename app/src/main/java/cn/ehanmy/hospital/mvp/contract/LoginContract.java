@@ -6,6 +6,8 @@ import com.jess.arms.mvp.IModel;
 import com.jess.arms.mvp.IView;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import cn.ehanmy.hospital.mvp.model.entity.store.GetStoreInfoRequest;
+import cn.ehanmy.hospital.mvp.model.entity.store.GetStoreInfoResponse;
 import io.reactivex.Observable;
 import cn.ehanmy.hospital.mvp.model.entity.hospital.HospitalInfoRequest;
 import cn.ehanmy.hospital.mvp.model.entity.request.LoginRequest;
@@ -26,9 +28,7 @@ public interface LoginContract {
 
     //Model层定义接口,外部只需关心Model返回的数据,无需关心内部细节,即是否使用缓存
     interface Model extends IModel {
-
         Observable<LoginResponse> login(LoginRequest request);
-        Observable<HospitalInfoResponse> requestHospitalInfo(HospitalInfoRequest request);
-
+        Observable<GetStoreInfoResponse> getStroeInfo(GetStoreInfoRequest request);
     }
 }

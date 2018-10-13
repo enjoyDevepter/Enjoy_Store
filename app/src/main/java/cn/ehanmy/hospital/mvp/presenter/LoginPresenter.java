@@ -19,6 +19,8 @@ import cn.ehanmy.hospital.mvp.model.entity.hospital.HospitalInfoRequest;
 import cn.ehanmy.hospital.mvp.model.entity.hospital.HospitalInfoResponse;
 import cn.ehanmy.hospital.mvp.model.entity.request.LoginRequest;
 import cn.ehanmy.hospital.mvp.model.entity.response.LoginResponse;
+import cn.ehanmy.hospital.mvp.model.entity.store.GetStoreInfoRequest;
+import cn.ehanmy.hospital.mvp.model.entity.store.GetStoreInfoResponse;
 import cn.ehanmy.hospital.util.CacheUtil;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -88,29 +90,28 @@ public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginCont
                         if (response.isSuccess()) {
                             UserBean value = new UserBean(username, response.getToken(), response.getSignkey());
                             CacheUtil.saveConstant(CacheUtil.CACHE_KEY_USER, value);
-                            mRootView.killMyself();
-                            mRootView.goMainPage();
                             CacheUtil.saveConstant(CacheUtil.CACHE_KEY_USER_LOGIN_NAME,username);
-//                            HospitalInfoRequest hospitalInfoRequest = new HospitalInfoRequest();
-//                            hospitalInfoRequest.setToken(response.getToken());
-//                            mModel.requestHospitalInfo(hospitalInfoRequest)
-//                                    .subscribeOn(Schedulers.io())
-//                                    .doOnSubscribe(disposable -> {
-//                                    }).subscribeOn(AndroidSchedulers.mainThread())
-//                                    .observeOn(AndroidSchedulers.mainThread())
-//                                    .compose(RxLifecycleUtils.bindToLifecycle(mRootView))//使用 Rxlifecycle,使 Disposable 和 Activity 一起销毁
-//                                    .subscribe(new ErrorHandleSubscriber<HospitalInfoResponse>(mErrorHandler) {
-//                                        @Override
-//                                        public void onNext(HospitalInfoResponse s) {
-//                                            mRootView.hideLoading();
-//                                            if (s.isSuccess()) {
-//                                                CacheUtil.saveConstant(CacheUtil.CACHE_KEY_USER_HOSPITAL_INFO, s.getHospital());
-//
-//                                            } else {
-//                                                mRootView.showMessage(s.getRetDesc());
-//                                            }
-//                                        }
-//                                    });
+                            GetStoreInfoRequest getStoreInfoRequest = new GetStoreInfoRequest();
+                            getStoreInfoRequest.setToken(response.getToken());
+                            mModel.getStroeInfo(getStoreInfoRequest)
+                                    .subscribeOn(Schedulers.io())
+                                    .doOnSubscribe(disposable -> {
+                                    }).subscribeOn(AndroidSchedulers.mainThread())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .compose(RxLifecycleUtils.bindToLifecycle(mRootView))//使用 Rxlifecycle,使 Disposable 和 Activity 一起销毁
+                                    .subscribe(new ErrorHandleSubscriber<GetStoreInfoResponse>(mErrorHandler) {
+                                        @Override
+                                        public void onNext(GetStoreInfoResponse s) {
+                                            mRootView.hideLoading();
+                                            if (s.isSuccess()) {
+                                                CacheUtil.saveConstant(CacheUtil.CACHE_KEY_STORE_INFO, s.getStore());
+                                                mRootView.killMyself();
+                                                mRootView.goMainPage();
+                                            } else {
+                                                mRootView.showMessage(s.getRetDesc());
+                                            }
+                                        }
+                                    });
                         } else {
                             mRootView.showMessage(response.getRetDesc());
                         }

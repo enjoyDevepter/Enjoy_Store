@@ -128,8 +128,8 @@ public class OrderConfirmActivity extends BaseActivity<OrderConfirmPresenter> im
         moneyET.setOnEditorActionListener(this);
         MemberBean memberBean = CacheUtil.getConstant(CacheUtil.CACHE_KEY_MEMBER);
         memberCodeTV.setText(memberBean.getUserName());
-        HospitaInfoBean hospitalInfoBean = CacheUtil.getConstant(CacheUtil.CACHE_KEY_USER_HOSPITAL_INFO);
-        hosptialTV.setText(hospitalInfoBean.getName());
+//        HospitaInfoBean hospitalInfoBean = CacheUtil.getConstant(CacheUtil.CACHE_KEY_USER_HOSPITAL_INFO);
+//        hosptialTV.setText(hospitalInfoBean.getName());
     }
 
     @Override

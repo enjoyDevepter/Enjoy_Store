@@ -2,12 +2,12 @@ package cn.ehanmy.hospital.mvp.model.entity.store;
 
 import cn.ehanmy.hospital.mvp.model.entity.response.BaseResponse;
 
-public class GetStroeInfoResponse extends BaseResponse {
+public class GetStoreInfoResponse extends BaseResponse {
     private StoreBean store;
 
     @Override
     public String toString() {
-        return "GetStroeInfoResponse{" +
+        return "GetStoreInfoResponse{" +
                 "store=" + store +
                 '}';
     }

@@ -46,6 +46,8 @@ import cn.ehanmy.hospital.mvp.model.entity.shop_appointment.GetShopAppointmentPa
 import cn.ehanmy.hospital.mvp.model.entity.shop_appointment.GetShopAppointmentPageResponse;
 import cn.ehanmy.hospital.mvp.model.entity.shop_appointment.ShopAppointmentInfoRequest;
 import cn.ehanmy.hospital.mvp.model.entity.shop_appointment.ShopAppointmentInfoResponse;
+import cn.ehanmy.hospital.mvp.model.entity.store.GetStoreInfoRequest;
+import cn.ehanmy.hospital.mvp.model.entity.store.GetStoreInfoResponse;
 import cn.ehanmy.hospital.mvp.model.entity.user.ChangePasswordRequest;
 import cn.ehanmy.hospital.mvp.model.entity.user.ChangePasswordResponse;
 import cn.ehanmy.hospital.mvp.model.entity.user.ProjectSettingRequest;
@@ -81,6 +83,13 @@ public interface InterfaceService {
 
     @POST("gateway")
     Observable<LoginResponse> login(@Body LoginRequest request);
+
+
+
+    @POST("gateway")
+    Observable<GetStoreInfoResponse> getStoreInfo(@Body GetStoreInfoRequest request);
+
+// --------------------------------------------------------------------------------
 
     @POST("gateway")
     Observable<HospitalInfoResponse> requestHosptialInfo(@Body HospitalInfoRequest request);

@@ -96,9 +96,9 @@ public class ChangeHospitalImagePresenter extends BasePresenter<ChangeHospitalIm
                     @Override
                     public void onNext(ChangeHospitalImageResponse response) {
                         if (response.isSuccess()) {
-                            HospitaInfoBean hospitaInfoBean = CacheUtil.getConstant(CacheUtil.CACHE_KEY_USER_HOSPITAL_INFO);
-                            hospitaInfoBean.setImage(uri);
-                            CacheUtil.saveConstant(CacheUtil.CACHE_KEY_USER_HOSPITAL_INFO,hospitaInfoBean);
+//                            HospitaInfoBean hospitaInfoBean = CacheUtil.getConstant(CacheUtil.CACHE_KEY_USER_HOSPITAL_INFO);
+//                            hospitaInfoBean.setImage(uri);
+//                            CacheUtil.saveConstant(CacheUtil.CACHE_KEY_USER_HOSPITAL_INFO,hospitaInfoBean);
                             mRootView.showMessage("上传成功");
                         } else {
                             mRootView.showMessage(response.getRetDesc());

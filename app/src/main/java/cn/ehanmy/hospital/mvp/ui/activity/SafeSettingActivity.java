@@ -77,9 +77,9 @@ public class SafeSettingActivity extends BaseActivity<SafeSettingPresenter> impl
             }
         });
 
-        HospitaInfoBean hospitaInfoBean = (HospitaInfoBean) CacheUtil.getConstant(CacheUtil.CACHE_KEY_USER_HOSPITAL_INFO);
-        id.setText("" + hospitaInfoBean.getHospitalId());
-        name.setText("" + hospitaInfoBean.getName());
+//        HospitaInfoBean hospitaInfoBean = (HospitaInfoBean) CacheUtil.getConstant(CacheUtil.CACHE_KEY_USER_HOSPITAL_INFO);
+//        id.setText("" + hospitaInfoBean.getHospitalId());
+//        name.setText("" + hospitaInfoBean.getName());
     }
 
     @Override
