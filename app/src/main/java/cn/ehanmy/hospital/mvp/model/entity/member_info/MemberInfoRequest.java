@@ -6,7 +6,7 @@ import cn.ehanmy.hospital.mvp.model.entity.request.BaseRequest;
 public class MemberInfoRequest extends BaseRequest {
     private String token;
     private String username;
-    private int cmd = 5050;
+    private int cmd = 10050;
 
     @Override
     public String toString() {

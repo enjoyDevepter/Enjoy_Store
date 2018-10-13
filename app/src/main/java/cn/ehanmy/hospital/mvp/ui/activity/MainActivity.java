@@ -123,26 +123,24 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         Class<? extends Activity> targetActivity = null;
         switch (position) {
             case 0:
-                targetActivity = BuyCenterActivity.class;
                 break;
             case 1:
-                // 订单中心
-                targetActivity = OrderFormCenterActivity.class;
+                // 下单中心
+                targetActivity = BuyCenterActivity.class;
                 break;
             case 2:
-                targetActivity = ShopAppointmentActivity.class;
+//                 订单中心
+                targetActivity = OrderFormCenterActivity.class;
+//                targetActivity = ShopAppointmentActivity.class;
                 break;
             case 3:
                 targetActivity = UserAppointmentActivity.class;
                 break;
             case 4:
-                targetActivity = ActivityInfoActivity.class;
+//                targetActivity = ActivityInfoActivity.class;
                 break;
             case 5:
-                targetActivity = HospitalInfoActivity.class;
-                break;
-            case 6:
-                targetActivity = ProjectSettingActivity.class;
+//                targetActivity = HospitalInfoActivity.class;
                 break;
         }
 
