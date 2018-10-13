@@ -34,7 +34,7 @@ android {
         debug {
             buildConfigField "boolean", "LOG_DEBUG", "true"
             buildConfigField "boolean", "USE_CANARY", "true"
-            buildConfigField "String", "API_HOST", "\"http://api.donhonet.net/conson-shop/\""
+            buildConfigField "String", "API_HOST", "\"http://api.donhonet.net/ehanmy/store/\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }

@@ -8,7 +8,7 @@ package cn.ehanmy.hospital.mvp.model.entity.request;
 public class LoginRequest extends BaseRequest {
     private String username;
     private String password;
-    private final int cmd = 5001;
+    private final int cmd = 10000;
 
     public String getUsername() {
         return username;
