@@ -43,6 +43,14 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
             R.mipmap.main_store_icon
     };
 
+    int[] stores = new int[]{
+            R.mipmap.main_store_icon,
+            R.mipmap.activity,
+            R.mipmap.main_regiest_icon,
+            R.mipmap.setting
+    };
+
+
     @Inject
     public MainPresenter(MainContract.Model model, MainContract.View rootView) {
         super(model, rootView);
@@ -50,12 +58,22 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     void onCreate() {
-        // 初始化数据
-        String[] titles = mApplication.getResources().getStringArray(R.array.main_title);
+        changeToMain(true);
+    }
+
+    public void changeToMain(boolean main) {
+        String[] titles;
+        if (main) {
+            // 初始化数据
+            titles = mApplication.getResources().getStringArray(R.array.main_title);
+        } else {
+            titles = mApplication.getResources().getStringArray(R.array.main_store_title);
+        }
+        mainItems.clear();
         for (int i = 0; i < titles.length; i++) {
             MainItem item = new MainItem();
             item.setName(titles[i]);
-            item.setImageId(images[i]);
+            item.setImageId(main ? images[i] : stores[i]);
             mainItems.add(item);
         }
         mAdapter.notifyDataSetChanged();

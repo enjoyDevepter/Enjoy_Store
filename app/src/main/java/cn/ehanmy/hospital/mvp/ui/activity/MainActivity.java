@@ -20,7 +20,6 @@ import cn.ehanmy.hospital.R;
 import cn.ehanmy.hospital.di.component.DaggerMainComponent;
 import cn.ehanmy.hospital.di.module.MainModule;
 import cn.ehanmy.hospital.mvp.contract.MainContract;
-import cn.ehanmy.hospital.mvp.model.entity.hospital.HospitaInfoBean;
 import cn.ehanmy.hospital.mvp.model.entity.store.StoreBean;
 import cn.ehanmy.hospital.mvp.presenter.MainPresenter;
 import cn.ehanmy.hospital.mvp.ui.adapter.MainAdapter;
@@ -32,6 +31,7 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
 
 public class MainActivity extends BaseActivity<MainPresenter> implements MainContract.View, View.OnClickListener, DefaultAdapter.OnRecyclerViewItemClickListener {
 
+    private static final String FORMAT_FOR_ACTIVITY_TITLE = "欢迎%s回到%s";
     @BindView(R.id.back)
     View backV;
     @BindView(R.id.title)
@@ -40,7 +40,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     View settingV;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-
     @Inject
     RecyclerView.LayoutManager mLayoutManager;
     @Inject
@@ -61,13 +60,11 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         return R.layout.activity_main; //如果你不需要框架帮你设置 setContentView(id) 需要自行设置,请返回 0
     }
 
-    private static final String FORMAT_FOR_ACTIVITY_TITLE = "欢迎%s回到%s";
-
     @Override
     public void initData(Bundle savedInstanceState) {
         String loginUserName = CacheUtil.getConstant(CacheUtil.CACHE_KEY_USER_LOGIN_NAME);
         StoreBean storeBean = CacheUtil.getConstant(CacheUtil.CACHE_KEY_STORE_INFO);
-        titleTV.setText(String.format(FORMAT_FOR_ACTIVITY_TITLE,loginUserName,storeBean.getName()));
+        titleTV.setText(String.format(FORMAT_FOR_ACTIVITY_TITLE, loginUserName, storeBean.getName()));
         settingV.setVisibility(View.VISIBLE);
         settingV.setOnClickListener(this);
         backV.setVisibility(View.GONE);
@@ -115,39 +112,61 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
             case R.id.setting:
                 ArmsUtils.startActivity(SafeSettingActivity.class);
                 break;
+            case R.id.back:
+                backV.setSelected(false);
+                mPresenter.changeToMain(true);
+                backV.setVisibility(View.GONE);
+                break;
         }
     }
 
     @Override
     public void onItemClick(View view, int viewType, Object data, int position) {
-        Class<? extends Activity> targetActivity = null;
         switch (position) {
             case 0:
+                if (backV.isSelected()) {
+                    ArmsUtils.startActivity(HospitalInfoActivity.class);
+                } else {
+                    // 注册会员
+                    ArmsUtils.startActivity(RegisterActivity.class);
+                }
                 break;
             case 1:
-                // 下单中心
-                targetActivity = BuyCenterActivity.class;
+                if (backV.isSelected()) {
+                    ArmsUtils.startActivity(ActivityInfoActivity.class);
+                } else {
+                    // 下单中心
+                    ArmsUtils.startActivity(BuyCenterActivity.class);
+                }
                 break;
             case 2:
-//                 订单中心
-                targetActivity = OrderFormCenterActivity.class;
-//                targetActivity = ShopAppointmentActivity.class;
+                if (backV.isSelected()) {
+                    // 本店会员
+
+                } else {
+                    // 订单中心
+                    ArmsUtils.startActivity(OrderFormCenterActivity.class);
+                }
                 break;
             case 3:
-                targetActivity = UserAppointmentActivity.class;
+                if (backV.isSelected()) {
+                    // 项目设置
+                    ArmsUtils.startActivity(ProjectSettingActivity.class);
+                } else {
+                    // 用户预约
+                    ArmsUtils.startActivity(UserAppointmentActivity.class);
+                }
                 break;
             case 4:
-//                targetActivity = ActivityInfoActivity.class;
+                // 医美预约
                 break;
             case 5:
-//                targetActivity = HospitalInfoActivity.class;
+                // 我的店铺
+                mPresenter.changeToMain(false);
+                backV.setSelected(true);
+                backV.setVisibility(View.VISIBLE);
+                backV.setOnClickListener(this);
                 break;
-        }
-
-        if (targetActivity == null) {
-            showMessage("功能尚未实现");
-        } else {
-            ArmsUtils.startActivity(targetActivity);
         }
     }
 }
