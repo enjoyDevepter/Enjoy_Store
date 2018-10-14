@@ -20,7 +20,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "cn.ehanmy.hospital"
+        applicationId "cn.ehanmy.store"
         minSdkVersion rootProject.ext.android["minSdkVersion"]
         targetSdkVersion rootProject.ext.android["targetSdkVersion"]
         versionCode rootProject.ext.android["versionCode"]

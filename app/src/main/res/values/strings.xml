@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Hi美医院端</string>
+    <string name="app_name">Hi美店铺端</string>
     <item name="tag_key_data" type="id" />
     <item name="tag_key_position" type="id" />
     <string name="values_type">values</string>
