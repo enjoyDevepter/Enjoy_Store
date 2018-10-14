@@ -3,7 +3,7 @@ package cn.ehanmy.hospital.mvp.model.entity.hospital;
 import cn.ehanmy.hospital.mvp.model.entity.request.BaseRequest;
 
 public class ChangeHospitalImageRequest extends BaseRequest {
-    private final int cmd = 5302;
+    private final int cmd = 10302;
     private String token;
     private String image;
 

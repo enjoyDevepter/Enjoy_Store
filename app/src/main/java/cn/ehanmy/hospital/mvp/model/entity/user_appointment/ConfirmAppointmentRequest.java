@@ -2,8 +2,9 @@ package cn.ehanmy.hospital.mvp.model.entity.user_appointment;
 
 import cn.ehanmy.hospital.mvp.model.entity.request.BaseRequest;
 
+/**用于预约确认请求*/
 public class ConfirmAppointmentRequest extends BaseRequest {
-    private final int cmd = 5353;
+    private final int cmd = 10353;
     private String token;
     private String reservationId;
 

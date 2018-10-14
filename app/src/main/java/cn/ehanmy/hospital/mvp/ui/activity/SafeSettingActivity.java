@@ -17,6 +17,7 @@ import cn.ehanmy.hospital.di.component.DaggerSafeSettingComponent;
 import cn.ehanmy.hospital.di.module.SafeSettingModule;
 import cn.ehanmy.hospital.mvp.contract.SafeSettingContract;
 import cn.ehanmy.hospital.mvp.model.entity.hospital.HospitaInfoBean;
+import cn.ehanmy.hospital.mvp.model.entity.store.StoreBean;
 import cn.ehanmy.hospital.mvp.presenter.SafeSettingPresenter;
 import cn.ehanmy.hospital.util.CacheUtil;
 
@@ -77,9 +78,9 @@ public class SafeSettingActivity extends BaseActivity<SafeSettingPresenter> impl
             }
         });
 
-//        HospitaInfoBean hospitaInfoBean = (HospitaInfoBean) CacheUtil.getConstant(CacheUtil.CACHE_KEY_USER_HOSPITAL_INFO);
-//        id.setText("" + hospitaInfoBean.getHospitalId());
-//        name.setText("" + hospitaInfoBean.getName());
+        StoreBean sb = CacheUtil.getConstant(CacheUtil.CACHE_KEY_STORE_INFO);
+        id.setText("" + sb.getStoreId());
+        name.setText("" + sb.getName());
     }
 
     @Override

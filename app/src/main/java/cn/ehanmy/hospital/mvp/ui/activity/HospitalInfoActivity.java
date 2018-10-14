@@ -83,7 +83,7 @@ public class HospitalInfoActivity extends BaseActivity<HospitalInfoPresenter> im
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        titleTV.setText("医院信息");
+        titleTV.setText("店铺信息");
         backV.setOnClickListener(this);
         imageV.setOnClickListener(this);
         infoV.setOnClickListener(this);

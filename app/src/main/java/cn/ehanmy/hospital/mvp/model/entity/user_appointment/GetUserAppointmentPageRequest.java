@@ -3,7 +3,7 @@ package cn.ehanmy.hospital.mvp.model.entity.user_appointment;
 import cn.ehanmy.hospital.mvp.model.entity.request.BaseRequest;
 
 public class GetUserAppointmentPageRequest extends BaseRequest {
-    private final int cmd = 5351;
+    private final int cmd = 10351;
     private String token;
     private int pageIndex;
     private int pageSize;

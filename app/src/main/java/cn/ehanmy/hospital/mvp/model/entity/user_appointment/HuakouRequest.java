@@ -2,8 +2,12 @@ package cn.ehanmy.hospital.mvp.model.entity.user_appointment;
 
 import cn.ehanmy.hospital.mvp.model.entity.request.BaseRequest;
 
+/**
+ * 用户预约划扣请求
+ * 划扣表示这项预约已经执行
+ * */
 public class HuakouRequest extends BaseRequest {
-    private final int cmd = 5357;
+    private final int cmd = 10357;
     private String token;
     private String reservationId;
     private String orderId;

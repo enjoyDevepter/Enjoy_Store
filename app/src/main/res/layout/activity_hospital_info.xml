@@ -25,9 +25,9 @@
 
                 <ImageView
                     android:id="@+id/image"
-                    android:layout_width="0dp"
+                    android:layout_width="516px"
                     android:src="@mipmap/default_image"
-                    android:layout_height="139dp"
+                    android:layout_height="327px"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="10dp"
                     android:layout_weight="1"

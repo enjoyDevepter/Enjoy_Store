@@ -3,7 +3,7 @@ package cn.ehanmy.hospital.mvp.model.entity.hospital;
 import cn.ehanmy.hospital.mvp.model.entity.request.BaseRequest;
 
 public class ChangeHospitalInfoRequest extends BaseRequest {
-    private final int cmd = 5301;
+    private final int cmd = 10301;
     private String tellphone;
     private String startTime;
     private String endTime;
