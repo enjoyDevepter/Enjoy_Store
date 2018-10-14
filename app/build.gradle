@@ -42,7 +42,7 @@ android {
         release {
             buildConfigField "boolean", "LOG_DEBUG", "false"
             buildConfigField "boolean", "USE_CANARY", "false"
-            buildConfigField "String", "API_HOST", "\"http://sj.ehanmy.cn/ehanmy/hospital/\""
+            buildConfigField "String", "API_HOST", "\"http://api.donhonet.net/ehanmy/store/\""
             minifyEnabled false
             shrinkResources false
             zipAlignEnabled false
