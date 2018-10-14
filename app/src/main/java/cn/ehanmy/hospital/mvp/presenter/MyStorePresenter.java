@@ -61,7 +61,7 @@ public class MyStorePresenter extends BasePresenter<MyStoreContract.Model, MySto
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     void onCreate() {
         // 初始化数据
-        String[] titles = mApplication.getResources().getStringArray(R.array.my_store_title);
+        String[] titles = mApplication.getResources().getStringArray(R.array.main_store_title);
         for (int i = 0; i < titles.length; i++) {
             MainItem item = new MainItem();
             item.setName(titles[i]);
