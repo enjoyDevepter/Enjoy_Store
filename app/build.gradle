@@ -27,6 +27,8 @@ android {
         versionName rootProject.ext.android["versionName"]
         testInstrumentationRunner rootProject.ext.dependencies["androidJUnitRunner"]
         signingConfig signingConfigs.release
+        flavorDimensions "versionCode"
+
     }
 
 
@@ -36,16 +38,18 @@ android {
             buildConfigField "boolean", "USE_CANARY", "true"
             buildConfigField "String", "API_HOST", "\"http://api.donhonet.net/ehanmy/store/\""
             minifyEnabled false
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
         release {
             buildConfigField "boolean", "LOG_DEBUG", "false"
             buildConfigField "boolean", "USE_CANARY", "false"
-            buildConfigField "String", "API_HOST", "\"http://api.donhonet.net/ehanmy/store/\""
+            buildConfigField "String", "API_HOST", "\"http://sj.ehanmy.cn/ehanmy/store/\""
             minifyEnabled false
             shrinkResources false
             zipAlignEnabled false
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -55,6 +59,17 @@ android {
         abortOnError false
     }
     productFlavors {
+        android_yybao {}
+    }
+
+    productFlavors.all { flavor ->
+        flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+    }
+    //给apk添加对应的版本号：
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "hibeauty-${buildType.name}-${defaultConfig.versionName}.apk"
+        }
     }
 }
 

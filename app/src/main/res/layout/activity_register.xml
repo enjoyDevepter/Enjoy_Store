@@ -10,12 +10,12 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="6px">
+        android:layout_marginTop="6px"
+        android:background="@color/white">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
             android:gravity="center_horizontal"
             android:orientation="vertical"
             android:paddingLeft="50px"
@@ -84,7 +84,7 @@
 
                         <View
                             android:id="@+id/step_name"
-                            android:layout_width="24px"
+                            android:layout_width="32px"
                             android:layout_height="32px"
                             android:layout_gravity="center"
                             android:background="@mipmap/reg_name_unfinished"
@@ -120,7 +120,7 @@
 
                         <View
                             android:id="@+id/step_last"
-                            android:layout_width="24px"
+                            android:layout_width="32px"
                             android:layout_height="32px"
                             android:layout_gravity="center"
                             android:background="@mipmap/reg_unfinished"
@@ -168,7 +168,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="15px"
                     android:layout_marginTop="15px"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -189,6 +190,7 @@
                                 android:background="@android:color/transparent"
                                 android:hint="请输入手机号"
                                 android:imeOptions="actionNext"
+                                android:inputType="number"
                                 android:singleLine="true"
                                 android:textColor="#FF666666"
                                 android:textSize="26px" />
@@ -199,7 +201,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="2px"
                             android:layout_marginTop="18px"
-                            android:background="#FFCCCCCC" />
+                            android:background="#FFDBDBDB" />
 
                     </LinearLayout>
 
@@ -241,7 +243,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="2px"
                         android:layout_marginTop="18px"
-                        android:background="#FFCCCCCC" />
+                        android:background="#FFDBDBDB" />
 
                     <TextView
                         android:id="@+id/register"
@@ -258,6 +260,187 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/error"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="100px"
+                        android:text="手机号已被注册，请换号重新注册！"
+                        android:textColor="#FF666666"
+                        android:textSize="24px" />
+
+
+                    <TextView
+                        android:layout_width="300px"
+                        android:layout_height="82px"
+                        android:layout_marginBottom="30px"
+                        android:layout_marginTop="70px"
+                        android:background="@drawable/reg_btn"
+                        android:gravity="center"
+                        android:text="重新注册"
+                        android:textColor="@color/white"
+                        android:textSize="28px"
+                        app:layout_auto_baseheight="width" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20px"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="100px"
+                            android:layout_height="wrap_content"
+                            android:text="会员名"
+                            android:textColor="#FF666666"
+                            android:textSize="26px"
+                            app:layout_auto_baseheight="width" />
+
+                        <EditText
+                            android:id="@+id/name"
+                            android:layout_width="match_parent"
+                            android:layout_height="54px"
+                            android:layout_marginLeft="20px"
+                            android:background="@drawable/reg_input_bg"
+                            android:hint="请输入会员号"
+                            android:paddingLeft="15px"
+                            android:textColor="#FF666666"
+                            android:textSize="26px"
+                            app:layout_auto_baseheight="width" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20px"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="100px"
+                            android:layout_height="wrap_content"
+                            android:text="性别    "
+                            android:textColor="#FF666666"
+                            android:textSize="26px"
+                            app:layout_auto_baseheight="width" />
+
+                        <EditText
+                            android:id="@+id/male"
+                            android:layout_width="match_parent"
+                            android:layout_height="54px"
+                            android:layout_marginLeft="20px"
+                            android:background="@drawable/reg_input_bg"
+                            android:hint="请输入会员号"
+                            android:textColor="#FF666666"
+                            android:textSize="26px"
+                            app:layout_auto_baseheight="width" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20px"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="100px"
+                            android:layout_height="wrap_content"
+                            android:text="生日    "
+                            android:textColor="#FF666666"
+                            android:textSize="26px"
+                            app:layout_auto_baseheight="width" />
+
+                        <TextView
+                            android:id="@+id/birth"
+                            android:layout_width="match_parent"
+                            android:layout_height="54px"
+                            android:layout_marginLeft="20px"
+                            android:background="@drawable/reg_input_bg"
+                            android:paddingLeft="15px"
+                            android:textColor="#FF666666"
+                            android:textSize="26px"
+                            app:layout_auto_baseheight="width" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20px"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="100px"
+                            android:layout_height="wrap_content"
+                            android:drawableRight="@mipmap/drop_down_icon"
+                            android:text="邀请码"
+                            android:textColor="#FF666666"
+                            android:textSize="26px"
+                            app:layout_auto_baseheight="width" />
+
+                        <TextView
+                            android:id="@+id/invite"
+                            android:layout_width="match_parent"
+                            android:layout_height="54px"
+                            android:layout_marginLeft="20px"
+                            android:background="@drawable/reg_input_bg"
+                            android:paddingLeft="15px"
+                            android:textColor="#FF666666"
+                            android:textSize="26px"
+                            app:layout_auto_baseheight="width" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="66px"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="40px"
+                        android:layout_marginTop="40px"
+                        app:layout_auto_baseheight="width">
+
+                        <TextView
+                            android:id="@+id/prev"
+                            android:layout_width="250px"
+                            android:layout_height="66px"
+                            android:background="@drawable/reg_btn"
+                            android:gravity="center"
+                            android:text="上一步"
+                            android:textColor="@color/white"
+                            android:textSize="28px"
+                            app:layout_auto_baseheight="width" />
+
+                        <TextView
+                            android:id="@+id/next"
+                            android:layout_width="250px"
+                            android:layout_height="66px"
+                            android:layout_marginLeft="40px"
+                            android:background="@drawable/reg_btn"
+                            android:gravity="center"
+                            android:text="下一步"
+                            android:textColor="@color/white"
+                            android:textSize="28px"
+                            app:layout_auto_baseheight="width" />
+
+                    </LinearLayout>
+                </LinearLayout>
             </FrameLayout>
         </LinearLayout>
 

@@ -10,7 +10,6 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
-    <!-- android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" -->
     <application
         android:name="com.jess.arms.base.BaseApplication"
         android:allowBackup="true"
@@ -43,7 +42,7 @@
 
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="cn.ehanmy.hospital.fileprovider"
+            android:authorities="cn.ehanmy.store.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
