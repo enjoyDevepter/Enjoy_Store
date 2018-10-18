@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * 下单中心，在列表中展示的商品的实体类
  */
-public class GoodsListBean implements Serializable {
+public class Goods implements Serializable {
     private int attention;
     private int cnt;
     private double costPrice;
@@ -24,7 +24,7 @@ public class GoodsListBean implements Serializable {
 
     @Override
     public String toString() {
-        return "GoodsListBean{" +
+        return "Goods{" +
                 "attention=" + attention +
                 ", cnt=" + cnt +
                 ", costPrice=" + costPrice +

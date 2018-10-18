@@ -30,9 +30,8 @@ import cn.ehanmy.hospital.R;
 import cn.ehanmy.hospital.di.component.DaggerOrderConfirmComponent;
 import cn.ehanmy.hospital.di.module.OrderConfirmModule;
 import cn.ehanmy.hospital.mvp.contract.OrderConfirmContract;
-import cn.ehanmy.hospital.mvp.model.entity.goods_list.GoodsListBean;
+import cn.ehanmy.hospital.mvp.model.entity.goods_list.Goods;
 import cn.ehanmy.hospital.mvp.model.entity.goods_list.GoodsSpecValueBean;
-import cn.ehanmy.hospital.mvp.model.entity.hospital.HospitaInfoBean;
 import cn.ehanmy.hospital.mvp.model.entity.member_info.MemberBean;
 import cn.ehanmy.hospital.mvp.model.entity.response.GoodsConfirmResponse;
 import cn.ehanmy.hospital.mvp.presenter.OrderConfirmPresenter;
@@ -54,6 +53,8 @@ public class OrderConfirmActivity extends BaseActivity<OrderConfirmPresenter> im
     TextView titleTV;
     @BindView(R.id.member_code)
     TextView memberCodeTV;
+    @BindView(R.id.hospital_layout)
+    View hospitalV;
     @BindView(R.id.hosptial)
     TextView hosptialTV;
     @BindView(R.id.remark)
@@ -122,14 +123,13 @@ public class OrderConfirmActivity extends BaseActivity<OrderConfirmPresenter> im
         backV.setOnClickListener(this);
         specV.setOnClickListener(this);
         confirmV.setOnClickListener(this);
+        hospitalV.setOnClickListener(this);
         maskSpecV.setOnClickListener(this);
         closeV.setOnClickListener(this);
         moneyET.setOnFocusChangeListener(this);
         moneyET.setOnEditorActionListener(this);
         MemberBean memberBean = CacheUtil.getConstant(CacheUtil.CACHE_KEY_MEMBER);
         memberCodeTV.setText(memberBean.getUserName());
-//        HospitaInfoBean hospitalInfoBean = CacheUtil.getConstant(CacheUtil.CACHE_KEY_USER_HOSPITAL_INFO);
-//        hosptialTV.setText(hospitalInfoBean.getName());
     }
 
     @Override
@@ -188,7 +188,7 @@ public class OrderConfirmActivity extends BaseActivity<OrderConfirmPresenter> im
             speceLabelsView.setOnLabelSelectChangeListener(this);
         }
         this.response = response;
-        GoodsListBean goods = response.getGoods();
+        Goods goods = response.getGoods();
 
         if (null != goods) {
             mImageLoader.loadImage(this,
@@ -196,6 +196,7 @@ public class OrderConfirmActivity extends BaseActivity<OrderConfirmPresenter> im
                             .builder()
                             .placeholder(R.drawable.place_holder_img)
                             .url(goods.getImage())
+                            .isCenterCrop(true)
                             .imageView(imageIV)
                             .build());
 
@@ -225,8 +226,11 @@ public class OrderConfirmActivity extends BaseActivity<OrderConfirmPresenter> im
                 showSpec();
                 break;
             case R.id.confirm:
-                getCache().put("remark",remarkET.getText()+"");
+                getCache().put("remark", remarkET.getText() + "");
                 mPresenter.placeGoodsOrder();
+                break;
+            case R.id.hospital_layout:
+                // 选择医院
                 break;
         }
     }

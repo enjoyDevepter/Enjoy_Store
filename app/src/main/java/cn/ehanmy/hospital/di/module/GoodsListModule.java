@@ -11,7 +11,7 @@ import java.util.List;
 import cn.ehanmy.hospital.mvp.contract.GoodsListContract;
 import cn.ehanmy.hospital.mvp.model.GoodsListModel;
 import cn.ehanmy.hospital.mvp.model.entity.goods_list.Category;
-import cn.ehanmy.hospital.mvp.model.entity.goods_list.GoodsListBean;
+import cn.ehanmy.hospital.mvp.model.entity.goods_list.Goods;
 import cn.ehanmy.hospital.mvp.ui.adapter.GoodsFilterSecondAdapter;
 import cn.ehanmy.hospital.mvp.ui.adapter.GoodsListAdapter;
 import dagger.Module;
@@ -51,13 +51,13 @@ public class GoodsListModule {
 
     @ActivityScope
     @Provides
-    List<GoodsListBean> provideStoreList() {
+    List<Goods> provideStoreList() {
         return new ArrayList<>();
     }
 
     @ActivityScope
     @Provides
-    GoodsListAdapter provideStoreAdapter(List<GoodsListBean> list) {
+    GoodsListAdapter provideStoreAdapter(List<Goods> list) {
         return new GoodsListAdapter(list);
     }
 

@@ -22,7 +22,7 @@ import cn.ehanmy.hospital.mvp.model.entity.UserBean;
 import cn.ehanmy.hospital.mvp.model.entity.goods_list.Category;
 import cn.ehanmy.hospital.mvp.model.entity.goods_list.CategoryRequest;
 import cn.ehanmy.hospital.mvp.model.entity.goods_list.CategoryResponse;
-import cn.ehanmy.hospital.mvp.model.entity.goods_list.GoodsListBean;
+import cn.ehanmy.hospital.mvp.model.entity.goods_list.Goods;
 import cn.ehanmy.hospital.mvp.model.entity.goods_list.GoodsPageRequest;
 import cn.ehanmy.hospital.mvp.model.entity.goods_list.GoodsPageResponse;
 import cn.ehanmy.hospital.mvp.model.entity.goods_list.OrderBy;
@@ -53,7 +53,7 @@ public class GoodsListPresenter extends BasePresenter<GoodsListContract.Model, G
     @Inject
     GoodsListAdapter mAdapter;
     @Inject
-    List<GoodsListBean> GoodsList;
+    List<Goods> GoodsList;
     private int preEndIndex;
     private int lastPageIndex = 1;
 
@@ -154,7 +154,7 @@ public class GoodsListPresenter extends BasePresenter<GoodsListContract.Model, G
                             mRootView.setLoadedAllItems(response.getNextPageIndex() == -1);
                             GoodsList.addAll(response.getGoodsList());
                             preEndIndex = GoodsList.size();//更新之前列表总长度,用于确定加载更多的起始位置
-                            lastPageIndex = GoodsList.size() / 10;
+                            lastPageIndex = GoodsList.size() / 10 + 1;
                             if (pullToRefresh) {
                                 mAdapter.notifyDataSetChanged();
                             } else {

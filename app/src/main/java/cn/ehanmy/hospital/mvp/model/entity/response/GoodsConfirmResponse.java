@@ -2,7 +2,7 @@ package cn.ehanmy.hospital.mvp.model.entity.response;
 
 import java.util.List;
 
-import cn.ehanmy.hospital.mvp.model.entity.goods_list.GoodsListBean;
+import cn.ehanmy.hospital.mvp.model.entity.goods_list.Goods;
 import cn.ehanmy.hospital.mvp.model.entity.goods_list.GoodsSpecValueBean;
 
 public class GoodsConfirmResponse extends BaseResponse {
@@ -11,7 +11,8 @@ public class GoodsConfirmResponse extends BaseResponse {
     private long price;
     private long totalPrice;
     private long payMoney;
-    private GoodsListBean goods;
+    private Goods goods;
+    private GoodsSpecValueBean goodsSpecValue;
     private List<GoodsSpecValueBean> goodsSpecValueList;
 
     @Override
@@ -23,8 +24,17 @@ public class GoodsConfirmResponse extends BaseResponse {
                 ", totalPrice=" + totalPrice +
                 ", payMoney=" + payMoney +
                 ", goods=" + goods +
+                ", goodsSpecValue=" + goodsSpecValue +
                 ", goodsSpecValueList=" + goodsSpecValueList +
                 '}';
+    }
+
+    public GoodsSpecValueBean getGoodsSpecValue() {
+        return goodsSpecValue;
+    }
+
+    public void setGoodsSpecValue(GoodsSpecValueBean goodsSpecValue) {
+        this.goodsSpecValue = goodsSpecValue;
     }
 
     public long getBalance() {
@@ -67,11 +77,11 @@ public class GoodsConfirmResponse extends BaseResponse {
         this.payMoney = payMoney;
     }
 
-    public GoodsListBean getGoods() {
+    public Goods getGoods() {
         return goods;
     }
 
-    public void setGoods(GoodsListBean goods) {
+    public void setGoods(Goods goods) {
         this.goods = goods;
     }
 

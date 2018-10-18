@@ -8,7 +8,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -49,7 +48,8 @@ public class BuyCenterActivity extends BaseActivity<BuyCenterPresenter> implemen
     TextView hide;
     @BindView(R.id.buy)
     View buy;
-
+    @BindView(R.id.no_date)
+    View noDate;
     @BindView(R.id.qr_code)
     View qr_code;  // 二维码
 
@@ -69,7 +69,7 @@ public class BuyCenterActivity extends BaseActivity<BuyCenterPresenter> implemen
     }
 
     // 启动扫描二维码界面
-    public void customScan(){
+    public void customScan() {
         ArrayList<String> desiredBarcodeFormats = new ArrayList<String>();
         desiredBarcodeFormats.add(QR_CODE.name());
         new IntentIntegrator(this)
@@ -80,9 +80,9 @@ public class BuyCenterActivity extends BaseActivity<BuyCenterPresenter> implemen
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode,resultCode,data);
-        if(intentResult != null) {
-            if(intentResult.getContents() == null) {
+        IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if (intentResult != null) {
+            if (intentResult.getContents() == null) {
                 showMessage("扫描失败，请重试");
             } else {
                 // 扫描二维码成功
@@ -92,7 +92,7 @@ public class BuyCenterActivity extends BaseActivity<BuyCenterPresenter> implemen
                 mPresenter.requestHospitalInfo(ScanResult);
             }
         } else {
-            super.onActivityResult(requestCode,resultCode,data);
+            super.onActivityResult(requestCode, resultCode, data);
         }
     }
 
@@ -102,12 +102,7 @@ public class BuyCenterActivity extends BaseActivity<BuyCenterPresenter> implemen
         clear_btn.setVisibility(View.GONE);
         buy.setOnClickListener(this);
         search_btn.setOnClickListener(this);
-        qr_code.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                customScan();
-            }
-        });
+        qr_code.setOnClickListener(this);
     }
 
     @Override
@@ -139,14 +134,15 @@ public class BuyCenterActivity extends BaseActivity<BuyCenterPresenter> implemen
 
     @Override
     public void updateCodeisRight(boolean codeIsRight) {
+        noDate.setVisibility(View.GONE);
         image.setVisibility(View.VISIBLE);
         image.setBackground(getResources().getDrawable(codeIsRight ? R.mipmap.member_code_right : R.mipmap.member_code_wrong));
         String defaultStr = "会员编号错误，请重新查询！";
-        if(codeIsRight){
+        if (codeIsRight) {
             MemberBean memberBean = CacheUtil.getConstant(CacheUtil.CACHE_KEY_MEMBER);
-            defaultStr = "会员编号正确，请继续下单\n"+memberBean.getNickName();
-            if(!TextUtils.isEmpty(memberBean.getRealName())){
-                defaultStr += ("("+memberBean.getRealName()+")");
+            defaultStr = "会员编号正确，请继续下单\n" + memberBean.getNickName();
+            if (!TextUtils.isEmpty(memberBean.getRealName())) {
+                defaultStr += ("(" + memberBean.getRealName() + ")");
             }
         }
         hide.setText(defaultStr);
@@ -167,6 +163,9 @@ public class BuyCenterActivity extends BaseActivity<BuyCenterPresenter> implemen
                 break;
             case R.id.buy:
                 ArmsUtils.startActivity(GoodsListActivity.class);
+                break;
+            case R.id.qr_code:
+                customScan();
                 break;
 
         }

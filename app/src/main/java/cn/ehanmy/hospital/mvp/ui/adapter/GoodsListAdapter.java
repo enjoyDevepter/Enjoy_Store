@@ -8,19 +8,19 @@ import com.jess.arms.base.DefaultAdapter;
 import java.util.List;
 
 import cn.ehanmy.hospital.R;
-import cn.ehanmy.hospital.mvp.model.entity.goods_list.GoodsListBean;
+import cn.ehanmy.hospital.mvp.model.entity.goods_list.Goods;
 import cn.ehanmy.hospital.mvp.ui.holder.GoodsListHolder;
 
-public class GoodsListAdapter extends DefaultAdapter<GoodsListBean> {
+public class GoodsListAdapter extends DefaultAdapter<Goods> {
 
     private OnChildItemClickLinstener onChildItemClickLinstener;
 
-    public GoodsListAdapter(List<GoodsListBean> infos) {
+    public GoodsListAdapter(List<Goods> infos) {
         super(infos);
     }
 
     @Override
-    public BaseHolder<GoodsListBean> getHolder(View v, int viewType) {
+    public BaseHolder<Goods> getHolder(View v, int viewType) {
         return new GoodsListHolder(v, new OnChildItemClickLinstener() {
             @Override
             public void onChildItemClick(View v, ViewName viewname, int position) {

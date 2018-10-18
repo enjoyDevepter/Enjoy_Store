@@ -4,6 +4,7 @@ public class GoodsConfirmBean {
     private String goodsId;
     private String merchId;
     private int nums;
+    private long money;
     private double salePrice;  // 单位元
 
     @Override
@@ -14,6 +15,14 @@ public class GoodsConfirmBean {
                 ", nums=" + nums +
                 ", salePrice=" + salePrice +
                 '}';
+    }
+
+    public long getMoney() {
+        return money;
+    }
+
+    public void setMoney(long money) {
+        this.money = money;
     }
 
     public double getSalePrice() {

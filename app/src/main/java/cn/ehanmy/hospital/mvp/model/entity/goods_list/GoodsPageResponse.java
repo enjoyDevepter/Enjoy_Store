@@ -2,11 +2,10 @@ package cn.ehanmy.hospital.mvp.model.entity.goods_list;
 
 import java.util.List;
 
-import cn.ehanmy.hospital.mvp.model.entity.goods_list.GoodsListBean;
 import cn.ehanmy.hospital.mvp.model.entity.response.BaseResponse;
 
 public class GoodsPageResponse extends BaseResponse {
-    private List<GoodsListBean> goodsList;
+    private List<Goods> goodsList;
     private int nextPageIndex;
 
     @Override
@@ -17,11 +16,11 @@ public class GoodsPageResponse extends BaseResponse {
                 '}';
     }
 
-    public List<GoodsListBean> getGoodsList() {
+    public List<Goods> getGoodsList() {
         return goodsList;
     }
 
-    public void setGoodsList(List<GoodsListBean> goodsList) {
+    public void setGoodsList(List<Goods> goodsList) {
         this.goodsList = goodsList;
     }
 

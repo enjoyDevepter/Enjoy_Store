@@ -1,6 +1,5 @@
 package cn.ehanmy.hospital.mvp.ui.holder;
 
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,20 +12,17 @@ import com.jess.arms.utils.ArmsUtils;
 
 import butterknife.BindView;
 import cn.ehanmy.hospital.R;
-import cn.ehanmy.hospital.mvp.model.entity.goods_list.GoodsListBean;
-import cn.ehanmy.hospital.mvp.model.entity.goods_list.GoodsSpecValueBean;
+import cn.ehanmy.hospital.mvp.model.entity.goods_list.Goods;
 import cn.ehanmy.hospital.mvp.ui.adapter.GoodsListAdapter;
 import cn.ehanmy.hospital.mvp.ui.widget.MoneyView;
 import io.reactivex.Observable;
 
-public class GoodsListHolder extends BaseHolder<GoodsListBean> {
+public class GoodsListHolder extends BaseHolder<Goods> {
 
     @BindView(R.id.image)
     ImageView image;
     @BindView(R.id.title)
     TextView title;
-    @BindView(R.id.title2)
-    TextView title2;
     @BindView(R.id.count)
     TextView count;
     @BindView(R.id.price)
@@ -45,12 +41,11 @@ public class GoodsListHolder extends BaseHolder<GoodsListBean> {
         mAppComponent = ArmsUtils.obtainAppComponentFromContext(itemView.getContext());
         mImageLoader = mAppComponent.imageLoader();
         this.onChildItemClickLinstener = onChildItemClickLinstener;
-
     }
 
 
     @Override
-    public void setData(GoodsListBean data, int position) {
+    public void setData(Goods data, int position) {
         mImageLoader.loadImage(itemView.getContext(),
                 ImageConfigImpl
                         .builder()
@@ -59,14 +54,8 @@ public class GoodsListHolder extends BaseHolder<GoodsListBean> {
                         .isCenterCrop(true)
                         .imageView(image)
                         .build());
-        Observable.just(data.getName())
+        Observable.just(data.getName() + data.getTitle())
                 .subscribe(s -> title.setText(s));
-        GoodsSpecValueBean goodsSpecValue = data.getGoodsSpecValue();
-        String specValueName = goodsSpecValue.getSpecValueName();
-        if(goodsSpecValue != null && !TextUtils.isEmpty(specValueName)){
-            Observable.just(specValueName)
-                    .subscribe(s -> title2.setText(s));
-        }
         Observable.just(data.getSales())
                 .subscribe(s -> count.setText(String.valueOf(s)));
         Observable.just(data.getSalePrice())
@@ -93,7 +82,6 @@ public class GoodsListHolder extends BaseHolder<GoodsListBean> {
                 .build());
         this.image = null;
         this.title = null;
-        this.title2 = null;
         this.count = null;
         this.priceMV = null;
         this.buy = null;

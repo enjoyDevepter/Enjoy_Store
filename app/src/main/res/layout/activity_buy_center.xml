@@ -7,8 +7,7 @@
 
     <include layout="@layout/title" />
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <LinearLayout
         android:id="@+id/search_layout"
         android:layout_width="match_parent"
         android:layout_height="92px"
@@ -31,29 +30,32 @@
 
         <FrameLayout
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="42px"
-            >
-        <EditText
-            android:id="@+id/search_key"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/search_edit_bg"
-            android:imeOptions="actionSearch"
-            android:paddingLeft="10px"
-            android:textSize="26px" />
+            android:layout_weight="1">
+
+            <EditText
+                android:id="@+id/search_key"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/search_edit_bg"
+                android:imeOptions="actionSearch"
+                android:paddingLeft="10px"
+                android:text="13121251463"
+                android:textSize="26px" />
 
             <FrameLayout
-                android:layout_width="42px"
                 android:id="@+id/qr_code"
-                android:layout_gravity="right|center_vertical"
-                android:layout_height="match_parent">
-            <View
-                android:layout_gravity="right|center_vertical"
-                android:layout_marginRight="14px"
-                android:background="@mipmap/qr_code_input_btn"
-                android:layout_width="22px"
-                android:layout_height="22px"/>
+                android:layout_width="42px"
+                android:layout_height="match_parent"
+                android:layout_gravity="right|center_vertical">
+
+                <View
+                    android:layout_width="22px"
+                    android:layout_height="22px"
+                    android:layout_gravity="right|center_vertical"
+                    android:layout_marginRight="14px"
+                    android:background="@mipmap/qr_code_input_btn"
+                    app:layout_auto_baseheight="width" />
             </FrameLayout>
         </FrameLayout>
 
@@ -92,18 +94,26 @@
             android:orientation="vertical">
 
             <View
+                android:id="@+id/no_date"
+                android:layout_width="153px"
+                android:layout_height="100px"
+                android:background="@mipmap/nodata"
+                app:layout_auto_baseheight="width" />
+
+            <View
                 android:id="@+id/image"
                 android:layout_width="104px"
                 android:layout_height="104px"
+                android:background="@mipmap/nodata"
                 android:visibility="gone"
                 app:layout_auto_baseheight="width" />
 
             <TextView
                 android:id="@+id/hide"
-                android:gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="38px"
+                android:gravity="center"
                 android:text="请查询您的会员编号"
                 android:textColor="#FF333333"
                 android:textSize="28px" />

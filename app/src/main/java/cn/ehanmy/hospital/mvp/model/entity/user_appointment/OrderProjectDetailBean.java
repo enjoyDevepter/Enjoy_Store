@@ -2,11 +2,6 @@ package cn.ehanmy.hospital.mvp.model.entity.user_appointment;
 
 import java.io.Serializable;
 
-import cn.ehanmy.hospital.mvp.model.entity.goods_list.GoodsConfirmBean;
-import cn.ehanmy.hospital.mvp.model.entity.goods_list.GoodsListBean;
-import cn.ehanmy.hospital.mvp.model.entity.goods_list.GoodsOrderBean;
-import cn.ehanmy.hospital.mvp.model.entity.member_info.MemberBean;
-
 public class OrderProjectDetailBean implements Serializable {
     private String projectId;
     private int surplusNum;
@@ -17,15 +12,6 @@ public class OrderProjectDetailBean implements Serializable {
     private String reservationTime;
     private String reservationId;
     private String reservationStatus;
-
-    public String getReservationStatusDesc() {
-        return reservationStatusDesc;
-    }
-
-    public void setReservationStatusDesc(String reservationStatusDesc) {
-        this.reservationStatusDesc = reservationStatusDesc;
-    }
-
     private String reservationStatusDesc;
     private String code;
     private String isExperience;  // 是否为体验卡
@@ -35,8 +21,16 @@ public class OrderProjectDetailBean implements Serializable {
     private String address;
     private UserAppointmentGoodsBean goods;
     private UserAppointmentMember member;
-
     private int maxNum;
+    private String searcyType;
+
+    public String getReservationStatusDesc() {
+        return reservationStatusDesc;
+    }
+
+    public void setReservationStatusDesc(String reservationStatusDesc) {
+        this.reservationStatusDesc = reservationStatusDesc;
+    }
 
     public int getMaxNum() {
         return maxNum;
@@ -53,8 +47,6 @@ public class OrderProjectDetailBean implements Serializable {
     public void setSearcyType(String searcyType) {
         this.searcyType = searcyType;
     }
-
-    private String searcyType;
 
     @Override
     public String toString() {

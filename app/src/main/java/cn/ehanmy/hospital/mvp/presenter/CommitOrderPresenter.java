@@ -15,8 +15,8 @@ import javax.inject.Inject;
 
 import cn.ehanmy.hospital.mvp.contract.CommitOrderContract;
 import cn.ehanmy.hospital.mvp.model.entity.UserBean;
+import cn.ehanmy.hospital.mvp.model.entity.goods_list.Goods;
 import cn.ehanmy.hospital.mvp.model.entity.goods_list.GoodsConfirmBean;
-import cn.ehanmy.hospital.mvp.model.entity.goods_list.GoodsListBean;
 import cn.ehanmy.hospital.mvp.model.entity.member_info.MemberBean;
 import cn.ehanmy.hospital.mvp.model.entity.member_info.MemberInfoRequest;
 import cn.ehanmy.hospital.mvp.model.entity.order.GetPayStatusRequest;
@@ -155,7 +155,7 @@ public class CommitOrderPresenter extends BasePresenter<CommitOrderContract.Mode
         MemberBean memberBean = CacheUtil.getConstant(CacheUtil.CACHE_KEY_MEMBER);
         UserBean userBean = CacheUtil.getConstant(CacheUtil.CACHE_KEY_USER);
         GoodsBuyRequest request = new GoodsBuyRequest();
-        GoodsListBean goods = goodsConfirmResponse.getGoods();
+        Goods goods = goodsConfirmResponse.getGoods();
         GoodsConfirmBean goodsConfirmBean = new GoodsConfirmBean();
         goodsConfirmBean.setSalePrice(goods.getSalePrice());
         goodsConfirmBean.setNums(goods.getNums());

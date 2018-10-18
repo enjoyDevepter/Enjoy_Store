@@ -383,11 +383,10 @@ public class GoodsListActivity extends BaseActivity<GoodsListPresenter> implemen
     public void onChildItemClick(View v, GoodsListAdapter.ViewName viewname, int position) {
         switch (viewname) {
             case BUY:
+            case ITEM:
                 Intent intent = new Intent(ArmsUtils.getContext(), OrderConfirmActivity.class);
                 intent.putExtra("goods", mAdapter.getItem(position));
                 ArmsUtils.startActivity(intent);
-                break;
-            case ITEM:
                 break;
         }
     }

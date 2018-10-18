@@ -16,9 +16,9 @@ import javax.inject.Inject;
 
 import cn.ehanmy.hospital.mvp.contract.OrderConfirmContract;
 import cn.ehanmy.hospital.mvp.model.entity.UserBean;
+import cn.ehanmy.hospital.mvp.model.entity.goods_list.Goods;
 import cn.ehanmy.hospital.mvp.model.entity.goods_list.GoodsConfirmBean;
 import cn.ehanmy.hospital.mvp.model.entity.goods_list.GoodsConfirmWithSpecBean;
-import cn.ehanmy.hospital.mvp.model.entity.goods_list.GoodsListBean;
 import cn.ehanmy.hospital.mvp.model.entity.member_info.MemberBean;
 import cn.ehanmy.hospital.mvp.model.entity.request.GoodsConfirmRequest;
 import cn.ehanmy.hospital.mvp.model.entity.request.GoodsConfirmWithSpecRequest;
@@ -65,18 +65,21 @@ public class OrderConfirmPresenter extends BasePresenter<OrderConfirmContract.Mo
     }
 
     public void requestConfirmInfo() {
-        GoodsListBean goodsListBean = (GoodsListBean) mRootView.getActivity().getIntent().getSerializableExtra("goods");
-        GoodsConfirmRequest goodsConfirmRequest = new GoodsConfirmRequest();
+        Goods goods = (Goods) mRootView.getActivity().getIntent().getSerializableExtra("goods");
+        GoodsConfirmRequest request = new GoodsConfirmRequest();
         MemberBean memberBean = CacheUtil.getConstant(CacheUtil.CACHE_KEY_MEMBER);
-        goodsConfirmRequest.setMemberId(memberBean.getMemberId());
+        request.setMemberId(memberBean.getMemberId());
         GoodsConfirmBean goodsConfirmBean = new GoodsConfirmBean();
-        goodsConfirmBean.setGoodsId(goodsListBean.getGoodsId());
-        goodsConfirmBean.setMerchId(goodsListBean.getMerchId());
+        goodsConfirmBean.setGoodsId(goods.getGoodsId());
+        goodsConfirmBean.setMerchId(goods.getMerchId());
         goodsConfirmBean.setNums(1);
-        goodsConfirmBean.setSalePrice(goodsListBean.getSalePrice());
-        goodsConfirmRequest.setGoods(goodsConfirmBean);
-        goodsConfirmRequest.setToken(((UserBean) CacheUtil.getConstant(CacheUtil.CACHE_KEY_USER)).getToken());
-        mModel.confirmGoods(goodsConfirmRequest)
+        goodsConfirmBean.setSalePrice(goods.getSalePrice());
+        request.setGoods(goodsConfirmBean);
+        request.setToken(((UserBean) CacheUtil.getConstant(CacheUtil.CACHE_KEY_USER)).getToken());
+        if (mRootView.getCache().get("money") != null) {
+            request.setMoney((Long) mRootView.getCache().get("money"));
+        }
+        mModel.confirmGoods(request)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .retryWhen(new RetryWithDelay(3, 2))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
@@ -93,16 +96,16 @@ public class OrderConfirmPresenter extends BasePresenter<OrderConfirmContract.Mo
     }
 
     public void getGoodsDetails() {
-        GoodsListBean goodsListBean = (GoodsListBean) mRootView.getActivity().getIntent().getSerializableExtra("goods");
+        Goods goods = (Goods) mRootView.getActivity().getIntent().getSerializableExtra("goods");
         GoodsConfirmWithSpecRequest request = new GoodsConfirmWithSpecRequest();
         MemberBean memberBean = CacheUtil.getConstant(CacheUtil.CACHE_KEY_MEMBER);
         request.setMemberId(memberBean.getMemberId());
         GoodsConfirmWithSpecBean goodsConfirmBean = new GoodsConfirmWithSpecBean();
         goodsConfirmBean.setSpecValueId((String) mRootView.getCache().get("specValueId"));
-        goodsConfirmBean.setGoodsId(goodsListBean.getGoodsId());
+        goodsConfirmBean.setGoodsId(goods.getGoodsId());
         goodsConfirmBean.setMerchId((String) mRootView.getCache().get("merchId"));
         goodsConfirmBean.setNums(1);
-        goodsConfirmBean.setSalePrice(goodsListBean.getSalePrice());
+        goodsConfirmBean.setSalePrice(goods.getSalePrice());
         request.setGoods(goodsConfirmBean);
         if (mRootView.getCache().get("money") != null) {
             request.setMoney((Long) mRootView.getCache().get("money"));
@@ -128,7 +131,7 @@ public class OrderConfirmPresenter extends BasePresenter<OrderConfirmContract.Mo
     public void placeGoodsOrder() {
         // 跳转到支付页面
         Intent payIntent = new Intent(mRootView.getActivity(), CommitOrderActivity.class);
-        payIntent.putExtra(CommitOrderActivity.KEY_FOR_GO_IN_TYPE,CommitOrderActivity.GO_IN_TYPE_CONFIRM);
+        payIntent.putExtra(CommitOrderActivity.KEY_FOR_GO_IN_TYPE, CommitOrderActivity.GO_IN_TYPE_CONFIRM);
         payIntent.putExtra("order_info", goodsConfirmResponse);
         payIntent.putExtra("remark", (String) mRootView.getCache().get("remark"));
         ArmsUtils.startActivity(payIntent);
