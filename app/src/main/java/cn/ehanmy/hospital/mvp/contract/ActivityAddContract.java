@@ -5,6 +5,8 @@ import android.app.Activity;
 import com.jess.arms.mvp.IView;
 import com.jess.arms.mvp.IModel;
 
+import cn.ehanmy.hospital.mvp.model.entity.QiniuRequest;
+import cn.ehanmy.hospital.mvp.model.entity.QiniuResponse;
 import cn.ehanmy.hospital.mvp.model.entity.activity.AddActivityRequest;
 import cn.ehanmy.hospital.mvp.model.entity.activity.AddActivityResponse;
 import cn.ehanmy.hospital.mvp.model.entity.activity.ChangeActivityInfoRequest;
@@ -22,8 +24,8 @@ public interface ActivityAddContract {
 
     //Model层定义接口,外部只需关心Model返回的数据,无需关心内部细节,即是否使用缓存
     interface Model extends IModel {
-        Observable<BaseResponse> uploadImage(String type, MultipartBody.Part imgs);
         Observable<AddActivityResponse> addActivity(AddActivityRequest request);
         Observable<ChangeActivityInfoResponse> changeActivityInfo(ChangeActivityInfoRequest request);
+        Observable<QiniuResponse> getQiniuInfo(QiniuRequest request);
     }
 }

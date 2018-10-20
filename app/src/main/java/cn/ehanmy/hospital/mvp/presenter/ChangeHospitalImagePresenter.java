@@ -13,12 +13,15 @@ import java.io.File;
 import javax.inject.Inject;
 
 import cn.ehanmy.hospital.mvp.contract.ChangeHospitalImageContract;
+import cn.ehanmy.hospital.mvp.model.entity.QiniuRequest;
+import cn.ehanmy.hospital.mvp.model.entity.QiniuResponse;
 import cn.ehanmy.hospital.mvp.model.entity.UserBean;
 import cn.ehanmy.hospital.mvp.model.entity.hospital.ChangeHospitalImageRequest;
 import cn.ehanmy.hospital.mvp.model.entity.hospital.ChangeHospitalImageResponse;
 import cn.ehanmy.hospital.mvp.model.entity.hospital.HospitaInfoBean;
 import cn.ehanmy.hospital.mvp.model.entity.response.BaseResponse;
 import cn.ehanmy.hospital.util.CacheUtil;
+import cn.ehanmy.hospital.util.ImageUploadManager;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
@@ -55,21 +58,30 @@ public class ChangeHospitalImagePresenter extends BasePresenter<ChangeHospitalIm
     }
 
     public void uploadImage(File file) {
-        RequestBody requestBody = RequestBody.create(MediaType.parse("application/otcet-stream"), file);
-        MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
 
-        mModel.uploadImage("3", body)
+        QiniuRequest request = new QiniuRequest();
+        UserBean ub = CacheUtil.getConstant(CacheUtil.CACHE_KEY_USER);
+        request.setToken(ub.getToken());
+        mModel.getQiniuInfo(request)
                 .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .retryWhen(new RetryWithDelay(3, 2))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))//使用 Rxlifecycle,使 Disposable 和 Activity 一起销毁
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new ErrorHandleSubscriber<BaseResponse>(mErrorHandler) {
+                .subscribe(new ErrorHandleSubscriber<QiniuResponse>(mErrorHandler) {
                     @Override
-                    public void onNext(BaseResponse response) {
+                    public void onNext(QiniuResponse response) {
                         if (response.isSuccess()) {
-                            requestOrderList(response.getResult().getUrl());
-                        } else {
-                            mRootView.showMessage(response.getRetDesc());
+                            ImageUploadManager.getInstance().updateImage(file, response.getUploadToken(), response.getUrlPrefix(), new ImageUploadManager.ImageUploadResponse() {
+                                @Override
+                                public void onImageUploadOk(String url) {
+                                    requestOrderList(url);
+                                }
+
+                                @Override
+                                public void onImageUploadError(String errorInfo) {
+                                    mRootView.showMessage(errorInfo);
+                                }
+                            });
                         }
                     }
                 });

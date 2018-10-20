@@ -1,5 +1,7 @@
 package cn.ehanmy.hospital.mvp.model.api.service;
 
+import cn.ehanmy.hospital.mvp.model.entity.QiniuRequest;
+import cn.ehanmy.hospital.mvp.model.entity.QiniuResponse;
 import cn.ehanmy.hospital.mvp.model.entity.activity.AddActivityRequest;
 import cn.ehanmy.hospital.mvp.model.entity.activity.AddActivityResponse;
 import cn.ehanmy.hospital.mvp.model.entity.activity.ChangeActivityInfoRequest;
@@ -93,6 +95,10 @@ public interface InterfaceService {
     @POST("gateway")
     Observable<GetStoreInfoResponse> getStoreInfo(@Body GetStoreInfoRequest request);
 
+    @POST("gateway")
+        // 获取七牛上传信息
+    Observable<QiniuResponse> getQiniuInfo(@Body QiniuRequest request);
+
 // --------------------------------------------------------------------------------
 
     @POST("gateway")
@@ -151,12 +157,6 @@ public interface InterfaceService {
     // 修改医院照片
     @POST("gateway")
     Observable<GetActivityInfoResponse> getActivityInfo(@Body GetActivityInfoRequest request);
-
-
-    @Multipart
-    @POST("file/imageUpload")
-    Observable<BaseResponse> uploadImage(@Part("type") String
-                                                 description, @Part MultipartBody.Part file);
 
     // 获取用户预约列表
     @POST("gateway")

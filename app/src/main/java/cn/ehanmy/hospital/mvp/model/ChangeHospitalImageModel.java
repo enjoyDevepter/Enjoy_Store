@@ -12,6 +12,8 @@ import javax.inject.Inject;
 
 import cn.ehanmy.hospital.mvp.contract.ChangeHospitalImageContract;
 import cn.ehanmy.hospital.mvp.model.api.service.InterfaceService;
+import cn.ehanmy.hospital.mvp.model.entity.QiniuRequest;
+import cn.ehanmy.hospital.mvp.model.entity.QiniuResponse;
 import cn.ehanmy.hospital.mvp.model.entity.hospital.ChangeHospitalImageRequest;
 import cn.ehanmy.hospital.mvp.model.entity.hospital.ChangeHospitalImageResponse;
 import cn.ehanmy.hospital.mvp.model.entity.response.BaseResponse;
@@ -40,17 +42,17 @@ public class ChangeHospitalImageModel extends BaseModel implements ChangeHospita
         this.mApplication = null;
     }
 
-
-    @Override
-    public Observable<BaseResponse> uploadImage(String type, MultipartBody.Part imgs) {
-        return mRepositoryManager.obtainRetrofitService(InterfaceService.class)
-                .uploadImage(type, imgs);
-    }
-
-
     @Override
     public Observable<ChangeHospitalImageResponse> changeHospitalImage(ChangeHospitalImageRequest request) {
         return mRepositoryManager.obtainRetrofitService(InterfaceService.class)
                 .changeHospitalImage(request);
     }
+
+    @Override
+    public Observable<QiniuResponse> getQiniuInfo(QiniuRequest request) {
+        return mRepositoryManager.obtainRetrofitService(InterfaceService.class)
+                .getQiniuInfo(request);
+    }
+
+
 }
