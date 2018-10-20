@@ -88,8 +88,7 @@ public class BuyCenterActivity extends BaseActivity<BuyCenterPresenter> implemen
                 // 扫描二维码成功
                 // ScanResult 为 获取到的字符串
                 String ScanResult = intentResult.getContents();
-                search_key.setText(ScanResult);
-                mPresenter.requestHospitalInfo(ScanResult);
+                mPresenter.requestMemberInfoById(ScanResult);
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
