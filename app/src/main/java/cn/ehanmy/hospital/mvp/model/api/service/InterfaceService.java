@@ -139,7 +139,41 @@ public interface InterfaceService {
 
     @POST("gateway")
     Observable<GetStoreInfoResponse> getStoreInfo(@Body GetStoreInfoRequest request);
-// --------------------------------------------------------------------------------
+
+
+    @POST("gateway")
+        // 获取用户设置
+    Observable<ProjectSettingResponse> getProjectSetting(@Body ProjectSettingRequest request);
+
+    @POST("gateway")
+        // 获取用户设置
+    Observable<SettingProjectResponse> setProjectSetting(@Body SettingProjectRequest request);
+
+
+    // 修改医院照片
+    @POST("gateway")
+    Observable<GetActivityInfoResponse> getActivityInfo(@Body GetActivityInfoRequest request);
+
+
+    // 获取用户预约详情
+    @POST("gateway")
+    Observable<GetUserAppointmentInfoResponse> getUserAppointmentInfo
+    (@Body GetUserAppointmentInfoRequest request);
+
+    // 获取用户预约时间
+    @POST("gateway")
+    Observable<GetUserAppointmentTimeResponse> getUserAppointmentTime
+    (@Body GetUserAppointmentTimeRequest request);
+
+    // 划扣账单
+    @POST("gateway")
+    Observable<HuakouResponse> huakou(@Body HuakouRequest request);
+
+    // 修改用户预约时间
+    @POST("gateway")
+    Observable<ChangeUserAppointmentTimeResponse> changeUserAppointmentTime
+    (@Body ChangeUserAppointmentTimeRequest request);
+
 
     @POST("gateway")
     Observable<MemberInfoResponse> requestMemberInfo(@Body MemberInfoRequest request);
@@ -156,39 +190,16 @@ public interface InterfaceService {
     @POST("gateway")
     Observable<GoodsBuyResponse> placeGoodsOrder(@Body GoodsBuyRequest request);
 
-    // 订单列表相关接口
-    @POST("gateway")
-    Observable<OrderListResponse> requestOrderListPage(@Body OrderListRequest request);
-
-    // 请求订单列表
-    @POST("gateway")
-    Observable<OrderInfoResponse> orderInfo(@Body OrderInfoRequest request);  // 请求订单详情
-
     @POST("gateway")
     Observable<CategoryResponse> getCategory(@Body CategoryRequest request);  // 获取分类信息
 
     @POST("gateway")
         // 修改密码
     Observable<ChangePasswordResponse> changePassword(@Body ChangePasswordRequest request);
-
-    @POST("gateway")
-        // 获取用户设置
-    Observable<ProjectSettingResponse> getProjectSetting(@Body ProjectSettingRequest request);
-
-    @POST("gateway")
-        // 获取用户设置
-    Observable<SettingProjectResponse> setProjectSetting(@Body SettingProjectRequest request);
-
-
-    // 修改医院照片
-    @POST("gateway")
-    Observable<GetActivityInfoResponse> getActivityInfo(@Body GetActivityInfoRequest request);
-
     // 获取用户预约列表
     @POST("gateway")
     Observable<GetUserAppointmentPageResponse> getUserAppointmentPage
     (@Body GetUserAppointmentPageRequest request);
-
 
     // 获取用户预约列表
     @POST("gateway")
@@ -214,24 +225,15 @@ public interface InterfaceService {
     Observable<DeleteActivityInfoResponse> deleteActivityInfo(@Body DeleteActivityInfoRequest
                                                                       request);
 
-    // 获取用户预约详情
-    @POST("gateway")
-    Observable<GetUserAppointmentInfoResponse> getUserAppointmentInfo
-    (@Body GetUserAppointmentInfoRequest request);
+// --------------------------------------------------------------------------------
 
-    // 获取用户预约时间
+    // 订单列表相关接口
     @POST("gateway")
-    Observable<GetUserAppointmentTimeResponse> getUserAppointmentTime
-    (@Body GetUserAppointmentTimeRequest request);
+    Observable<OrderListResponse> requestOrderListPage(@Body OrderListRequest request);
 
-    // 划扣账单
+    // 请求订单列表
     @POST("gateway")
-    Observable<HuakouResponse> huakou(@Body HuakouRequest request);
-
-    // 修改用户预约时间
-    @POST("gateway")
-    Observable<ChangeUserAppointmentTimeResponse> changeUserAppointmentTime
-    (@Body ChangeUserAppointmentTimeRequest request);
+    Observable<OrderInfoResponse> orderInfo(@Body OrderInfoRequest request);  // 请求订单详情
 
     // 修改用户预约时间
     @POST("gateway")
