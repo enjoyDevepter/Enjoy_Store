@@ -41,6 +41,8 @@ import com.jess.arms.integration.AppManager;
 
 import java.math.BigDecimal;
 import java.security.MessageDigest;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.jess.arms.integration.AppManager.APP_EXIT;
 import static com.jess.arms.integration.AppManager.KILL_ALL;
@@ -461,6 +463,12 @@ public class ArmsUtils {
         AppManager.post(message);
     }
 
+
+    public static boolean isPhoneNum(String str) {
+        Pattern p = Pattern.compile("[1][0-9]\\d{9}");
+        Matcher m = p.matcher(str);
+        return m.matches();
+    }
     public static AppComponent obtainAppComponentFromContext(Context context) {
         Preconditions.checkNotNull(context, "%s cannot be null", Context.class.getName());
         Preconditions.checkState(context.getApplicationContext() instanceof App, "Application does not implements App");

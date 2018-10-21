@@ -1,9 +1,15 @@
 package cn.ehanmy.hospital.di.module;
 
+import android.support.v7.widget.RecyclerView;
+
 import com.jess.arms.di.scope.ActivityScope;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import cn.ehanmy.hospital.mvp.contract.RegisterContract;
 import cn.ehanmy.hospital.mvp.model.RegisterModel;
+import cn.ehanmy.hospital.mvp.ui.adapter.CodeAdapter;
 import dagger.Module;
 import dagger.Provides;
 
@@ -31,5 +37,21 @@ public class RegisterModule {
     @Provides
     RegisterContract.Model provideRegisterModel(RegisterModel model) {
         return model;
+    }
+
+    @ActivityScope
+    @Provides
+    List<String> provideCodeList() {
+        List<String> codes = new ArrayList<>();
+        codes.add("请选择");
+        codes.add("邀请码");
+        codes.add("邀请人");
+        return codes;
+    }
+
+    @ActivityScope
+    @Provides
+    RecyclerView.Adapter provideCodeAdapter(List<String> list) {
+        return new CodeAdapter(list);
     }
 }

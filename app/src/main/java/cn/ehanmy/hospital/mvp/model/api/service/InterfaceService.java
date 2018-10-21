@@ -40,6 +40,9 @@ import cn.ehanmy.hospital.mvp.model.entity.order.OrderListRequest;
 import cn.ehanmy.hospital.mvp.model.entity.order.OrderListResponse;
 import cn.ehanmy.hospital.mvp.model.entity.placeOrder.GoodsBuyRequest;
 import cn.ehanmy.hospital.mvp.model.entity.placeOrder.GoodsBuyResponse;
+import cn.ehanmy.hospital.mvp.model.entity.reg.RegisterRequest;
+import cn.ehanmy.hospital.mvp.model.entity.reg.RegisterResponse;
+import cn.ehanmy.hospital.mvp.model.entity.reg.VeritfyRequest;
 import cn.ehanmy.hospital.mvp.model.entity.request.GoodsConfirmRequest;
 import cn.ehanmy.hospital.mvp.model.entity.request.GoodsConfirmWithSpecRequest;
 import cn.ehanmy.hospital.mvp.model.entity.request.LoginRequest;
@@ -81,11 +84,8 @@ import cn.ehanmy.hospital.mvp.model.entity.user_appointment.GetUserAppointmentTi
 import cn.ehanmy.hospital.mvp.model.entity.user_appointment.HuakouRequest;
 import cn.ehanmy.hospital.mvp.model.entity.user_appointment.HuakouResponse;
 import io.reactivex.Observable;
-import okhttp3.MultipartBody;
 import retrofit2.http.Body;
-import retrofit2.http.Multipart;
 import retrofit2.http.POST;
-import retrofit2.http.Part;
 
 
 /**
@@ -96,6 +96,14 @@ public interface InterfaceService {
     @POST("gateway")
     Observable<LoginResponse> login(@Body LoginRequest request);
 
+    @POST("gateway")
+    Observable<RegisterResponse> register(@Body VeritfyRequest request);
+
+    @POST("gateway")
+    Observable<BaseResponse> register(@Body RegisterRequest request);
+
+    @POST("gateway")
+    Observable<BaseResponse> getVerify(@Body VeritfyRequest request);
 
     @POST("gateway")
     Observable<MemberInfoByIdResponse> requestMemberInfoById(@Body MemberInfoByIdRequest request);

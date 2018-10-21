@@ -73,6 +73,7 @@ public class OrderConfirmPresenter extends BasePresenter<OrderConfirmContract.Mo
         goodsConfirmBean.setGoodsId(goods.getGoodsId());
         goodsConfirmBean.setMerchId(goods.getMerchId());
         goodsConfirmBean.setNums(1);
+        goodsConfirmBean.setSpecValueId(goods.getSpecValueId());
         goodsConfirmBean.setSalePrice(goods.getSalePrice());
         request.setGoods(goodsConfirmBean);
         request.setToken(((UserBean) CacheUtil.getConstant(CacheUtil.CACHE_KEY_USER)).getToken());

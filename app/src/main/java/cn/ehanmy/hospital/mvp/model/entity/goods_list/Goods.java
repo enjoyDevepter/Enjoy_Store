@@ -15,6 +15,7 @@ public class Goods implements Serializable {
     private String image;
     private double marketPrice;
     private String merchId;
+    private String specValueId;
     private String name;
     private double salePrice;
     private int sales;
@@ -34,6 +35,7 @@ public class Goods implements Serializable {
                 ", image='" + image + '\'' +
                 ", marketPrice=" + marketPrice +
                 ", merchId='" + merchId + '\'' +
+                ", specValueId='" + specValueId + '\'' +
                 ", name='" + name + '\'' +
                 ", salePrice=" + salePrice +
                 ", sales=" + sales +
@@ -97,6 +99,14 @@ public class Goods implements Serializable {
 
     public void setGoodsSpecValue(GoodsSpecValueBean goodsSpecValue) {
         this.goodsSpecValue = goodsSpecValue;
+    }
+
+    public String getSpecValueId() {
+        return specValueId;
+    }
+
+    public void setSpecValueId(String specValueId) {
+        this.specValueId = specValueId;
     }
 
     public String getImage() {

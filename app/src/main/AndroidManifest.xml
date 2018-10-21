@@ -121,6 +121,7 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".mvp.ui.activity.RegisterActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
             android:screenOrientation="landscape" />
         <activity
             android:name=".mvp.ui.activity.MemberListActivity"

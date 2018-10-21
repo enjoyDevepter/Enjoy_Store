@@ -10,6 +10,12 @@ import com.jess.arms.mvp.BaseModel;
 import javax.inject.Inject;
 
 import cn.ehanmy.hospital.mvp.contract.RegisterContract;
+import cn.ehanmy.hospital.mvp.model.api.service.InterfaceService;
+import cn.ehanmy.hospital.mvp.model.entity.reg.RegisterRequest;
+import cn.ehanmy.hospital.mvp.model.entity.reg.RegisterResponse;
+import cn.ehanmy.hospital.mvp.model.entity.reg.VeritfyRequest;
+import cn.ehanmy.hospital.mvp.model.entity.response.BaseResponse;
+import io.reactivex.Observable;
 
 
 @ActivityScope
@@ -31,4 +37,21 @@ public class RegisterModel extends BaseModel implements RegisterContract.Model {
         this.mApplication = null;
     }
 
+    @Override
+    public Observable<RegisterResponse> register(VeritfyRequest request) {
+        return mRepositoryManager.obtainRetrofitService(InterfaceService.class)
+                .register(request);
+    }
+
+    @Override
+    public Observable<BaseResponse> register(RegisterRequest request) {
+        return mRepositoryManager.obtainRetrofitService(InterfaceService.class)
+                .register(request);
+    }
+
+    @Override
+    public Observable<BaseResponse> getVerify(VeritfyRequest request) {
+        return mRepositoryManager.obtainRetrofitService(InterfaceService.class)
+                .getVerify(request);
+    }
 }

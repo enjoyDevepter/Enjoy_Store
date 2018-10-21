@@ -54,7 +54,7 @@ public class OrderFormCenterPresenter extends BasePresenter<OrderFormCenterContr
         OrderListRequest request = new OrderListRequest();
         request.setOrderStatus((String) mRootView.getCache().get("type"));
         String key = (String) mRootView.getCache().get("key");
-        if(!TextUtils.isEmpty(key)){
+        if (!TextUtils.isEmpty(key)) {
             request.setSearch(key);
         }
         UserBean cacheUserBean = CacheUtil.getConstant(CacheUtil.CACHE_KEY_USER);
@@ -95,11 +95,11 @@ public class OrderFormCenterPresenter extends BasePresenter<OrderFormCenterContr
                             List<OrderBean> orderList = response.getOrderList();
 
                             orderBeanList.addAll(orderList);
-                            for(OrderBean ob : orderBeanList){
+                            for (OrderBean ob : orderBeanList) {
                                 ob.setOrderListStatus(type);
                             }
                             preEndIndex = orderBeanList.size();//更新之前列表总长度,用于确定加载更多的起始位置
-                            lastPageIndex = orderBeanList.size() / 10;
+                            lastPageIndex = orderBeanList.size() / 10 + 1;
                             if (pullToRefresh) {
                                 mAdapter.notifyDataSetChanged();
                             } else {

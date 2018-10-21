@@ -3,6 +3,7 @@ package cn.ehanmy.hospital.mvp.model.entity.goods_list;
 public class GoodsConfirmBean {
     private String goodsId;
     private String merchId;
+    private String specValueId;
     private int nums;
     private long money;
     private double salePrice;  // 单位元
@@ -12,9 +13,19 @@ public class GoodsConfirmBean {
         return "GoodsConfirmBean{" +
                 "goodsId='" + goodsId + '\'' +
                 ", merchId='" + merchId + '\'' +
+                ", specValueId='" + specValueId + '\'' +
                 ", nums=" + nums +
+                ", money=" + money +
                 ", salePrice=" + salePrice +
                 '}';
+    }
+
+    public String getSpecValueId() {
+        return specValueId;
+    }
+
+    public void setSpecValueId(String specValueId) {
+        this.specValueId = specValueId;
     }
 
     public long getMoney() {
