@@ -207,7 +207,7 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
                 registerLast();
                 break;
             case R.id.info_btn:
-                if (nextV.isShown()) {
+                if ("去下单".equals(infoBTNV.getText().toString())) {
                     ArmsUtils.startActivity(BuyCenterActivity.class);
                 } else {
                     hasRegister(false);
@@ -227,14 +227,22 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
 
     private void showBirth() {
         if (!birthMaskV.isShown()) {
-            Calendar calendar = Calendar.getInstance();
-            int year = calendar.get(Calendar.YEAR);
-            int monthOfYear = calendar.get(Calendar.MONTH);
-            int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+            int year, monthOfYear, dayOfMonth;
+            if (ArmsUtils.isEmpty(birthTV.getText().toString())) {
+                Calendar calendar = Calendar.getInstance();
+                year = calendar.get(Calendar.YEAR);
+                monthOfYear = calendar.get(Calendar.MONTH);
+                dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+            } else {
+                String[] times = birthTV.getText().toString().split("-");
+                year = Integer.valueOf(times[0]);
+                monthOfYear = Integer.valueOf(times[1]);
+                dayOfMonth = Integer.valueOf(times[2]);
+            }
             timeDP.init(year, monthOfYear, dayOfMonth, new DatePicker.OnDateChangedListener() {
                 @Override
                 public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                    String birthday = year + "-" + (monthOfYear < 10 ? "0" + monthOfYear : monthOfYear) + "-" + dayOfMonth;
+                    String birthday = year + "-" + (monthOfYear + 1 < 10 ? "0" + monthOfYear + 1 : monthOfYear + 1) + "-" + (dayOfMonth < 10 ? "0" + dayOfMonth : dayOfMonth);
                     birthTV.setText(birthday);
                     getCache().put("birthday", birthday);
                 }
