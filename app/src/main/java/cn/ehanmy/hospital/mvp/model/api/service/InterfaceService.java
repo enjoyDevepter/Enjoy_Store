@@ -22,10 +22,14 @@ import cn.ehanmy.hospital.mvp.model.entity.hospital.HospitalInfoRequest;
 import cn.ehanmy.hospital.mvp.model.entity.hospital.HospitalInfoResponse;
 import cn.ehanmy.hospital.mvp.model.entity.member_info.GetMemberListRequest;
 import cn.ehanmy.hospital.mvp.model.entity.member_info.GetMemberListResponse;
+import cn.ehanmy.hospital.mvp.model.entity.member_info.GetMessageListRequest;
+import cn.ehanmy.hospital.mvp.model.entity.member_info.GetMessageListResponse;
 import cn.ehanmy.hospital.mvp.model.entity.member_info.MemberInfoByIdRequest;
 import cn.ehanmy.hospital.mvp.model.entity.member_info.MemberInfoByIdResponse;
 import cn.ehanmy.hospital.mvp.model.entity.member_info.MemberInfoRequest;
 import cn.ehanmy.hospital.mvp.model.entity.member_info.MemberInfoResponse;
+import cn.ehanmy.hospital.mvp.model.entity.member_info.SendMessageRequest;
+import cn.ehanmy.hospital.mvp.model.entity.member_info.SendMessageResponse;
 import cn.ehanmy.hospital.mvp.model.entity.order.GetPayStatusRequest;
 import cn.ehanmy.hospital.mvp.model.entity.order.GetPayStatusResponse;
 import cn.ehanmy.hospital.mvp.model.entity.order.GoPayRequest;
@@ -109,6 +113,13 @@ public interface InterfaceService {
     @POST("gateway")
         // 获取七牛上传信息
     Observable<GetCategoryGoodsListResponse> getCategoryGoodsList(@Body GetCategoryGoodsListRequest request);
+
+    @POST("gateway")
+        // 获取七牛上传信息
+    Observable<GetMessageListResponse> getMessageList(@Body GetMessageListRequest request);
+    @POST("gateway")
+        // 获取七牛上传信息
+    Observable<SendMessageResponse> sendMessage(@Body SendMessageRequest request);
 // --------------------------------------------------------------------------------
 
     @POST("gateway")
