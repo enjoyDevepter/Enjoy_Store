@@ -38,6 +38,7 @@
     <TextView
         android:textSize="26px"
         android:text="私信"
+        android:gravity="center"
         android:id="@+id/btn"
         android:textColor="#ff676767"
         android:layout_below="@id/phone"

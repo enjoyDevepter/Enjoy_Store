@@ -6,7 +6,7 @@ import cn.ehanmy.hospital.mvp.model.entity.response.BaseResponse;
 
 public class GetMemberListResponse extends BaseResponse {
     private int nextPageIndex;
-    private List memberList;
+    private List<MemberMiniInfoBean> memberList;
 
     @Override
     public String toString() {

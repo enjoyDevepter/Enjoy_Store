@@ -46,12 +46,13 @@ public class MemberInfoListHolder extends BaseHolder<MemberMiniInfoBean> {
         mImageLoader.loadImage(itemView.getContext(),
                 ImageConfigImpl
                         .builder()
+                        .placeholder(R.drawable.place_holder_img)
                         .url(data.getHeadImage())
                         .imageView(image)
                         .build());
 
         name.setText(data.getNickName());
-        phone.setText(data.getMemberId());
+        phone.setText(data.getMobile());
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
