@@ -122,7 +122,12 @@
         <activity
             android:name=".mvp.ui.activity.RegisterActivity"
             android:screenOrientation="landscape" />
-        <activity android:name=".mvp.ui.activity.MemberListActivity"                              android:screenOrientation="landscape"></activity>
+        <activity
+            android:name=".mvp.ui.activity.MemberListActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".mvp.ui.activity.MemberInfoActivity"
+            android:screenOrientation="landscape"></activity>
     </application>
 
 </manifest>
