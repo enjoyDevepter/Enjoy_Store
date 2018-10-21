@@ -16,8 +16,8 @@ import cn.ehanmy.hospital.mvp.contract.HospitalInfoContract;
 import cn.ehanmy.hospital.mvp.model.entity.UserBean;
 import cn.ehanmy.hospital.mvp.model.entity.hospital.ChangeHospitalInfoRequest;
 import cn.ehanmy.hospital.mvp.model.entity.hospital.ChangeHospitalInfoResponse;
-import cn.ehanmy.hospital.mvp.model.entity.hospital.HospitalInfoRequest;
-import cn.ehanmy.hospital.mvp.model.entity.hospital.HospitalInfoResponse;
+import cn.ehanmy.hospital.mvp.model.entity.store.GetStoreInfoRequest;
+import cn.ehanmy.hospital.mvp.model.entity.store.GetStoreInfoResponse;
 import cn.ehanmy.hospital.util.CacheUtil;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -54,19 +54,19 @@ public class HospitalInfoPresenter extends BasePresenter<HospitalInfoContract.Mo
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     private void initHospitalInfo() {
-        HospitalInfoRequest request = new HospitalInfoRequest();
+        GetStoreInfoRequest request = new GetStoreInfoRequest();
         UserBean ub = CacheUtil.getConstant(CacheUtil.CACHE_KEY_USER);
         request.setToken(ub.getToken());
-        mModel.requestHospitalInfo(request)
+        mModel.getStoreInfo(request)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .retryWhen(new RetryWithDelay(3, 2))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))//使用 Rxlifecycle,使 Disposable 和 Activity 一起销毁
-                .subscribe(new ErrorHandleSubscriber<HospitalInfoResponse>(mErrorHandler) {
+                .subscribe(new ErrorHandleSubscriber<GetStoreInfoResponse>(mErrorHandler) {
                     @Override
-                    public void onNext(HospitalInfoResponse response) {
+                    public void onNext(GetStoreInfoResponse response) {
                         if (response.isSuccess()) {
-                            mRootView.updateUI(response);
+                            mRootView.updateUI(response.getStore());
 //                            CacheUtil.saveConstant(CacheUtil.CACHE_KEY_USER_HOSPITAL_INFO, response.getHospital());
                         } else {
                             mRootView.showMessage(response.getRetDesc());

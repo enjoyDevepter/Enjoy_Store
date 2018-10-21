@@ -3,7 +3,7 @@ package cn.ehanmy.hospital.mvp.model.entity.order;
 import java.io.Serializable;
 import java.util.List;
 
-import cn.ehanmy.hospital.mvp.model.entity.hospital.HospitaInfoBean;
+import cn.ehanmy.hospital.mvp.model.entity.store.StoreBean;
 
 /**订单详情*/
 public class OrderInfoBean implements Serializable{
@@ -27,7 +27,7 @@ public class OrderInfoBean implements Serializable{
     private long totalPrice;
     private List<GoodsOrderBean> goodsList;
     private OrderRecipientInfoBean orderRecipientInfo;
-    private HospitaInfoBean hospital;
+    private StoreBean hospital;
     private OrderMemberInfoBean member;
 
     public OrderMemberInfoBean getMember() {
@@ -225,11 +225,11 @@ public class OrderInfoBean implements Serializable{
         this.orderRecipientInfo = orderRecipientInfo;
     }
 
-    public HospitaInfoBean getHospital() {
+    public StoreBean getHospital() {
         return hospital;
     }
 
-    public void setHospital(HospitaInfoBean hospital) {
+    public void setHospital(StoreBean hospital) {
         this.hospital = hospital;
     }
 }

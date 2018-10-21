@@ -18,8 +18,6 @@ import cn.ehanmy.hospital.mvp.model.entity.hospital.ChangeHospitalImageRequest;
 import cn.ehanmy.hospital.mvp.model.entity.hospital.ChangeHospitalImageResponse;
 import cn.ehanmy.hospital.mvp.model.entity.hospital.ChangeHospitalInfoRequest;
 import cn.ehanmy.hospital.mvp.model.entity.hospital.ChangeHospitalInfoResponse;
-import cn.ehanmy.hospital.mvp.model.entity.hospital.HospitalInfoRequest;
-import cn.ehanmy.hospital.mvp.model.entity.hospital.HospitalInfoResponse;
 import cn.ehanmy.hospital.mvp.model.entity.member_info.GetMemberListRequest;
 import cn.ehanmy.hospital.mvp.model.entity.member_info.GetMemberListResponse;
 import cn.ehanmy.hospital.mvp.model.entity.member_info.GetMessageListRequest;
@@ -46,7 +44,6 @@ import cn.ehanmy.hospital.mvp.model.entity.reg.VeritfyRequest;
 import cn.ehanmy.hospital.mvp.model.entity.request.GoodsConfirmRequest;
 import cn.ehanmy.hospital.mvp.model.entity.request.GoodsConfirmWithSpecRequest;
 import cn.ehanmy.hospital.mvp.model.entity.request.LoginRequest;
-import cn.ehanmy.hospital.mvp.model.entity.response.BaseResponse;
 import cn.ehanmy.hospital.mvp.model.entity.response.GoodsConfirmResponse;
 import cn.ehanmy.hospital.mvp.model.entity.response.LoginResponse;
 import cn.ehanmy.hospital.mvp.model.entity.shop_appointment.CancelShopAppointmentRequest;
@@ -129,9 +126,6 @@ public interface InterfaceService {
         // 获取七牛上传信息
     Observable<SendMessageResponse> sendMessage(@Body SendMessageRequest request);
 // --------------------------------------------------------------------------------
-
-    @POST("gateway")
-    Observable<HospitalInfoResponse> requestHosptialInfo(@Body HospitalInfoRequest request);
 
     @POST("gateway")
     Observable<MemberInfoResponse> requestMemberInfo(@Body MemberInfoRequest request);

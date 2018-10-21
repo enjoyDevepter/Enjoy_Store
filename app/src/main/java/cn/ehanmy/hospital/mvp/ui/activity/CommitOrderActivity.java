@@ -28,7 +28,6 @@ import cn.ehanmy.hospital.di.component.DaggerCommitOrderComponent;
 import cn.ehanmy.hospital.di.module.CommitOrderModule;
 import cn.ehanmy.hospital.mvp.contract.CommitOrderContract;
 import cn.ehanmy.hospital.mvp.model.entity.goods_list.PayEntry;
-import cn.ehanmy.hospital.mvp.model.entity.hospital.HospitaInfoBean;
 import cn.ehanmy.hospital.mvp.model.entity.member_info.MemberBean;
 import cn.ehanmy.hospital.mvp.model.entity.order.GoPayResponse;
 import cn.ehanmy.hospital.mvp.model.entity.order.GoodsOrderBean;
@@ -128,11 +127,11 @@ public class CommitOrderActivity extends BaseActivity<CommitOrderPresenter> impl
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         new TitleUtil(title, this, "提交订单");
-//        HospitaInfoBean hospitaInfoBean = CacheUtil.getConstant(CacheUtil.CACHE_KEY_USER_HOSPITAL_INFO);
+//        HospitaInfoBean storeBean = CacheUtil.getConstant(CacheUtil.CACHE_KEY_USER_HOSPITAL_INFO);
         MemberBean memberBean = CacheUtil.getConstant(CacheUtil.CACHE_KEY_MEMBER);
         updateMember(memberBean);
-//        hospital.setText(hospitaInfoBean.getName());
-//        addr.setText(hospitaInfoBean.getAddress());
+//        hospital.setText(storeBean.getName());
+//        addr.setText(storeBean.getAddress());
         ArmsUtils.configRecyclerView(mRecyclerView, mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
     }

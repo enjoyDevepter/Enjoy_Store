@@ -15,8 +15,6 @@ import javax.inject.Inject;
 
 import cn.ehanmy.hospital.mvp.contract.LoginContract;
 import cn.ehanmy.hospital.mvp.model.entity.UserBean;
-import cn.ehanmy.hospital.mvp.model.entity.hospital.HospitalInfoRequest;
-import cn.ehanmy.hospital.mvp.model.entity.hospital.HospitalInfoResponse;
 import cn.ehanmy.hospital.mvp.model.entity.request.LoginRequest;
 import cn.ehanmy.hospital.mvp.model.entity.response.LoginResponse;
 import cn.ehanmy.hospital.mvp.model.entity.store.GetStoreInfoRequest;

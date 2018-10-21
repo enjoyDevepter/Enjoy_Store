@@ -18,8 +18,6 @@ import cn.ehanmy.hospital.mvp.model.entity.QiniuResponse;
 import cn.ehanmy.hospital.mvp.model.entity.UserBean;
 import cn.ehanmy.hospital.mvp.model.entity.hospital.ChangeHospitalImageRequest;
 import cn.ehanmy.hospital.mvp.model.entity.hospital.ChangeHospitalImageResponse;
-import cn.ehanmy.hospital.mvp.model.entity.hospital.HospitaInfoBean;
-import cn.ehanmy.hospital.mvp.model.entity.response.BaseResponse;
 import cn.ehanmy.hospital.util.CacheUtil;
 import cn.ehanmy.hospital.util.ImageUploadManager;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -27,9 +25,6 @@ import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 
 
 @ActivityScope

@@ -9,9 +9,7 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 import cn.ehanmy.hospital.mvp.model.entity.store.GetStoreInfoRequest;
 import cn.ehanmy.hospital.mvp.model.entity.store.GetStoreInfoResponse;
 import io.reactivex.Observable;
-import cn.ehanmy.hospital.mvp.model.entity.hospital.HospitalInfoRequest;
 import cn.ehanmy.hospital.mvp.model.entity.request.LoginRequest;
-import cn.ehanmy.hospital.mvp.model.entity.hospital.HospitalInfoResponse;
 import cn.ehanmy.hospital.mvp.model.entity.response.LoginResponse;
 
 

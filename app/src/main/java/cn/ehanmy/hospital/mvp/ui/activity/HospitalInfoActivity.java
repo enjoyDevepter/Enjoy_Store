@@ -5,13 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.text.Editable;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bigkoo.pickerview.TimePickerView;
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.http.imageloader.ImageLoader;
@@ -19,7 +17,6 @@ import com.jess.arms.http.imageloader.glide.ImageConfigImpl;
 import com.jess.arms.integration.cache.Cache;
 import com.jess.arms.utils.ArmsUtils;
 
-import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,8 +27,7 @@ import cn.ehanmy.hospital.R;
 import cn.ehanmy.hospital.di.component.DaggerHospitalInfoComponent;
 import cn.ehanmy.hospital.di.module.HospitalInfoModule;
 import cn.ehanmy.hospital.mvp.contract.HospitalInfoContract;
-import cn.ehanmy.hospital.mvp.model.entity.hospital.HospitaInfoBean;
-import cn.ehanmy.hospital.mvp.model.entity.hospital.HospitalInfoResponse;
+import cn.ehanmy.hospital.mvp.model.entity.store.StoreBean;
 import cn.ehanmy.hospital.mvp.presenter.HospitalInfoPresenter;
 import cn.ehanmy.hospital.mvp.ui.widget.CustomDialog;
 import cn.ehanmy.hospital.util.EdittextUtil;
@@ -62,7 +58,7 @@ public class HospitalInfoActivity extends BaseActivity<HospitalInfoPresenter> im
     @Inject
     ImageLoader mImageLoader;
 
-    HospitaInfoBean hospitaInfoBean;
+    StoreBean storeBean;
 
     CustomDialog dialog = null;
 
@@ -127,17 +123,17 @@ public class HospitalInfoActivity extends BaseActivity<HospitalInfoPresenter> im
     }
 
     @Override
-    public void updateUI(HospitalInfoResponse response) {
-        hospitaInfoBean = response.getHospital();
-        nameTV.setText(hospitaInfoBean.getName());
-        phoneTV.setText("联系电话：" + hospitaInfoBean.getTellphone());
-        timeTV.setText("营业时间：早" + hospitaInfoBean.getStarTime() + "-晚" + hospitaInfoBean.getEndTime());
-        addressTV.setText(hospitaInfoBean.getAddress());
+    public void updateUI(StoreBean storeBean) {
+        this.storeBean = storeBean;
+        nameTV.setText(storeBean.getName());
+        phoneTV.setText("联系电话：" + storeBean.getTellphone());
+        timeTV.setText("营业时间：早" + storeBean.getStarTime() + "-晚" + storeBean.getEndTime());
+        addressTV.setText(storeBean.getAddress());
 
         mImageLoader.loadImage(this,
                 ImageConfigImpl
                         .builder()
-                        .url(hospitaInfoBean.getImage())
+                        .url(storeBean.getImage())
                         .placeholder(R.drawable.place_holder_img)
                         .imageView(imageIV)
                         .build());
@@ -160,14 +156,14 @@ public class HospitalInfoActivity extends BaseActivity<HospitalInfoPresenter> im
                 .setViewListener(new CustomDialog.ViewListener() {
                     @Override
                     public void bindView(View view) {
-                        ((TextView) view.findViewById(R.id.name)).setText("本店名称:" + hospitaInfoBean.getName());
-                        ((TextView) view.findViewById(R.id.address)).setText("地址:" + hospitaInfoBean.getAddress());
+                        ((TextView) view.findViewById(R.id.name)).setText("本店名称:" + storeBean.getName());
+                        ((TextView) view.findViewById(R.id.address)).setText("地址:" + storeBean.getAddress());
                         EditText phone = view.findViewById(R.id.phone);
-                        phone.setText(hospitaInfoBean.getTellphone());
+                        phone.setText(storeBean.getTellphone());
                         EditText startTime = view.findViewById(R.id.start_time);
-                        startTime.setText(hospitaInfoBean.getStarTime());
+                        startTime.setText(storeBean.getStarTime());
                         EditText endTime = view.findViewById(R.id.end_time);
-                        endTime.setText(hospitaInfoBean.getEndTime());
+                        endTime.setText(storeBean.getEndTime());
 //                        startTime.setOnClickListener(new View.OnClickListener() {
 //                            @Override
 //                            public void onClick(View v) {

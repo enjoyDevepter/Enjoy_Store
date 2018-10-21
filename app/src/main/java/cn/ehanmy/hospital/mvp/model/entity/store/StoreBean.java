@@ -15,7 +15,7 @@ public class StoreBean implements Serializable {
     private String distance;
     private String distanceDesc;
     private String tellphone;
-    private String startTime;
+    private String starTime;
     private String endTime;
     private String image;
 
@@ -34,7 +34,7 @@ public class StoreBean implements Serializable {
                 ", distance='" + distance + '\'' +
                 ", distanceDesc='" + distanceDesc + '\'' +
                 ", tellphone='" + tellphone + '\'' +
-                ", startTime='" + startTime + '\'' +
+                ", starTime='" + starTime + '\'' +
                 ", endTime='" + endTime + '\'' +
                 ", image='" + image + '\'' +
                 '}';
@@ -136,12 +136,12 @@ public class StoreBean implements Serializable {
         this.tellphone = tellphone;
     }
 
-    public String getStartTime() {
-        return startTime;
+    public String getStarTime() {
+        return starTime;
     }
 
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
+    public void setStarTime(String starTime) {
+        this.starTime = starTime;
     }
 
     public String getEndTime() {

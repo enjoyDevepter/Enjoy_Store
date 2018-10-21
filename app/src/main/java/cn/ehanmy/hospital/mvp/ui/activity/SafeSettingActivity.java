@@ -16,7 +16,6 @@ import cn.ehanmy.hospital.R;
 import cn.ehanmy.hospital.di.component.DaggerSafeSettingComponent;
 import cn.ehanmy.hospital.di.module.SafeSettingModule;
 import cn.ehanmy.hospital.mvp.contract.SafeSettingContract;
-import cn.ehanmy.hospital.mvp.model.entity.hospital.HospitaInfoBean;
 import cn.ehanmy.hospital.mvp.model.entity.store.StoreBean;
 import cn.ehanmy.hospital.mvp.presenter.SafeSettingPresenter;
 import cn.ehanmy.hospital.util.CacheUtil;

@@ -8,8 +8,9 @@ import com.jess.arms.mvp.IView;
 
 import cn.ehanmy.hospital.mvp.model.entity.hospital.ChangeHospitalInfoRequest;
 import cn.ehanmy.hospital.mvp.model.entity.hospital.ChangeHospitalInfoResponse;
-import cn.ehanmy.hospital.mvp.model.entity.hospital.HospitalInfoRequest;
-import cn.ehanmy.hospital.mvp.model.entity.hospital.HospitalInfoResponse;
+import cn.ehanmy.hospital.mvp.model.entity.store.GetStoreInfoRequest;
+import cn.ehanmy.hospital.mvp.model.entity.store.GetStoreInfoResponse;
+import cn.ehanmy.hospital.mvp.model.entity.store.StoreBean;
 import io.reactivex.Observable;
 
 
@@ -21,7 +22,7 @@ public interface HospitalInfoContract {
 
         Cache getCache();
 
-        void updateUI(HospitalInfoResponse response);
+        void updateUI(StoreBean response);
 
         void changeOk();
 
@@ -30,7 +31,6 @@ public interface HospitalInfoContract {
     //Model层定义接口,外部只需关心Model返回的数据,无需关心内部细节,即是否使用缓存
     interface Model extends IModel {
         Observable<ChangeHospitalInfoResponse> changeHospitalInfo(ChangeHospitalInfoRequest request);
-
-        Observable<HospitalInfoResponse> requestHospitalInfo(HospitalInfoRequest request);
+        Observable<GetStoreInfoResponse> getStoreInfo(GetStoreInfoRequest request);
     }
 }
