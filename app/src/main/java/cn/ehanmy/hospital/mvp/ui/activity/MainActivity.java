@@ -142,7 +142,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
             case 2:
                 if (backV.isSelected()) {
                     // 本店会员
-
+                    ArmsUtils.startActivity(MemberListActivity.class);
                 } else {
                     // 订单中心
                     ArmsUtils.startActivity(OrderFormCenterActivity.class);

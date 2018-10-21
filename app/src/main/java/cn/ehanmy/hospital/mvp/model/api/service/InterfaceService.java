@@ -20,6 +20,8 @@ import cn.ehanmy.hospital.mvp.model.entity.hospital.ChangeHospitalInfoRequest;
 import cn.ehanmy.hospital.mvp.model.entity.hospital.ChangeHospitalInfoResponse;
 import cn.ehanmy.hospital.mvp.model.entity.hospital.HospitalInfoRequest;
 import cn.ehanmy.hospital.mvp.model.entity.hospital.HospitalInfoResponse;
+import cn.ehanmy.hospital.mvp.model.entity.member_info.GetMemberListRequest;
+import cn.ehanmy.hospital.mvp.model.entity.member_info.GetMemberListResponse;
 import cn.ehanmy.hospital.mvp.model.entity.member_info.MemberInfoByIdRequest;
 import cn.ehanmy.hospital.mvp.model.entity.member_info.MemberInfoByIdResponse;
 import cn.ehanmy.hospital.mvp.model.entity.member_info.MemberInfoRequest;
@@ -98,6 +100,9 @@ public interface InterfaceService {
     @POST("gateway")
         // 获取七牛上传信息
     Observable<QiniuResponse> getQiniuInfo(@Body QiniuRequest request);
+    @POST("gateway")
+        // 获取七牛上传信息
+    Observable<GetMemberListResponse> getMemberList(@Body GetMemberListRequest request);
 
 // --------------------------------------------------------------------------------
 
