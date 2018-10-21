@@ -236,7 +236,7 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
             } else {
                 String[] times = birthTV.getText().toString().split("-");
                 year = Integer.valueOf(times[0]);
-                monthOfYear = Integer.valueOf(times[1]);
+                monthOfYear = Integer.valueOf(times[1]) - 1;
                 dayOfMonth = Integer.valueOf(times[2]);
             }
             timeDP.init(year, monthOfYear, dayOfMonth, new DatePicker.OnDateChangedListener() {
