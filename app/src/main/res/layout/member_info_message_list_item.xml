@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:paddingLeft="44px"
+    android:layout_width="match_parent" android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_marginTop="40px"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="标题："
+            android:textColor="#333333"
+            android:textSize="24px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/content"
+            android:textColor="#333333"
+            android:textSize="24px"
+            android:text="hahaha"
+            android:gravity="left|center_vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+
+        <TextView
+            android:id="@+id/time_message"
+            android:textSize="22px"
+            android:textColor="#ffc7c7c7"
+            android:text="heheh"
+            android:layout_width="wrap_content"
+            android:layout_marginRight="40px"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="21px"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="44px"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:visibility="invisible"
+            android:textColor="#333333"
+            android:text="标题："
+            android:textSize="24px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:textColor="#333333"
+            android:text="回复："
+            android:textSize="24px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+        <TextView
+            android:textColor="#333333"
+            android:text="呵呵呵"
+            android:id="@+id/repeat"
+            android:textSize="24px"
+            android:gravity="left|center_vertical"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/time_repeat"
+            android:textSize="22px"
+            android:textColor="#ffc7c7c7"
+            android:layout_width="wrap_content"
+            android:text="heheh"
+            android:layout_marginRight="40px"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</LinearLayout>

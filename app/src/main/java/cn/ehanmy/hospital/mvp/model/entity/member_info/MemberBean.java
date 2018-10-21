@@ -16,6 +16,16 @@ public class MemberBean implements Serializable{
     private String address;
     private String memberId;
 
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    private int age;
+
     public String getNickName() {
         return nickName;
     }

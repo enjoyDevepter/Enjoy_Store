@@ -266,5 +266,6 @@
         android:textColor="#ff999999"
         android:textSize="24px"
         android:layout_width="match_parent"
+        android:imeOptions="actionSend"
         android:layout_height="148px" />
 </LinearLayout>

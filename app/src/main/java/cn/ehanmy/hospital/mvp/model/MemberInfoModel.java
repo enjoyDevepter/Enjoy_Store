@@ -12,10 +12,16 @@ import javax.inject.Inject;
 
 import cn.ehanmy.hospital.mvp.contract.MemberInfoContract;
 import cn.ehanmy.hospital.mvp.model.api.service.InterfaceService;
+import cn.ehanmy.hospital.mvp.model.entity.member_info.GetMemberListRequest;
+import cn.ehanmy.hospital.mvp.model.entity.member_info.GetMemberListResponse;
+import cn.ehanmy.hospital.mvp.model.entity.member_info.GetMessageListRequest;
+import cn.ehanmy.hospital.mvp.model.entity.member_info.GetMessageListResponse;
 import cn.ehanmy.hospital.mvp.model.entity.member_info.MemberInfoByIdRequest;
 import cn.ehanmy.hospital.mvp.model.entity.member_info.MemberInfoByIdResponse;
 import cn.ehanmy.hospital.mvp.model.entity.member_info.MemberInfoRequest;
 import cn.ehanmy.hospital.mvp.model.entity.member_info.MemberInfoResponse;
+import cn.ehanmy.hospital.mvp.model.entity.member_info.SendMessageRequest;
+import cn.ehanmy.hospital.mvp.model.entity.member_info.SendMessageResponse;
 import io.reactivex.Observable;
 
 
@@ -41,5 +47,17 @@ public class MemberInfoModel extends BaseModel implements MemberInfoContract.Mod
     public Observable<MemberInfoByIdResponse> requestMemberinfoById(MemberInfoByIdRequest request) {
         return mRepositoryManager.obtainRetrofitService(InterfaceService.class)
                 .requestMemberInfoById(request);
+    }
+
+    @Override
+    public Observable<GetMessageListResponse> getMessageList(GetMessageListRequest request) {
+        return mRepositoryManager.obtainRetrofitService(InterfaceService.class)
+                .getMessageList(request);
+    }
+
+    @Override
+    public Observable<SendMessageResponse> sendMessage(SendMessageRequest request) {
+        return mRepositoryManager.obtainRetrofitService(InterfaceService.class)
+                .sendMessage(request);
     }
 }
