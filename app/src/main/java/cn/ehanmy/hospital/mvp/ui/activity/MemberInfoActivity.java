@@ -75,6 +75,9 @@ public class MemberInfoActivity extends BaseActivity<MemberInfoPresenter> implem
     @BindView(R.id.contentList)
     RecyclerView contentList;
 
+    @BindView(R.id.title_Layout)
+    View title;
+
     @BindView(R.id.swipeRefreshLayout)
     SwipeRefreshLayout swipeRefreshLayout;
     private Paginate mPaginate;
@@ -128,6 +131,7 @@ public class MemberInfoActivity extends BaseActivity<MemberInfoPresenter> implem
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+        new TitleUtil(title,this,"本店会员");
         ArmsUtils.configRecyclerView(contentList, mLayoutManager);
         contentList.setAdapter(mAdapter);
 
@@ -180,6 +184,7 @@ public class MemberInfoActivity extends BaseActivity<MemberInfoPresenter> implem
         mImageLoader.loadImage(this,
                 ImageConfigImpl
                         .builder()
+                        .placeholder(R.drawable.place_holder_img)
                         .url(memberBean.getHeadImage())
                         .imageView(image)
                         .build());
@@ -209,9 +214,10 @@ public class MemberInfoActivity extends BaseActivity<MemberInfoPresenter> implem
     public void updateRecyclerViewHeight() {
         RecyclerView.Adapter adapter = contentList.getAdapter();
         if (adapter.getItemCount() == 0) {
-            contentList.setVisibility(View.GONE);
+            contentList.setVisibility(View.INVISIBLE);
             return;
         }
+        contentList.setVisibility(View.VISIBLE);
         ViewGroup.LayoutParams layoutParams = swipeRefreshLayout.getLayoutParams();
         layoutParams.height = 150 * (adapter.getItemCount() < 10 ? adapter.getItemCount() : 10);
         swipeRefreshLayout.setLayoutParams(layoutParams);
@@ -238,6 +244,13 @@ public class MemberInfoActivity extends BaseActivity<MemberInfoPresenter> implem
     public void showError(boolean hasDate) {
         onDateV.setVisibility(hasDate ? INVISIBLE : VISIBLE);
         contentList.setVisibility(hasDate ? VISIBLE : INVISIBLE);
+        if(hasDate){
+            updateRecyclerViewHeight();
+        }else{
+            ViewGroup.LayoutParams layoutParams = swipeRefreshLayout.getLayoutParams();
+            layoutParams.height = 200;
+            swipeRefreshLayout.setLayoutParams(layoutParams);
+        }
     }
 
     @Override

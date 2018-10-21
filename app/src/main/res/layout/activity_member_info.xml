@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView android:layout_width="wrap_content" android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:background="@color/white"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+<LinearLayout
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:orientation="vertical">
+
+    <include layout="@layout/title"/>
     
     <RelativeLayout
         android:background="@color/white"
@@ -108,7 +115,7 @@
             />
 
         <TextView
-            android:layout_marginLeft="400px"
+            android:layout_marginLeft="500px"
             android:id="@+id/sex_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -211,7 +218,7 @@
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/white"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
@@ -219,12 +226,12 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/contentList"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="9dp"
                 android:scrollbars="none"
                 tools:listitem="@layout/recycle_list" />
@@ -232,7 +239,7 @@
             <LinearLayout
                 android:id="@+id/no_date"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
                 android:visibility="gone">
@@ -258,14 +265,22 @@
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
+    <View style="@style/divider_1"/>
+
     <EditText
         android:id="@+id/message"
         android:background="@drawable/member_info_message_et_back"
         android:hint="请输入您要发送的私信！"
-        android:layout_marginTop="2px"
+        android:layout_marginTop="43px"
         android:textColor="#ff999999"
+        android:layout_marginLeft="48px"
+        android:layout_marginRight="48px"
+        android:layout_marginBottom="48px"
         android:textSize="24px"
         android:layout_width="match_parent"
         android:imeOptions="actionSend"
+        android:padding="25px"
+        android:gravity="left|top"
         android:layout_height="148px" />
 </LinearLayout>
+</ScrollView>
