@@ -3,7 +3,7 @@ package cn.ehanmy.hospital.mvp.model.entity.member_info;
 import cn.ehanmy.hospital.mvp.model.entity.request.BaseRequest;
 
 public class GetMemberListRequest extends BaseRequest {
-    private final int cmd = 10154;
+    private final int cmd = 10054;
     private int pageIndex;
     private int pageSize;
     private String token;
