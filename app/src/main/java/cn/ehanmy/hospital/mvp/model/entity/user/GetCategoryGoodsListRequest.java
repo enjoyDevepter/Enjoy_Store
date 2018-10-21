@@ -3,7 +3,7 @@ package cn.ehanmy.hospital.mvp.model.entity.user;
 import cn.ehanmy.hospital.mvp.model.entity.request.BaseRequest;
 
 public class GetCategoryGoodsListRequest extends BaseRequest {
-    private final int cmd = 10204;
+    private final int cmd = 10205;
     private String secondCategoryId;
     private String categoryId;
 

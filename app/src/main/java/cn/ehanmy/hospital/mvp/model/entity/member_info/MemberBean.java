@@ -7,7 +7,7 @@ public class MemberBean implements Serializable{
     private String userName;
     private Rank rank;
     private String headImage;
-    private String sex;
+    private String sex;  // 0:保密,1:男,2:女
     private String realName;
     private String mobile;
     private Province province;

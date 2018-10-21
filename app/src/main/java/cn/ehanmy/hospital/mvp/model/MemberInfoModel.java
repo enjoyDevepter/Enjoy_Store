@@ -11,6 +11,12 @@ import com.jess.arms.di.scope.ActivityScope;
 import javax.inject.Inject;
 
 import cn.ehanmy.hospital.mvp.contract.MemberInfoContract;
+import cn.ehanmy.hospital.mvp.model.api.service.InterfaceService;
+import cn.ehanmy.hospital.mvp.model.entity.member_info.MemberInfoByIdRequest;
+import cn.ehanmy.hospital.mvp.model.entity.member_info.MemberInfoByIdResponse;
+import cn.ehanmy.hospital.mvp.model.entity.member_info.MemberInfoRequest;
+import cn.ehanmy.hospital.mvp.model.entity.member_info.MemberInfoResponse;
+import io.reactivex.Observable;
 
 
 @ActivityScope
@@ -30,5 +36,10 @@ public class MemberInfoModel extends BaseModel implements MemberInfoContract.Mod
         super.onDestroy();
         this.mGson = null;
         this.mApplication = null;
+    }
+    @Override
+    public Observable<MemberInfoByIdResponse> requestMemberinfoById(MemberInfoByIdRequest request) {
+        return mRepositoryManager.obtainRetrofitService(InterfaceService.class)
+                .requestMemberInfoById(request);
     }
 }

@@ -26,6 +26,7 @@ import butterknife.BindView;
 import cn.ehanmy.hospital.di.component.DaggerMemberListComponent;
 import cn.ehanmy.hospital.di.module.MemberListModule;
 import cn.ehanmy.hospital.mvp.contract.MemberListContract;
+import cn.ehanmy.hospital.mvp.model.entity.member_info.MemberMiniInfoBean;
 import cn.ehanmy.hospital.mvp.presenter.MemberListPresenter;
 
 import cn.ehanmy.hospital.R;
@@ -80,7 +81,10 @@ public class MemberListActivity extends BaseActivity<MemberListPresenter> implem
         ((MemberInfoListAdapter)mAdapter).setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(MemberListActivity.this,"position = "+position,Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(MemberListActivity.this,MemberInfoActivity.class);
+                MemberMiniInfoBean item = ((MemberInfoListAdapter) mAdapter).getItem(position);
+                intent.putExtra(MemberInfoActivity.KEY_FOR_MEMBER_ID,item.getMemberId());
+                ArmsUtils.startActivity(intent);
             }
         });
         contentList.setAdapter(mAdapter);
