@@ -44,6 +44,7 @@ import cn.ehanmy.hospital.mvp.model.entity.reg.VeritfyRequest;
 import cn.ehanmy.hospital.mvp.model.entity.request.GoodsConfirmRequest;
 import cn.ehanmy.hospital.mvp.model.entity.request.GoodsConfirmWithSpecRequest;
 import cn.ehanmy.hospital.mvp.model.entity.request.LoginRequest;
+import cn.ehanmy.hospital.mvp.model.entity.response.BaseResponse;
 import cn.ehanmy.hospital.mvp.model.entity.response.GoodsConfirmResponse;
 import cn.ehanmy.hospital.mvp.model.entity.response.LoginResponse;
 import cn.ehanmy.hospital.mvp.model.entity.shop_appointment.CancelShopAppointmentRequest;
@@ -105,12 +106,11 @@ public interface InterfaceService {
     @POST("gateway")
     Observable<MemberInfoByIdResponse> requestMemberInfoById(@Body MemberInfoByIdRequest request);
 
-    @POST("gateway")
-    Observable<GetStoreInfoResponse> getStoreInfo(@Body GetStoreInfoRequest request);
 
     @POST("gateway")
         // 获取七牛上传信息
     Observable<QiniuResponse> getQiniuInfo(@Body QiniuRequest request);
+
     @POST("gateway")
         // 获取七牛上传信息
     Observable<GetMemberListResponse> getMemberList(@Body GetMemberListRequest request);
@@ -122,9 +122,23 @@ public interface InterfaceService {
     @POST("gateway")
         // 获取七牛上传信息
     Observable<GetMessageListResponse> getMessageList(@Body GetMessageListRequest request);
+
     @POST("gateway")
         // 获取七牛上传信息
     Observable<SendMessageResponse> sendMessage(@Body SendMessageRequest request);
+
+
+    // 修改医院信息设置
+    @POST("gateway")
+    Observable<ChangeHospitalInfoResponse> changeHospitalInfo(@Body ChangeHospitalInfoRequest request);
+
+    // 修改医院照片
+    @POST("gateway")
+    Observable<ChangeHospitalImageResponse> changeHospitalImage
+    (@Body ChangeHospitalImageRequest request);
+
+    @POST("gateway")
+    Observable<GetStoreInfoResponse> getStoreInfo(@Body GetStoreInfoRequest request);
 // --------------------------------------------------------------------------------
 
     @POST("gateway")
@@ -164,17 +178,6 @@ public interface InterfaceService {
     @POST("gateway")
         // 获取用户设置
     Observable<SettingProjectResponse> setProjectSetting(@Body SettingProjectRequest request);
-
-    // 修改医院信息设置
-    @POST("gateway")
-    Observable<ChangeHospitalInfoResponse> changeHospitalInfo(@Body ChangeHospitalInfoRequest
-                                                                      request);
-
-
-    // 修改医院照片
-    @POST("gateway")
-    Observable<ChangeHospitalImageResponse> changeHospitalImage
-    (@Body ChangeHospitalImageRequest request);
 
 
     // 修改医院照片
