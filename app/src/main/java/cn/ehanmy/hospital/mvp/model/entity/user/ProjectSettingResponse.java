@@ -5,20 +5,20 @@ import java.util.List;
 import cn.ehanmy.hospital.mvp.model.entity.response.BaseResponse;
 
 public class ProjectSettingResponse extends BaseResponse {
-    private List<String> categoryList;
+    private List<String> merchIdList;
 
     @Override
     public String toString() {
         return "ProjectSettingResponse{" +
-                "categoryList=" + categoryList +
+                "merchIdList=" + merchIdList +
                 '}';
     }
 
-    public List<String> getCategoryList() {
-        return categoryList;
+    public List<String> getMerchIdList() {
+        return merchIdList;
     }
 
-    public void setCategoryList(List<String> categoryList) {
-        this.categoryList = categoryList;
+    public void setMerchIdList(List<String> merchIdList) {
+        this.merchIdList = merchIdList;
     }
 }

@@ -21,6 +21,8 @@ import cn.ehanmy.hospital.mvp.model.entity.UserBean;
 import cn.ehanmy.hospital.mvp.model.entity.goods_list.Category;
 import cn.ehanmy.hospital.mvp.model.entity.goods_list.CategoryRequest;
 import cn.ehanmy.hospital.mvp.model.entity.goods_list.CategoryResponse;
+import cn.ehanmy.hospital.mvp.model.entity.user.GetCategoryGoodsListRequest;
+import cn.ehanmy.hospital.mvp.model.entity.user.GetCategoryGoodsListResponse;
 import cn.ehanmy.hospital.mvp.model.entity.user.ProjectSettingRequest;
 import cn.ehanmy.hospital.mvp.model.entity.user.ProjectSettingResponse;
 import cn.ehanmy.hospital.mvp.model.entity.user.SettingProjectRequest;
@@ -30,7 +32,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
-
 
 @ActivityScope
 public class ProjectSettingPresenter extends BasePresenter<ProjectSettingContract.Model, ProjectSettingContract.View> {
@@ -101,7 +102,7 @@ public class ProjectSettingPresenter extends BasePresenter<ProjectSettingContrac
                     @Override
                     public void onNext(ProjectSettingResponse response) {
                         if (response.isSuccess()) {
-                            mRootView.updateCategory(list, response.getCategoryList());
+                            mRootView.updateCategory(list, response.getMerchIdList());
                         } else {
                             mRootView.showMessage(response.getRetDesc());
                         }
@@ -109,12 +110,40 @@ public class ProjectSettingPresenter extends BasePresenter<ProjectSettingContrac
                 });
     }
 
+    public void getGoodsList(String categoryId,String secondCategoryId){
+        GetCategoryGoodsListRequest request = new GetCategoryGoodsListRequest();
+        request.setCategoryId(categoryId);
+        request.setSecondCategoryId(secondCategoryId);
+
+
+        mModel.getCategoryGoodsList(request)
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe(disposable -> {
+                }).subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> {
+                    mRootView.hideLoading();//隐藏下拉刷新的进度条
+                })
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))//使用 Rxlifecycle,使 Disposable 和 Activity 一起销毁
+                .subscribe(new ErrorHandleSubscriber<GetCategoryGoodsListResponse>(mErrorHandler) {
+                    @Override
+                    public void onNext(GetCategoryGoodsListResponse response) {
+                        if (response.isSuccess()) {
+                            mRootView.updateGoodsList(response.getMerchList());
+                        } else {
+                            mRootView.showMessage(response.getRetDesc());
+                        }
+                    }
+                });
+
+    }
+
     public void setProjectSetting(List<String> list) {
         SettingProjectRequest request = new SettingProjectRequest();
 
         UserBean ub = CacheUtil.getConstant(CacheUtil.CACHE_KEY_USER);
         request.setToken(ub.getToken());
-        request.setCategoryList(list);
+        request.setMerchIdList(list);
 
         mModel.setProjectSetting(request)
                 .subscribeOn(Schedulers.io())
@@ -134,5 +163,5 @@ public class ProjectSettingPresenter extends BasePresenter<ProjectSettingContrac
                         }
                     }
                 });
-    }
-}
+    }}
+

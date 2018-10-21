@@ -7,14 +7,14 @@ import cn.ehanmy.hospital.mvp.model.entity.request.BaseRequest;
 public class SettingProjectRequest extends BaseRequest {
     private final int cmd = 10203;
     private String token;
-    private List<String> categoryList;
+    private List<String> merchIdList;
 
     @Override
     public String toString() {
         return "SettingProjectRequest{" +
                 "cmd=" + cmd +
                 ", token='" + token + '\'' +
-                ", categoryList=" + categoryList +
+                ", merchIdList=" + merchIdList +
                 '}';
     }
 
@@ -30,11 +30,11 @@ public class SettingProjectRequest extends BaseRequest {
         this.token = token;
     }
 
-    public List<String> getCategoryList() {
-        return categoryList;
+    public List<String> getMerchIdList() {
+        return merchIdList;
     }
 
-    public void setCategoryList(List<String> categoryList) {
-        this.categoryList = categoryList;
+    public void setMerchIdList(List<String> merchIdList) {
+        this.merchIdList = merchIdList;
     }
 }

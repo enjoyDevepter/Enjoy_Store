@@ -56,6 +56,8 @@ import cn.ehanmy.hospital.mvp.model.entity.store.GetStoreInfoRequest;
 import cn.ehanmy.hospital.mvp.model.entity.store.GetStoreInfoResponse;
 import cn.ehanmy.hospital.mvp.model.entity.user.ChangePasswordRequest;
 import cn.ehanmy.hospital.mvp.model.entity.user.ChangePasswordResponse;
+import cn.ehanmy.hospital.mvp.model.entity.user.GetCategoryGoodsListRequest;
+import cn.ehanmy.hospital.mvp.model.entity.user.GetCategoryGoodsListResponse;
 import cn.ehanmy.hospital.mvp.model.entity.user.ProjectSettingRequest;
 import cn.ehanmy.hospital.mvp.model.entity.user.ProjectSettingResponse;
 import cn.ehanmy.hospital.mvp.model.entity.user.SettingProjectRequest;
@@ -104,6 +106,9 @@ public interface InterfaceService {
         // 获取七牛上传信息
     Observable<GetMemberListResponse> getMemberList(@Body GetMemberListRequest request);
 
+    @POST("gateway")
+        // 获取七牛上传信息
+    Observable<GetCategoryGoodsListResponse> getCategoryGoodsList(@Body GetCategoryGoodsListRequest request);
 // --------------------------------------------------------------------------------
 
     @POST("gateway")

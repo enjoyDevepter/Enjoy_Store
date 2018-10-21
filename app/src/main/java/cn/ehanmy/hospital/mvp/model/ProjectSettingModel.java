@@ -14,6 +14,8 @@ import cn.ehanmy.hospital.mvp.contract.ProjectSettingContract;
 import cn.ehanmy.hospital.mvp.model.api.service.InterfaceService;
 import cn.ehanmy.hospital.mvp.model.entity.goods_list.CategoryRequest;
 import cn.ehanmy.hospital.mvp.model.entity.goods_list.CategoryResponse;
+import cn.ehanmy.hospital.mvp.model.entity.user.GetCategoryGoodsListRequest;
+import cn.ehanmy.hospital.mvp.model.entity.user.GetCategoryGoodsListResponse;
 import cn.ehanmy.hospital.mvp.model.entity.user.ProjectSettingRequest;
 import cn.ehanmy.hospital.mvp.model.entity.user.ProjectSettingResponse;
 import cn.ehanmy.hospital.mvp.model.entity.user.SettingProjectRequest;
@@ -55,5 +57,10 @@ public class ProjectSettingModel extends BaseModel implements ProjectSettingCont
     public Observable<SettingProjectResponse> setProjectSetting(SettingProjectRequest request) {
         return mRepositoryManager.obtainRetrofitService(InterfaceService.class)
                 .setProjectSetting(request);
+    }
+    @Override
+    public Observable<GetCategoryGoodsListResponse> getCategoryGoodsList(GetCategoryGoodsListRequest request) {
+        return mRepositoryManager.obtainRetrofitService(InterfaceService.class)
+                .getCategoryGoodsList(request);
     }
 }
