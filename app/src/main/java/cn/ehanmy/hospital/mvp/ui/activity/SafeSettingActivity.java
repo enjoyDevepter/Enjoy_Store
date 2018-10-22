@@ -19,6 +19,7 @@ import cn.ehanmy.hospital.mvp.contract.SafeSettingContract;
 import cn.ehanmy.hospital.mvp.model.entity.store.StoreBean;
 import cn.ehanmy.hospital.mvp.presenter.SafeSettingPresenter;
 import cn.ehanmy.hospital.util.CacheUtil;
+import cn.ehanmy.hospital.util.SPUtils;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
@@ -70,6 +71,7 @@ public class SafeSettingActivity extends BaseActivity<SafeSettingPresenter> impl
                 CacheUtil.saveConstant(CacheUtil.CACHE_KEY_USER,null);
                 CacheUtil.saveConstant(CacheUtil.CACHE_KEY_MEMBER,null);
                 CacheUtil.saveConstant(CacheUtil.CACHE_KEY_USER_LOGIN_NAME,null);
+                SPUtils.clear(SafeSettingActivity.this);
                 Intent intent = new Intent(SafeSettingActivity.this,LoginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

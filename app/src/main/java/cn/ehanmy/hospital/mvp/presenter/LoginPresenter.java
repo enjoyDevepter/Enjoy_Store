@@ -20,6 +20,7 @@ import cn.ehanmy.hospital.mvp.model.entity.response.LoginResponse;
 import cn.ehanmy.hospital.mvp.model.entity.store.GetStoreInfoRequest;
 import cn.ehanmy.hospital.mvp.model.entity.store.GetStoreInfoResponse;
 import cn.ehanmy.hospital.util.CacheUtil;
+import cn.ehanmy.hospital.util.SPUtils;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
@@ -103,6 +104,9 @@ public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginCont
                                             mRootView.hideLoading();
                                             if (s.isSuccess()) {
                                                 CacheUtil.saveConstant(CacheUtil.CACHE_KEY_STORE_INFO, s.getStore());
+                                                SPUtils.put(SPUtils.KEY_FOR_HOSPITAL_INFO, s.getStore() );
+                                                SPUtils.put(SPUtils.KEY_FOR_USER_INFO,value);
+                                                SPUtils.put(SPUtils.KEY_FOR_USER_NAME,username);
                                                 mRootView.killMyself();
                                                 mRootView.goMainPage();
                                             } else {
