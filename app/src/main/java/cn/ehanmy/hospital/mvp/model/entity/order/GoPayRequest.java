@@ -3,7 +3,7 @@ package cn.ehanmy.hospital.mvp.model.entity.order;
 import cn.ehanmy.hospital.mvp.model.entity.request.BaseRequest;
 
 public class GoPayRequest extends BaseRequest {
-    private final int cmd = 5106;
+    private final int cmd = 10156;
     private String token;
     private String orderId;
 

@@ -6,7 +6,7 @@ import cn.ehanmy.hospital.mvp.model.entity.request.BaseRequest;
 public class OrderInfoRequest extends BaseRequest {
     private String orderId;
     private String token;
-    private final int cmd = 5152;
+    private final int cmd = 10502;
 
     @Override
     public String toString() {

@@ -27,7 +27,7 @@ public class OrderInfoBean implements Serializable{
     private long totalPrice;
     private List<GoodsOrderBean> goodsList;
     private OrderRecipientInfoBean orderRecipientInfo;
-    private StoreBean hospital;
+    private HospitalBean hospital;
     private OrderMemberInfoBean member;
 
     public OrderMemberInfoBean getMember() {
@@ -225,11 +225,11 @@ public class OrderInfoBean implements Serializable{
         this.orderRecipientInfo = orderRecipientInfo;
     }
 
-    public StoreBean getHospital() {
+    public HospitalBean getHospital() {
         return hospital;
     }
 
-    public void setHospital(StoreBean hospital) {
+    public void setHospital(HospitalBean hospital) {
         this.hospital = hospital;
     }
 }
