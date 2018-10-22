@@ -47,7 +47,7 @@ public class BuyCenterActivity extends BaseActivity<BuyCenterPresenter> implemen
     @BindView(R.id.hide)
     TextView hide;
     @BindView(R.id.buy)
-    View buy;
+    TextView buy;
     @BindView(R.id.no_date)
     View noDate;
     @BindView(R.id.qr_code)
@@ -97,7 +97,13 @@ public class BuyCenterActivity extends BaseActivity<BuyCenterPresenter> implemen
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        new TitleUtil(title, this, "下单中心");
+        if (getIntent().getBooleanExtra("isBuy", true)) {
+            new TitleUtil(title, this, "下单中心");
+            buy.setText("开始下单");
+        } else {
+            new TitleUtil(title, this, "医美预约");
+            buy.setText("开始预约");
+        }
         clear_btn.setVisibility(View.GONE);
         buy.setOnClickListener(this);
         search_btn.setOnClickListener(this);
@@ -161,7 +167,11 @@ public class BuyCenterActivity extends BaseActivity<BuyCenterPresenter> implemen
                 }
                 break;
             case R.id.buy:
-                ArmsUtils.startActivity(GoodsListActivity.class);
+                if (getIntent().getBooleanExtra("isBuy", true)) {
+                    ArmsUtils.startActivity(GoodsListActivity.class);
+                } else {
+                    ArmsUtils.startActivity(HGoodsListActivity.class);
+                }
                 break;
             case R.id.qr_code:
                 customScan();

@@ -23,6 +23,8 @@ public class GoodsListHolder extends BaseHolder<Goods> {
     ImageView image;
     @BindView(R.id.title)
     TextView title;
+    @BindView(R.id.count_title)
+    View countTagV;
     @BindView(R.id.count)
     TextView count;
     @BindView(R.id.price)
@@ -30,14 +32,16 @@ public class GoodsListHolder extends BaseHolder<Goods> {
     @BindView(R.id.buy)
     TextView buy;
 
+    boolean isBuy;
     GoodsListAdapter.OnChildItemClickLinstener onChildItemClickLinstener;
 
     private AppComponent mAppComponent;
     private ImageLoader mImageLoader;//用于加载图片的管理类,默认使用 Glide,使用策略模式,可替换框架
 
 
-    public GoodsListHolder(View itemView, GoodsListAdapter.OnChildItemClickLinstener onChildItemClickLinstener) {
+    public GoodsListHolder(View itemView, boolean isBuy, GoodsListAdapter.OnChildItemClickLinstener onChildItemClickLinstener) {
         super(itemView);
+        this.isBuy = isBuy;
         mAppComponent = ArmsUtils.obtainAppComponentFromContext(itemView.getContext());
         mImageLoader = mAppComponent.imageLoader();
         this.onChildItemClickLinstener = onChildItemClickLinstener;
@@ -61,6 +65,9 @@ public class GoodsListHolder extends BaseHolder<Goods> {
         Observable.just(data.getSalePrice())
                 .subscribe(s -> priceMV.setMoneyText(String.valueOf(s)));
         buy.setOnClickListener(this);
+        buy.setText(isBuy ? "立即下单" : "立即预约");
+        countTagV.setVisibility(isBuy ? View.VISIBLE : View.INVISIBLE);
+        count.setVisibility(isBuy ? View.VISIBLE : View.INVISIBLE);
     }
 
     @Override
@@ -82,6 +89,7 @@ public class GoodsListHolder extends BaseHolder<Goods> {
                 .build());
         this.image = null;
         this.title = null;
+        this.countTagV = null;
         this.count = null;
         this.priceMV = null;
         this.buy = null;

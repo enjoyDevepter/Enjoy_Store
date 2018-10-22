@@ -64,6 +64,8 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
     View stepTwoContentV;
     @BindView(R.id.name)
     EditText nameET;
+    @BindView(R.id.realName)
+    EditText realNameET;
     @BindView(R.id.male_layout)
     View maleLayoutV;
     @BindView(R.id.male)
@@ -345,8 +347,8 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
             return;
         }
 
-        if (ArmsUtils.isEmpty(birthTV.getText().toString())) {
-            showMessage("请选择出生年月");
+        if (ArmsUtils.isEmpty(realNameET.getText().toString())) {
+            showMessage("请输入姓名");
             return;
         }
 
@@ -358,6 +360,7 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
         }
         getCache().put("nickName", nameET.getText().toString());
         getCache().put("code", inviteET.getText().toString());
+        getCache().put("realName", realNameET.getText().toString());
         mPresenter.registerLast();
 
     }
@@ -404,6 +407,7 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
     public void inputUserInfo() {
         stepOneContentV.setVisibility(View.GONE);
         stepTwoContentV.setVisibility(View.VISIBLE);
+        nameET.setText("Hi" + ((String) getCache().get("mobile")).substring(1));
         stepNameLayoutV.setBackgroundResource(R.drawable.register_current_step);
         stepNameV.setBackgroundResource(R.mipmap.reg_name_finished);
     }

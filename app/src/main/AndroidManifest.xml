@@ -121,14 +121,21 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".mvp.ui.activity.RegisterActivity"
+            android:screenOrientation="landscape"
             android:windowSoftInputMode="stateVisible|adjustResize" />
-            android:screenOrientation="landscape" />
         <activity
             android:name=".mvp.ui.activity.MemberListActivity"
             android:screenOrientation="landscape" />
         <activity
             android:name=".mvp.ui.activity.MemberInfoActivity"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".mvp.ui.activity.HGoodsListActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".mvp.ui.activity.HGoodsConfirmActivity"
+            android:screenOrientation="landscape" />
+
     </application>
 
 </manifest>

@@ -14,14 +14,16 @@ import cn.ehanmy.hospital.mvp.ui.holder.GoodsListHolder;
 public class GoodsListAdapter extends DefaultAdapter<Goods> {
 
     private OnChildItemClickLinstener onChildItemClickLinstener;
+    private boolean isBuy;
 
-    public GoodsListAdapter(List<Goods> infos) {
+    public GoodsListAdapter(List<Goods> infos, boolean isBuy) {
         super(infos);
+        this.isBuy = isBuy;
     }
 
     @Override
     public BaseHolder<Goods> getHolder(View v, int viewType) {
-        return new GoodsListHolder(v, new OnChildItemClickLinstener() {
+        return new GoodsListHolder(v, isBuy, new OnChildItemClickLinstener() {
             @Override
             public void onChildItemClick(View v, ViewName viewname, int position) {
                 if (onChildItemClickLinstener != null) {

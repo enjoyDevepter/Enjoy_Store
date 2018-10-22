@@ -136,7 +136,9 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                     ArmsUtils.startActivity(ActivityInfoActivity.class);
                 } else {
                     // 下单中心
-                    ArmsUtils.startActivity(BuyCenterActivity.class);
+                    Intent intent = new Intent(this, BuyCenterActivity.class);
+                    intent.putExtra("isBuy", true);
+                    ArmsUtils.startActivity(intent);
                 }
                 break;
             case 2:
@@ -159,6 +161,9 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                 break;
             case 4:
                 // 医美预约
+                Intent intent = new Intent(this, BuyCenterActivity.class);
+                intent.putExtra("isBuy", false);
+                ArmsUtils.startActivity(intent);
                 break;
             case 5:
                 // 我的店铺
