@@ -41,23 +41,4 @@ public class CommitOrderModule {
         return model;
     }
 
-    @ActivityScope
-    @Provides
-    RecyclerView.LayoutManager provideLayoutManager() {
-        return new LinearLayoutManager(view.getActivity(), LinearLayoutManager.HORIZONTAL, false);
-    }
-
-    @ActivityScope
-    @Provides
-    List<PayEntry> provideStoreList() {
-        return new ArrayList<>();
-    }
-
-    @ActivityScope
-    @Provides
-    PayItemAdapter provideStoreAdapter(List<PayEntry> list) {
-        return new PayItemAdapter(list);
-    }
-
-
 }

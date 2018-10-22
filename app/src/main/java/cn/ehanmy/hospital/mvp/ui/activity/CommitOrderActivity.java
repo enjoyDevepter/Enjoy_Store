@@ -6,8 +6,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.jess.arms.base.BaseActivity;
@@ -46,6 +51,12 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
  * 显示订单信息并提供支付入口（支付二维码）
  */
 public class CommitOrderActivity extends BaseActivity<CommitOrderPresenter> implements CommitOrderContract.View{
+
+
+    public static final String PAY_WEIXIN = "WEIXIN_QRCODE";
+    public static final String PAY_ZHIFUBAO = "ALIPAY_QRCODE";
+
+
     public static final String KEY_FOR_ORDER_BEAN = "KEY_FOR_ORDER_BEAN";
     public static final String KEY_FOR_GO_IN_TYPE = "key_for_go_in_type";
     private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -75,21 +86,17 @@ public class CommitOrderActivity extends BaseActivity<CommitOrderPresenter> impl
     TextView addr;
     @BindView(R.id.pay)
     View payV;
-    @BindView(R.id.pay_type)
-    View payTypeV;
-    @BindView(R.id.arList)
-    RecyclerView mRecyclerView;
-    @Inject
-    PayItemAdapter mAdapter;
-    @Inject
-    List<PayEntry> payEntries;
-    @Inject
-    RecyclerView.LayoutManager mLayoutManager;
+
     @Inject
     ImageLoader mImageLoader;
     @Inject
     AppManager appManager;
     private CustomDialog payOkDialog;
+    private CustomDialog confirmPayDialog;
+    private CustomDialog payErrorDialog;
+
+    @BindView(R.id.pay_item)
+    RadioGroup pay_item;
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -100,6 +107,53 @@ public class CommitOrderActivity extends BaseActivity<CommitOrderPresenter> impl
                 .build()
                 .inject(this);
     }
+
+
+    public void updatePayEntry(List<PayEntry> payEntries){
+        pay_item.removeAllViews();
+        RadioButton rb = null;
+        LayoutInflater from = LayoutInflater.from(this);
+        for(int i = 0;i<payEntries.size();i++){
+            PayEntry payEntry = payEntries.get(i);
+            RadioButton v = (RadioButton) from.inflate(R.layout.pay_list_item,null);
+            v.setText(payEntry.getName());
+            v.setId(i);
+            v.setTag(payEntry);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,72);
+            pay_item.addView(v,params);
+            if(i == 0){
+                rb = v;
+            }
+        }
+        pay_item.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                View viewById = group.findViewById(checkedId);
+                CommitOrderActivity.this.payEntry = (PayEntry) viewById.getTag();
+
+                String payId = payEntry.getPayId();
+                if(cacheView != null){
+                    group.removeView(cacheView);
+                    cacheView = null;
+                }
+                if(PAY_WEIXIN.equals(payId) || PAY_ZHIFUBAO.equals(payId)){
+                    int index = group.indexOfChild(viewById);
+                    View root = LayoutInflater.from(CommitOrderActivity.this).inflate(R.layout.commit_pay_rq_item,null);
+                    cacheView = root;
+                    ImageView imageView = root.findViewById(R.id.image);
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    root.setLayoutParams(params);
+                    group.addView(root,index+1);
+                    mPresenter.orderPay(payId,money,orderId,imageView);
+                }
+            }
+        });
+        if(rb != null){
+            rb.setChecked(true);
+        }
+    }
+
+    private View cacheView;
 
     @Override
     public int initView(@Nullable Bundle savedInstanceState) {
@@ -132,9 +186,13 @@ public class CommitOrderActivity extends BaseActivity<CommitOrderPresenter> impl
         updateMember(memberBean);
 //        hospital.setText(storeBean.getName());
 //        addr.setText(storeBean.getAddress());
-        ArmsUtils.configRecyclerView(mRecyclerView, mLayoutManager);
-        mRecyclerView.setAdapter(mAdapter);
+
     }
+
+
+    private String orderId;
+    private long money;
+    private PayEntry payEntry;
 
     @Override
     public void showLoading() {
@@ -183,21 +241,32 @@ public class CommitOrderActivity extends BaseActivity<CommitOrderPresenter> impl
     public void showPaySuccess(GoPayResponse response, OrderBean orderBean) {
         GoodsOrderBean goodsOrderBean = orderBean.getGoodsList().get(0);
         updateView(goodsOrderBean.getImage(),goodsOrderBean.getName()
-        ,response.getPayMoney(),response.getPayStatus(),response.getOrderId(),response.getOrderTime(),response.getPayEntryList());
+        ,response.getPayMoney(),response.getPayStatus(),response.getOrderId(),response.getOrderTime());
     }
 
     public void showPaySuccess(GoodsBuyResponse response) {
         cn.ehanmy.hospital.mvp.model.entity.goods_list.GoodsOrderBean goods = response.getGoods();
         updateView(goods.getImage(), goods.getName(),response.getPayMoney(),
-                response.getPayStatus(),response.getOrderId(),response.getOrderTime(),response.getPayEntryList());
+                response.getPayStatus(),response.getOrderId(),response.getOrderTime());
     }
 
     private void updateView(String imageUrl,String orderName,long payMoney,
-                            String payStatus,String orderId,long orderTime,List<PayEntry> payEntries){
+                            String payStatus,String orderId,long orderTime){
+        this.orderId = orderId;
+        this.money = payMoney;
         payV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPresenter.getPayStatus(orderId);
+                if(payEntry == null){
+                    showMessage("请选择付款方式");
+                    return;
+                }
+                String payId = CommitOrderActivity.this.payEntry.getPayId();
+                if(payId.startsWith("OFFLINE_")){
+                    confirmPay();
+                }else if(PAY_WEIXIN.equals(payId) || PAY_ZHIFUBAO.equals(payId)){
+                    mPresenter.getPayStatus(orderId);
+                }
             }
         });
         mImageLoader.loadImage(this,
@@ -211,16 +280,43 @@ public class CommitOrderActivity extends BaseActivity<CommitOrderPresenter> impl
         priceMV.setMoneyText(ArmsUtils.formatLong(payMoney));
         if ("1".equals(payStatus)) {
             payOk(orderId, orderTime);
-        } else {
-            payTypeV.setVisibility(View.VISIBLE);
-            payEntries.clear();
-            payEntries.addAll(payEntries);
-            mAdapter.notifyDataSetChanged();
         }
     }
 
+
+    private void confirmPay(){
+        confirmPayDialog = CustomDialog.create(getSupportFragmentManager())
+                .setViewListener(new CustomDialog.ViewListener() {
+                    @Override
+                    public void bindView(View view) {
+                        view.findViewById(R.id.confirm).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mPresenter.orderPay(payEntry.getPayId(),money,orderId);
+                            }
+                        });
+                        view.findViewById(R.id.cancle).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                confirmPayDialog.dismiss();
+                            }
+                        });
+                    }
+                })
+                .setLayoutRes(R.layout.confirm_pay_dialog_layout)
+                .setDimAmount(0.5f)
+                .isCenter(true)
+                .setCancelOutside(false)
+                .setWidth(ArmsUtils.dip2px(CommitOrderActivity.this, 228))
+                .show();
+    }
+
+
     public void payOk(String orderId, long orderTime) {
-        payTypeV.setVisibility(View.GONE);
+        if(confirmPayDialog != null){
+            confirmPayDialog.dismiss();
+            confirmPayDialog = null;
+        }
         payOkDialog = CustomDialog.create(getSupportFragmentManager())
                 .setViewListener(new CustomDialog.ViewListener() {
                     @Override
@@ -264,4 +360,28 @@ public class CommitOrderActivity extends BaseActivity<CommitOrderPresenter> impl
                 .show();
     }
 
+
+    public void showPayError(String errorInfo){
+        payErrorDialog = CustomDialog.create(getSupportFragmentManager())
+                .setViewListener(new CustomDialog.ViewListener() {
+                    @Override
+                    public void bindView(View view) {
+                        TextView content = view.findViewById(R.id.content);
+                        content.setText(errorInfo);
+                        view.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                payErrorDialog.dismiss();
+                                payErrorDialog = null;
+                            }
+                        });
+                    }
+                })
+                .setLayoutRes(R.layout.pay_error_dialog)
+                .setDimAmount(0.5f)
+                .isCenter(true)
+                .setCancelOutside(false)
+                .setWidth(456)
+                .show();
+    }
 }

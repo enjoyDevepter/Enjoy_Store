@@ -36,6 +36,8 @@ import cn.ehanmy.hospital.mvp.model.entity.order.OrderInfoRequest;
 import cn.ehanmy.hospital.mvp.model.entity.order.OrderInfoResponse;
 import cn.ehanmy.hospital.mvp.model.entity.order.OrderListRequest;
 import cn.ehanmy.hospital.mvp.model.entity.order.OrderListResponse;
+import cn.ehanmy.hospital.mvp.model.entity.order.OrderPayRequest;
+import cn.ehanmy.hospital.mvp.model.entity.order.OrderPayResponse;
 import cn.ehanmy.hospital.mvp.model.entity.placeOrder.GoodsBuyRequest;
 import cn.ehanmy.hospital.mvp.model.entity.placeOrder.GoodsBuyResponse;
 import cn.ehanmy.hospital.mvp.model.entity.reg.RegisterRequest;
@@ -226,6 +228,11 @@ public interface InterfaceService {
                                                                       request);
 
 // --------------------------------------------------------------------------------
+
+
+    @POST("gateway")
+        // 获取七牛上传信息
+    Observable<OrderPayResponse> orderPay(@Body OrderPayRequest request);
 
     // 订单列表相关接口
     @POST("gateway")

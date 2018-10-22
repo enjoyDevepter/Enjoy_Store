@@ -152,35 +152,16 @@
 
             </RelativeLayout>
 
-            <LinearLayout
-                android:id="@+id/pay_type"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6px"
+            <RadioGroup
+                android:layout_marginTop="7px"
                 android:background="@color/white"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="72px"
-                    android:layout_marginBottom="26px"
-                    android:background="@drawable/list_item_bg"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="44px"
-                    android:text="二维码支付"
-                    android:textColor="#ff000000"
-                    android:textSize="26px" />
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/arList"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:orientation="horizontal">
-
-                </android.support.v7.widget.RecyclerView>
-
-            </LinearLayout>
+                android:id="@+id/pay_item"
+                android:dividerPadding="1px"
+                android:showDividers="middle"
+                android:divider="@drawable/linearlayout_divider_v"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></RadioGroup>
 
             <TextView
                 android:id="@+id/pay"
@@ -192,7 +173,7 @@
                 android:layout_marginTop="32px"
                 android:background="@drawable/make_sure_btn"
                 android:gravity="center"
-                android:text="确认支付"
+                android:text="提交"
                 android:textColor="@color/white"
                 android:textSize="24px" />
 

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RadioButton xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/radio"
+    android:layout_width="match_parent"
+    android:layout_height="72px"
+    android:layout_gravity="left|center_vertical"
+    android:paddingLeft="43px"
+    android:drawablePadding="11px"
+    android:button="@null"
+    android:buttonTint="@null"
+    android:drawableLeft="@drawable/commit_pay_item_radio_style"
+    android:textColor="#000000"
+    android:textSize="26px" />

@@ -4,11 +4,14 @@ import android.app.Application;
 import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.OnLifecycleEvent;
 import android.content.Intent;
+import android.widget.ImageView;
 
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.http.imageloader.ImageLoader;
+import com.jess.arms.http.imageloader.glide.ImageConfigImpl;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.mvp.BasePresenter;
+import com.jess.arms.utils.ArmsUtils;
 import com.jess.arms.utils.RxLifecycleUtils;
 
 import javax.inject.Inject;
@@ -24,6 +27,7 @@ import cn.ehanmy.hospital.mvp.model.entity.order.GoPayRequest;
 import cn.ehanmy.hospital.mvp.model.entity.order.GoPayResponse;
 import cn.ehanmy.hospital.mvp.model.entity.order.OrderBean;
 import cn.ehanmy.hospital.mvp.model.entity.order.OrderMemberInfoBean;
+import cn.ehanmy.hospital.mvp.model.entity.order.OrderPayRequest;
 import cn.ehanmy.hospital.mvp.model.entity.placeOrder.GoodsBuyRequest;
 import cn.ehanmy.hospital.mvp.model.entity.placeOrder.GoodsBuyResponse;
 import cn.ehanmy.hospital.mvp.model.entity.response.GoodsConfirmResponse;
@@ -89,6 +93,8 @@ public class CommitOrderPresenter extends BasePresenter<CommitOrderContract.Mode
                     public void onNext(GoPayResponse response) {
                         if (response.isSuccess()) {
                             mRootView.showPaySuccess(response,orderBean);
+                            mRootView.updatePayEntry(response.getPayEntryList());
+
                         }else{
                             mRootView.showMessage(response.getRetDesc());
                             mRootView.killMyself();
@@ -141,7 +147,73 @@ public class CommitOrderPresenter extends BasePresenter<CommitOrderContract.Mode
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))//使用 Rxlifecycle,使 Disposable 和 Activity 一起销毁
                 .subscribe(response -> {
                     if (response.isSuccess()) {
-                        mRootView.payOk(response.getOrderId(),response.getOrderTime());
+                        if("1".equals(response.getPayStatus())){
+                            // 已支付
+                            mRootView.payOk(response.getOrderId(),response.getOrderTime());
+                        }else if("0".equals(response.getPayStatus())){
+                            // 未支付
+                            mRootView.showPayError(response.getRemind());
+                        }
+                    } else {
+                        mRootView.showMessage(response.getRetDesc());
+                    }
+                });
+    }
+
+
+    public void orderPay(String payId,long money,String orderId) {
+        OrderPayRequest request = new OrderPayRequest();
+        request.setAmount(money);
+        request.setPayId(payId);
+        request.setOrderId(orderId);
+        UserBean user = CacheUtil.getConstant(CacheUtil.CACHE_KEY_USER);
+        request.setToken(user.getToken());
+        mModel.orderPay(request)
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe(disposable -> {
+                    mRootView.showLoading();//显示下拉刷新的进度条
+                }).subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> {
+                    mRootView.hideLoading();
+                }).retryWhen(new RetryWithDelay(3, 2))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))//使用 Rxlifecycle,使 Disposable 和 Activity 一起销毁
+                .subscribe(response -> {
+                    if (response.isSuccess()) {
+                        mRootView.payOk(orderId,System.currentTimeMillis());
+                    } else {
+                        mRootView.showMessage(response.getRetDesc());
+                    }
+                });
+    }
+
+
+    public void orderPay(String payId, long money, String orderId, ImageView imageView) {
+        OrderPayRequest request = new OrderPayRequest();
+        request.setAmount(money);
+        request.setPayId(payId);
+        request.setOrderId(orderId);
+        UserBean user = CacheUtil.getConstant(CacheUtil.CACHE_KEY_USER);
+        request.setToken(user.getToken());
+        mModel.orderPay(request)
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe(disposable -> {
+                    mRootView.showLoading();//显示下拉刷新的进度条
+                }).subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> {
+                    mRootView.hideLoading();
+                }).retryWhen(new RetryWithDelay(3, 2))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))//使用 Rxlifecycle,使 Disposable 和 Activity 一起销毁
+                .subscribe(response -> {
+                    if (response.isSuccess()) {
+                        String url = response.getParams();
+                        mImageLoader.loadImage(ArmsUtils.getContext(),
+                                ImageConfigImpl
+                                        .builder()
+                                        .url(url)
+                                        .imageView(imageView)
+                                        .build());
                     } else {
                         mRootView.showMessage(response.getRetDesc());
                     }
@@ -180,6 +252,7 @@ public class CommitOrderPresenter extends BasePresenter<CommitOrderContract.Mode
                     public void onNext(GoodsBuyResponse response) {
                         if (response.isSuccess()) {
                             mRootView.showPaySuccess(response);
+                            mRootView.updatePayEntry(response.getPayEntryList());
                         }else{
                             mRootView.showMessage(response.getRetDesc());
                             mRootView.killMyself();

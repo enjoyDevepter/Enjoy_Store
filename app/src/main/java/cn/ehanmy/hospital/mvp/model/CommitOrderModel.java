@@ -17,6 +17,8 @@ import cn.ehanmy.hospital.mvp.model.entity.order.GetPayStatusRequest;
 import cn.ehanmy.hospital.mvp.model.entity.order.GetPayStatusResponse;
 import cn.ehanmy.hospital.mvp.model.entity.order.GoPayRequest;
 import cn.ehanmy.hospital.mvp.model.entity.order.GoPayResponse;
+import cn.ehanmy.hospital.mvp.model.entity.order.OrderPayRequest;
+import cn.ehanmy.hospital.mvp.model.entity.order.OrderPayResponse;
 import cn.ehanmy.hospital.mvp.model.entity.placeOrder.GoodsBuyRequest;
 import cn.ehanmy.hospital.mvp.model.entity.placeOrder.GoodsBuyResponse;
 import io.reactivex.Observable;
@@ -61,5 +63,11 @@ public class CommitOrderModel extends BaseModel implements CommitOrderContract.M
     public Observable<GetPayStatusResponse> getPayStatus(GetPayStatusRequest request) {
         return mRepositoryManager.obtainRetrofitService(InterfaceService.class)
                 .getPayStatus(request);
+    }
+
+    @Override
+    public Observable<OrderPayResponse> orderPay(OrderPayRequest request) {
+        return mRepositoryManager.obtainRetrofitService(InterfaceService.class)
+                .orderPay(request);
     }
 }
