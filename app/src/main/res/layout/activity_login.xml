@@ -98,6 +98,7 @@
                     android:background="@android:color/transparent"
                     android:hint="请输入密码"
                     android:imeOptions="actionDone"
+                    android:inputType="textPassword"
                     android:text="123456"
                     android:textSize="28px" />
 
