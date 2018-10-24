@@ -11,7 +11,7 @@ public class OrderBean implements Serializable {
     private String orderId;
     private String orderType;
     private String orderTypeDesc;
-    private String orderStatus;  // 不填时显示全部订单 1:待付款2:待二次付款;5:已完成
+    private String orderStatus;  // 1:待付款3:待发货4:待收货31:待预约;5:已完成
 
     private String orderStatusDesc;
     private long payMoney;

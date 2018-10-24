@@ -5,7 +5,7 @@ import java.util.Map;
 import cn.ehanmy.hospital.mvp.model.entity.request.BaseRequest;
 
 public class OrderPayRequest extends BaseRequest {
-    private final int cmd = 5107;
+    private final int cmd = 10504;
     private String payId;
     private long amount;
     private String orderId;

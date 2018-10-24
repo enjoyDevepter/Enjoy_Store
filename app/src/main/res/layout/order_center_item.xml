@@ -170,6 +170,23 @@
                 app:yuan_size="22px" />
         </FrameLayout>
 
+        <TextView
+            android:id="@+id/all_times"
+            android:text="总次数"
+            android:layout_marginLeft="5px"
+            style="@style/recycler_item_style"
+            android:layout_width="100px"
+            android:layout_height="match_parent"
+            app:layout_auto_baseheight="width" />
+
+        <TextView
+            android:id="@+id/shengyu_times"
+            android:text="剩余次数"
+            android:layout_marginLeft="5px"
+            style="@style/recycler_item_style"
+            android:layout_width="100px"
+            android:layout_height="match_parent"
+            app:layout_auto_baseheight="width" />
 
         <TextView
             android:id="@+id/order_time"

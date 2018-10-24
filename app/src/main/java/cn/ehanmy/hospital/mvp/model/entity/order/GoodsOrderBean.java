@@ -21,9 +21,9 @@ public class GoodsOrderBean implements Serializable{
     private GoodsSpecValueBean goodsSpecValue;
     private List<SetMealGoodsBean> setMealGoodsList;
     private String projectId;
-    private int times;
-    private int surplusTimes;
-    private String status;
+    private int times;  // 总次数
+    private int surplusTimes;  // 剩余次数
+    private String status;  // 1:可预约2:预约中3:已预约4:已服务5:已转赠
     private String reservationId;
     private String reservationDate;
     private String reservationTime;

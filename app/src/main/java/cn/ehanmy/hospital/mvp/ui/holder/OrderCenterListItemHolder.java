@@ -82,6 +82,12 @@ public class OrderCenterListItemHolder extends BaseHolder<OrderBean> {
     @BindView(R.id.pay)
     View pay;
 
+    @BindView(R.id.all_times)
+    TextView all_times;
+    @BindView(R.id.shengyu_times)
+    TextView shengyu_times;
+
+
     private OrderCenterListAdapter.OnChildItemClickLinstener onChildItemClickLinstener;
 
     public OrderCenterListItemHolder(View itemView, OrderCenterListAdapter.OnChildItemClickLinstener onChildItemClickLinstener) {
@@ -119,7 +125,7 @@ public class OrderCenterListItemHolder extends BaseHolder<OrderBean> {
         } else {
             switch (orderStatus) {
                 case "1":
-                case "2":
+                case "31":
                     order_status.setTextColor(Color.parseColor("#0096FF"));
                     break;
                 case "5":
@@ -133,12 +139,16 @@ public class OrderCenterListItemHolder extends BaseHolder<OrderBean> {
         order_price_title.setVisibility(View.GONE);
         order_secend_price_title.setVisibility(View.GONE);
         order_price.setVisibility(View.VISIBLE);
+        all_times.setVisibility(View.VISIBLE);
+        shengyu_times.setVisibility(View.VISIBLE);
         order_secend_price.setVisibility(View.VISIBLE);
         order_project.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
         if (goodsOrderBean != null) {
             order_project.setText(goodsOrderBean.getName());
             order_price.setMoneyText(String.valueOf(goodsOrderBean.getSalePrice()));
             order_secend_price.setMoneyText(String.valueOf(goodsOrderBean.getTailMoney()));
+            all_times.setText(""+goodsOrderBean.getTimes());
+            shengyu_times.setText(""+goodsOrderBean.getSurplusTimes());
         }
         if (member != null) {
             order_phone.setText(member.getMobile());
@@ -164,7 +174,7 @@ public class OrderCenterListItemHolder extends BaseHolder<OrderBean> {
                     pay.setVisibility(View.VISIBLE);
                     order_secend_parent.setVisibility(View.GONE);
                     break;
-                case "2":
+                case "31":
                     pay.setVisibility(View.VISIBLE);
                     order_secend_parent.setVisibility(View.VISIBLE);
                     break;
@@ -191,6 +201,8 @@ public class OrderCenterListItemHolder extends BaseHolder<OrderBean> {
         this.order_time = null;
         this.detail = null;
         this.pay = null;
+        this.all_times = null;
+        this.shengyu_times = null;
     }
 }
 

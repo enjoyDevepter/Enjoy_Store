@@ -18,7 +18,7 @@ public class OrderListRequest extends BaseRequest {
     }
 
     private String search;
-    private String orderStatus;
+    private String orderStatus;  // 1:待付款3:待发货4:待收货31:待预约;5:已完成
 
     public String getOrderStatus() {
         return orderStatus;

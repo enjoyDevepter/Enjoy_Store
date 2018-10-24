@@ -91,7 +91,7 @@ public class OrderFormCenterActivity extends BaseActivity<OrderFormCenterPresent
         clear.setOnClickListener(this);
         new TitleUtil(title_Layout, this, "订单中心");
         tabLayout.addTab(tabLayout.newTab().setTag("1").setText("未支付"));
-        tabLayout.addTab(tabLayout.newTab().setTag("2").setText("二次付款"));
+        tabLayout.addTab(tabLayout.newTab().setTag("31").setText("可消费"));
         tabLayout.addTab(tabLayout.newTab().setTag("5").setText("已完成"));
         tabLayout.addTab(tabLayout.newTab().setText("全部"));
         tabLayout.addOnTabSelectedListener(this);
@@ -258,7 +258,7 @@ public class OrderFormCenterActivity extends BaseActivity<OrderFormCenterPresent
                 provideCache().put("type", "1");
                 break;
             case 1:
-                provideCache().put("type", "2");
+                provideCache().put("type", "31");
                 break;
             case 2:
                 provideCache().put("type", "5");
