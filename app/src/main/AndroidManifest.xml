@@ -135,7 +135,9 @@
         <activity
             android:name=".mvp.ui.activity.HGoodsConfirmActivity"
             android:screenOrientation="landscape" />
-
+        <activity
+            android:name=".mvp.ui.activity.ChoiceHospitalActivity"
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>

@@ -13,32 +13,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.ehanmy.hospital.app;
+package cn.ehanmy.hospital.mvp.ui.adapter;
 
-import org.simple.eventbus.EventBus;
+import android.view.View;
+
+import com.jess.arms.base.BaseHolder;
+import com.jess.arms.base.DefaultAdapter;
+
+import java.util.List;
+
+import cn.ehanmy.hospital.R;
+import cn.ehanmy.hospital.mvp.model.entity.Hospital;
+import cn.ehanmy.hospital.mvp.ui.holder.HospitalItemHolder;
 
 /**
  * ================================================
- * 放置 {@link EventBus} 的 Tag ,便于检索
- *
- * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#3.5">EventBusTags wiki 官方文档</a>
- * Created by JessYan on 8/30/2016 16:39
+ * 展示 {@link DefaultAdapter} 的用法
+ * <p>
+ * Created by JessYan on 09/04/2016 12:57
  * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
-public interface EventBusTags {
+public class HospitalListAdapter extends DefaultAdapter<Hospital> {
+    public HospitalListAdapter(List<Hospital> stores) {
+        super(stores);
+    }
 
-    /**
-     * 城市切换
-     */
-    String CITY_CHANGE_EVENT = "city_change_tag";
-    /**
-     * 登录状态改变
-     */
-    String LOGIN_STATUS_CHANGE_EVENT = "login_status_change_Event";
-    String CHANGE_APPOINTMENT_TIME = "change_appointment_time";
-    String APPOINTMENTS_CHANGE_EVENT = "appointments_change_event";
-    String HOSPITAL_CHANGE_EVENT = "hospital_change_event";
+    @Override
+    public BaseHolder<Hospital> getHolder(View v, int viewType) {
+        return new HospitalItemHolder(v);
+    }
 
+    @Override
+    public int getLayoutId(int viewType) {
+        return R.layout.stroe_list_item;
+    }
 }

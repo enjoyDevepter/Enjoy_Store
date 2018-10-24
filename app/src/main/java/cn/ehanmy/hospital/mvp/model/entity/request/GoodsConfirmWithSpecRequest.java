@@ -4,7 +4,7 @@ import cn.ehanmy.hospital.mvp.model.entity.goods_list.GoodsConfirmWithSpecBean;
 
 // 2.3.2	获取医美项目确认信息
 public class GoodsConfirmWithSpecRequest extends BaseRequest {
-    private final int cmd = 10154;
+    private int cmd = 10154;
     private String token;
     private GoodsConfirmWithSpecBean goods;
     private String memberId;
@@ -55,5 +55,9 @@ public class GoodsConfirmWithSpecRequest extends BaseRequest {
 
     public int getCmd() {
         return cmd;
+    }
+
+    public void setCmd(int cmd) {
+        this.cmd = cmd;
     }
 }

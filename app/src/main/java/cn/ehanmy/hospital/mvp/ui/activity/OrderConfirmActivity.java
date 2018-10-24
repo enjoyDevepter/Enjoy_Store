@@ -23,10 +23,13 @@ import com.jess.arms.http.imageloader.glide.ImageConfigImpl;
 import com.jess.arms.integration.cache.Cache;
 import com.jess.arms.utils.ArmsUtils;
 
+import org.simple.eventbus.Subscriber;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import cn.ehanmy.hospital.R;
+import cn.ehanmy.hospital.app.EventBusTags;
 import cn.ehanmy.hospital.di.component.DaggerOrderConfirmComponent;
 import cn.ehanmy.hospital.di.module.OrderConfirmModule;
 import cn.ehanmy.hospital.mvp.contract.OrderConfirmContract;
@@ -34,6 +37,9 @@ import cn.ehanmy.hospital.mvp.model.entity.goods_list.Goods;
 import cn.ehanmy.hospital.mvp.model.entity.goods_list.GoodsSpecValueBean;
 import cn.ehanmy.hospital.mvp.model.entity.member_info.MemberBean;
 import cn.ehanmy.hospital.mvp.model.entity.response.GoodsConfirmResponse;
+import cn.ehanmy.hospital.mvp.model.entity.store.StoreBean;
+import cn.ehanmy.hospital.mvp.model.entity.user_appointment.ReservationDateBean;
+import cn.ehanmy.hospital.mvp.model.entity.user_appointment.ReservationTimeBean;
 import cn.ehanmy.hospital.mvp.presenter.OrderConfirmPresenter;
 import cn.ehanmy.hospital.mvp.ui.adapter.SpecLabelTextProvider;
 import cn.ehanmy.hospital.mvp.ui.widget.LabelsView;
@@ -55,8 +61,8 @@ public class OrderConfirmActivity extends BaseActivity<OrderConfirmPresenter> im
     TextView memberCodeTV;
     @BindView(R.id.hospital_layout)
     View hospitalV;
-    @BindView(R.id.hosptial)
-    TextView hosptialTV;
+    @BindView(R.id.store)
+    TextView storeTV;
     @BindView(R.id.remark)
     EditText remarkET;
     @BindView(R.id.image)
@@ -77,6 +83,10 @@ public class OrderConfirmActivity extends BaseActivity<OrderConfirmPresenter> im
     MoneyView payMoneyTV;
     @BindView(R.id.confirm)
     View confirmV;
+    @BindView(R.id.time_layout)
+    View timeV;
+    @BindView(R.id.time)
+    TextView timeTV;
     @BindView(R.id.spec)
     View specV;
     @BindView(R.id.mask_spec)
@@ -122,6 +132,7 @@ public class OrderConfirmActivity extends BaseActivity<OrderConfirmPresenter> im
         titleTV.setText("确认订单");
         backV.setOnClickListener(this);
         specV.setOnClickListener(this);
+        timeV.setOnClickListener(this);
         confirmV.setOnClickListener(this);
         hospitalV.setOnClickListener(this);
         maskSpecV.setOnClickListener(this);
@@ -130,6 +141,8 @@ public class OrderConfirmActivity extends BaseActivity<OrderConfirmPresenter> im
         moneyET.setOnEditorActionListener(this);
         MemberBean memberBean = CacheUtil.getConstant(CacheUtil.CACHE_KEY_MEMBER);
         memberCodeTV.setText(memberBean.getUserName());
+        StoreBean storeBean = CacheUtil.getConstant(CacheUtil.CACHE_KEY_STORE_INFO);
+        storeTV.setText(storeBean.getName());
     }
 
     @Override
@@ -229,8 +242,10 @@ public class OrderConfirmActivity extends BaseActivity<OrderConfirmPresenter> im
                 getCache().put("remark", remarkET.getText() + "");
                 mPresenter.placeGoodsOrder();
                 break;
-            case R.id.hospital_layout:
-                // 选择医院
+            case R.id.time_layout:
+                Intent intent = new Intent(this, ChoiceTimeActivity.class);
+                intent.putExtra("from", "placeOrder");
+                ArmsUtils.startActivity(intent);
                 break;
         }
     }
@@ -262,6 +277,20 @@ public class OrderConfirmActivity extends BaseActivity<OrderConfirmPresenter> im
             specLayoutV.setVisibility(View.GONE);
             specLayoutV.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.for_buttom_out));
         }
+    }
+
+    @Subscriber(tag = EventBusTags.CHANGE_APPOINTMENT_TIME)
+    private void updateAppointmentInfo(ReservationDateBean reservationDateBean) {
+        String reservationTime = "";
+        for (ReservationTimeBean time : reservationDateBean.getReservationTimeList()) {
+            if (time.isChoose()) {
+                reservationTime = time.getTime();
+                break;
+            }
+        }
+        timeTV.setText(reservationDateBean.getDate() + "   " + reservationTime);
+        provideCache().put("reservationDate", reservationDateBean.getDate());
+        provideCache().put("reservationTime", reservationTime);
     }
 
     @Override

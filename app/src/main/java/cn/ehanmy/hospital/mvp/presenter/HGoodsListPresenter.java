@@ -65,6 +65,7 @@ public class HGoodsListPresenter extends BasePresenter<HGoodsListContract.Model,
 
     private void getCategory() {
         CategoryRequest request = new CategoryRequest();
+        request.setCmd(10204);
         mModel.getCategory(request)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

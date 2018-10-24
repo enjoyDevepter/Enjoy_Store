@@ -10,6 +10,13 @@ import com.jess.arms.mvp.BaseModel;
 import javax.inject.Inject;
 
 import cn.ehanmy.hospital.mvp.contract.HGoodsConfirmContract;
+import cn.ehanmy.hospital.mvp.model.api.service.InterfaceService;
+import cn.ehanmy.hospital.mvp.model.entity.request.GoodsConfirmRequest;
+import cn.ehanmy.hospital.mvp.model.entity.request.GoodsConfirmWithSpecRequest;
+import cn.ehanmy.hospital.mvp.model.entity.request.HGoodsConfirmRequest;
+import cn.ehanmy.hospital.mvp.model.entity.response.BaseResponse;
+import cn.ehanmy.hospital.mvp.model.entity.response.GoodsConfirmResponse;
+import io.reactivex.Observable;
 
 
 @ActivityScope
@@ -29,6 +36,24 @@ public class HGoodsConfirmModel extends BaseModel implements HGoodsConfirmContra
         super.onDestroy();
         this.mGson = null;
         this.mApplication = null;
+    }
+
+    @Override
+    public Observable<GoodsConfirmResponse> confirmGoods(GoodsConfirmRequest request) {
+        return mRepositoryManager.obtainRetrofitService(InterfaceService.class)
+                .confirmGoods(request);
+    }
+
+    @Override
+    public Observable<GoodsConfirmResponse> confirmGoodsWithSpec(GoodsConfirmWithSpecRequest request) {
+        return mRepositoryManager.obtainRetrofitService(InterfaceService.class)
+                .confirmGoodsWithSpec(request);
+    }
+
+    @Override
+    public Observable<BaseResponse> makeAppointment(HGoodsConfirmRequest request) {
+        return mRepositoryManager.obtainRetrofitService(InterfaceService.class)
+                .makeAppointment(request);
     }
 
 }

@@ -1,4 +1,4 @@
-package cn.ehanmy.hospital.mvp.model.entity.goods_list;
+package cn.ehanmy.hospital.mvp.model.entity.hospital;
 
 import cn.ehanmy.hospital.mvp.model.entity.request.BaseRequest;
 
@@ -6,9 +6,8 @@ import cn.ehanmy.hospital.mvp.model.entity.request.BaseRequest;
  * Created by guomin on 2018/7/25.
  */
 
-// 2.3.4	获取医美商品分类列表
-public class CategoryRequest extends BaseRequest {
-    private int cmd = 10201;
+public class SimpleRequest extends BaseRequest {
+    private int cmd;
 
     public int getCmd() {
         return cmd;
@@ -20,7 +19,7 @@ public class CategoryRequest extends BaseRequest {
 
     @Override
     public String toString() {
-        return "CategoryRequest{" +
+        return "SimpleRequest{" +
                 "cmd=" + cmd +
                 '}';
     }

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/title" />
+
+    <LinearLayout
+        android:id="@+id/district_layout"
+        android:layout_width="match_parent"
+        android:layout_height="84px"
+        android:layout_marginTop="6px"
+        android:background="@drawable/list_item_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="44px"
+            android:text="所在区域："
+            android:textColor="#FF000000"
+            android:textSize="26px" />
+
+
+        <TextView
+            android:id="@+id/district"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:textColor="#FF000000"
+            android:textSize="26px" />
+
+        <View
+            android:layout_width="10px"
+            android:layout_height="18px"
+            android:layout_marginRight="16px"
+            android:background="@mipmap/more_right" />
+
+    </LinearLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/white">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/stores"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none" />
+
+            <LinearLayout
+                android:id="@+id/no_date"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <View
+                    android:layout_width="188px"
+                    android:layout_height="120px"
+                    android:layout_marginTop="60px"
+                    android:background="@mipmap/nodata"
+                    app:layout_auto_baseheight="width" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="60px"
+                    android:text="暂无数据"
+                    android:textColor="#FF666666"
+                    android:textSize="26px" />
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <TextView
+        android:id="@+id/confirm"
+        android:layout_width="match_parent"
+        android:layout_height="82px"
+        android:layout_marginBottom="10px"
+        android:layout_marginLeft="50px"
+        android:layout_marginRight="50px"
+        android:layout_marginTop="10px"
+        android:background="@drawable/order_confirm_btn_bg"
+        android:gravity="center"
+        android:text="确认"
+        android:textColor="#FFFFFF"
+        android:textSize="26px" />
+</LinearLayout>

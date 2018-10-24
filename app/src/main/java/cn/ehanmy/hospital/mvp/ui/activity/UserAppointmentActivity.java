@@ -201,6 +201,7 @@ public class UserAppointmentActivity extends BaseActivity<UserAppointmentPresent
                 switch (viewname) {
                     case CHANGE_APPOINTMENT:
                         Intent intent2 = new Intent(UserAppointmentActivity.this, ChoiceTimeActivity.class);
+                        intent2.putExtra("from", "userAppointment");
                         intent2.putExtra("reservationId", mAdapter.getItem(position).getReservationId());
                         intent2.putExtra("projectId", mAdapter.getItem(position).getProjectId());
                         UserAppointmentActivity.this.startActivityForResult(intent2, 1);

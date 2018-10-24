@@ -3,20 +3,25 @@ package cn.ehanmy.hospital.mvp.model.entity.request;
 import cn.ehanmy.hospital.mvp.model.entity.goods_list.GoodsConfirmBean;
 
 // 2.3.2	获取医美项目确认信息
-public class GoodsConfirmRequest extends BaseRequest {
+public class HGoodsConfirmRequest extends BaseRequest {
     private String token;
     private GoodsConfirmBean goods;
+    private String hospitalId;
+    private String reservationDate;
+    private String reservationTime;
     private String memberId;
-    private long money;  // 单位分
-    private int cmd = 10152;
+    private int cmd = 10105;
 
     @Override
     public String toString() {
-        return "GoodsConfirmRequest{" +
+        return "HGoodsConfirmRequest{" +
                 "token='" + token + '\'' +
                 ", goods=" + goods +
+                ", hospitalId='" + hospitalId + '\'' +
+                ", reservationDate='" + reservationDate + '\'' +
+                ", reservationTime='" + reservationTime + '\'' +
                 ", memberId='" + memberId + '\'' +
-                ", money=" + money +
+                ", cmd=" + cmd +
                 '}';
     }
 
@@ -52,11 +57,27 @@ public class GoodsConfirmRequest extends BaseRequest {
         this.memberId = memberId;
     }
 
-    public long getMoney() {
-        return money;
+    public String getHospitalId() {
+        return hospitalId;
     }
 
-    public void setMoney(long money) {
-        this.money = money;
+    public void setHospitalId(String hospitalId) {
+        this.hospitalId = hospitalId;
+    }
+
+    public String getReservationDate() {
+        return reservationDate;
+    }
+
+    public void setReservationDate(String reservationDate) {
+        this.reservationDate = reservationDate;
+    }
+
+    public String getReservationTime() {
+        return reservationTime;
+    }
+
+    public void setReservationTime(String reservationTime) {
+        this.reservationTime = reservationTime;
     }
 }

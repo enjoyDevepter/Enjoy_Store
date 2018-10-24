@@ -241,6 +241,8 @@ public class CommitOrderPresenter extends BasePresenter<CommitOrderContract.Mode
         request.setTotalPrice(goodsConfirmResponse.getTotalPrice());
         request.setRemark(remark);
         request.setToken(userBean.getToken());
+        request.setReservationDate(mRootView.getActivity().getIntent().getStringExtra("reservationDate"));
+        request.setReservationTime(mRootView.getActivity().getIntent().getStringExtra("reservationTime"));
 
         mModel.placeGoodsOrder(request)
                 .subscribeOn(Schedulers.io())

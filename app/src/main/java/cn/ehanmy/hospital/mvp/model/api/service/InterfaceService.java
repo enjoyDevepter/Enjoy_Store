@@ -1,5 +1,7 @@
 package cn.ehanmy.hospital.mvp.model.api.service;
 
+import cn.ehanmy.hospital.mvp.model.entity.GetAppointmentTimeRequest;
+import cn.ehanmy.hospital.mvp.model.entity.GetAppointmentTimeResponse;
 import cn.ehanmy.hospital.mvp.model.entity.QiniuRequest;
 import cn.ehanmy.hospital.mvp.model.entity.QiniuResponse;
 import cn.ehanmy.hospital.mvp.model.entity.activity.AddActivityRequest;
@@ -14,10 +16,14 @@ import cn.ehanmy.hospital.mvp.model.entity.goods_list.CategoryRequest;
 import cn.ehanmy.hospital.mvp.model.entity.goods_list.CategoryResponse;
 import cn.ehanmy.hospital.mvp.model.entity.goods_list.GoodsPageRequest;
 import cn.ehanmy.hospital.mvp.model.entity.goods_list.GoodsPageResponse;
+import cn.ehanmy.hospital.mvp.model.entity.hospital.AllAddressResponse;
 import cn.ehanmy.hospital.mvp.model.entity.hospital.ChangeHospitalImageRequest;
 import cn.ehanmy.hospital.mvp.model.entity.hospital.ChangeHospitalImageResponse;
 import cn.ehanmy.hospital.mvp.model.entity.hospital.ChangeHospitalInfoRequest;
 import cn.ehanmy.hospital.mvp.model.entity.hospital.ChangeHospitalInfoResponse;
+import cn.ehanmy.hospital.mvp.model.entity.hospital.HospitalListRequest;
+import cn.ehanmy.hospital.mvp.model.entity.hospital.HospitalListResponse;
+import cn.ehanmy.hospital.mvp.model.entity.hospital.SimpleRequest;
 import cn.ehanmy.hospital.mvp.model.entity.member_info.GetMemberListRequest;
 import cn.ehanmy.hospital.mvp.model.entity.member_info.GetMemberListResponse;
 import cn.ehanmy.hospital.mvp.model.entity.member_info.GetMessageListRequest;
@@ -45,6 +51,7 @@ import cn.ehanmy.hospital.mvp.model.entity.reg.RegisterResponse;
 import cn.ehanmy.hospital.mvp.model.entity.reg.VeritfyRequest;
 import cn.ehanmy.hospital.mvp.model.entity.request.GoodsConfirmRequest;
 import cn.ehanmy.hospital.mvp.model.entity.request.GoodsConfirmWithSpecRequest;
+import cn.ehanmy.hospital.mvp.model.entity.request.HGoodsConfirmRequest;
 import cn.ehanmy.hospital.mvp.model.entity.request.LoginRequest;
 import cn.ehanmy.hospital.mvp.model.entity.response.BaseResponse;
 import cn.ehanmy.hospital.mvp.model.entity.response.GoodsConfirmResponse;
@@ -79,8 +86,6 @@ import cn.ehanmy.hospital.mvp.model.entity.user_appointment.GetUserAppointmentIn
 import cn.ehanmy.hospital.mvp.model.entity.user_appointment.GetUserAppointmentInfoResponse;
 import cn.ehanmy.hospital.mvp.model.entity.user_appointment.GetUserAppointmentPageRequest;
 import cn.ehanmy.hospital.mvp.model.entity.user_appointment.GetUserAppointmentPageResponse;
-import cn.ehanmy.hospital.mvp.model.entity.user_appointment.GetUserAppointmentTimeRequest;
-import cn.ehanmy.hospital.mvp.model.entity.user_appointment.GetUserAppointmentTimeResponse;
 import cn.ehanmy.hospital.mvp.model.entity.user_appointment.HuakouRequest;
 import cn.ehanmy.hospital.mvp.model.entity.user_appointment.HuakouResponse;
 import io.reactivex.Observable;
@@ -164,8 +169,7 @@ public interface InterfaceService {
 
     // 获取用户预约时间
     @POST("gateway")
-    Observable<GetUserAppointmentTimeResponse> getUserAppointmentTime
-    (@Body GetUserAppointmentTimeRequest request);
+    Observable<GetAppointmentTimeResponse> getUserAppointmentTime(@Body GetAppointmentTimeRequest request);
 
     // 划扣账单
     @POST("gateway")
@@ -189,6 +193,10 @@ public interface InterfaceService {
     @POST("gateway")
     Observable<GoodsConfirmResponse> confirmGoodsWithSpec(@Body GoodsConfirmWithSpecRequest request);
 
+    // 确认预约
+    @POST("gateway")
+    Observable<BaseResponse> makeAppointment(@Body HGoodsConfirmRequest request);
+
     @POST("gateway")
     Observable<GoodsBuyResponse> placeGoodsOrder(@Body GoodsBuyRequest request);
 
@@ -198,20 +206,18 @@ public interface InterfaceService {
     @POST("gateway")
         // 修改密码
     Observable<ChangePasswordResponse> changePassword(@Body ChangePasswordRequest request);
-    // 获取用户预约列表
-    @POST("gateway")
-    Observable<GetUserAppointmentPageResponse> getUserAppointmentPage
-    (@Body GetUserAppointmentPageRequest request);
 
     // 获取用户预约列表
     @POST("gateway")
-    Observable<ConfirmAppointmentResponse> confirmAppointment(@Body ConfirmAppointmentRequest
-                                                                      request);
+    Observable<GetUserAppointmentPageResponse> getUserAppointmentPage(@Body GetUserAppointmentPageRequest request);
 
     // 获取用户预约列表
     @POST("gateway")
-    Observable<CancelAppointmentResponse> cancelAppointment(@Body CancelAppointmentRequest
-                                                                    request);
+    Observable<ConfirmAppointmentResponse> confirmAppointment(@Body ConfirmAppointmentRequest request);
+
+    // 获取用户预约列表
+    @POST("gateway")
+    Observable<CancelAppointmentResponse> cancelAppointment(@Body CancelAppointmentRequest request);
 
     // 添加活动
     @POST("gateway")
@@ -219,13 +225,11 @@ public interface InterfaceService {
 
     // 修改活动信息
     @POST("gateway")
-    Observable<ChangeActivityInfoResponse> changeActivityInfo(@Body ChangeActivityInfoRequest
-                                                                      request);
+    Observable<ChangeActivityInfoResponse> changeActivityInfo(@Body ChangeActivityInfoRequest request);
 
     // 删除活动
     @POST("gateway")
-    Observable<DeleteActivityInfoResponse> deleteActivityInfo(@Body DeleteActivityInfoRequest
-                                                                      request);
+    Observable<DeleteActivityInfoResponse> deleteActivityInfo(@Body DeleteActivityInfoRequest request);
 
 // --------------------------------------------------------------------------------
 
@@ -271,4 +275,10 @@ public interface InterfaceService {
     // 获取支付状态
     @POST("gateway")
     Observable<GetPayStatusResponse> getPayStatus(@Body GetPayStatusRequest request);
+
+    @POST("gateway")
+    Observable<AllAddressResponse> getAllAddressList(@Body SimpleRequest request);
+
+    @POST("gateway")
+    Observable<HospitalListResponse> getHospitals(@Body HospitalListRequest request);
 }

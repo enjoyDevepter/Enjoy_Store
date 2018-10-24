@@ -130,11 +130,17 @@ public class OrderConfirmPresenter extends BasePresenter<OrderConfirmContract.Mo
     }
 
     public void placeGoodsOrder() {
+        if (ArmsUtils.isEmpty((String) mRootView.getCache().get("reservationTime"))) {
+            mRootView.showMessage("请选择预约时间");
+            return;
+        }
         // 跳转到支付页面
         Intent payIntent = new Intent(mRootView.getActivity(), CommitOrderActivity.class);
         payIntent.putExtra(CommitOrderActivity.KEY_FOR_GO_IN_TYPE, CommitOrderActivity.GO_IN_TYPE_CONFIRM);
         payIntent.putExtra("order_info", goodsConfirmResponse);
         payIntent.putExtra("remark", (String) mRootView.getCache().get("remark"));
+        payIntent.putExtra("reservationDate", (String) mRootView.getCache().get("reservationDate"));
+        payIntent.putExtra("reservationTime", (String) mRootView.getCache().get("reservationTime"));
         ArmsUtils.startActivity(payIntent);
     }
 }

@@ -16,6 +16,7 @@ import com.jess.arms.base.DefaultAdapter;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.integration.cache.Cache;
 import com.jess.arms.utils.ArmsUtils;
+import com.paginate.Paginate;
 
 import org.simple.eventbus.EventBus;
 
@@ -24,6 +25,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import cn.ehanmy.hospital.R;
 import cn.ehanmy.hospital.app.EventBusTags;
 import cn.ehanmy.hospital.di.component.DaggerChoiceTimeComponent;
 import cn.ehanmy.hospital.di.module.ChoiceTimeModule;
@@ -31,16 +33,13 @@ import cn.ehanmy.hospital.mvp.contract.ChoiceTimeContract;
 import cn.ehanmy.hospital.mvp.model.entity.user_appointment.ReservationDateBean;
 import cn.ehanmy.hospital.mvp.model.entity.user_appointment.ReservationTimeBean;
 import cn.ehanmy.hospital.mvp.presenter.ChoiceTimePresenter;
-
-import cn.ehanmy.hospital.R;
 import cn.ehanmy.hospital.mvp.ui.adapter.DateAdapter;
 import cn.ehanmy.hospital.mvp.ui.adapter.TimeAdapter;
-
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
 
-public class ChoiceTimeActivity extends BaseActivity<ChoiceTimePresenter> implements ChoiceTimeContract.View,View.OnClickListener,DefaultAdapter.OnRecyclerViewItemClickListener {
+public class ChoiceTimeActivity extends BaseActivity<ChoiceTimePresenter> implements ChoiceTimeContract.View, View.OnClickListener, DefaultAdapter.OnRecyclerViewItemClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.back)
     View backV;
@@ -60,6 +59,9 @@ public class ChoiceTimeActivity extends BaseActivity<ChoiceTimePresenter> implem
     RecyclerView.LayoutManager layoutManager;
     @Inject
     TimeAdapter timeAdapter;
+    private Paginate mPaginate;
+    private boolean isLoadingMore;
+    private boolean hasLoadedAllItems;
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -87,6 +89,8 @@ public class ChoiceTimeActivity extends BaseActivity<ChoiceTimePresenter> implem
         ArmsUtils.configRecyclerView(timeRV, new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         dateRV.setAdapter(dateAdapter);
         timeRV.setAdapter(timeAdapter);
+        swipeRefreshLayout.setOnRefreshListener(this);
+        initPaginate();
     }
 
     @Override
@@ -98,7 +102,6 @@ public class ChoiceTimeActivity extends BaseActivity<ChoiceTimePresenter> implem
     public void hideLoading() {
         swipeRefreshLayout.setRefreshing(false);
     }
-
 
 
     @Override
@@ -130,7 +133,11 @@ public class ChoiceTimeActivity extends BaseActivity<ChoiceTimePresenter> implem
                     showMessage("请选择预约时间");
                     return;
                 }
-                mPresenter.modifyAppointmentTime();
+                String from = getIntent().getStringExtra("from");
+                if ("hAppointment".equals(from) || "placeOrder".equals(from) || "userAppointment".equals(from)) {
+                    EventBus.getDefault().post(dateAdapter.getInfos().get((int) provideCache().get("dateIndex")), EventBusTags.CHANGE_APPOINTMENT_TIME);
+                    killMyself();
+                }
                 break;
         }
     }
@@ -144,6 +151,57 @@ public class ChoiceTimeActivity extends BaseActivity<ChoiceTimePresenter> implem
     public Cache getCache() {
         return provideCache();
     }
+
+    /**
+     * 开始加载更多
+     */
+    @Override
+    public void startLoadMore() {
+        isLoadingMore = true;
+    }
+
+    /**
+     * 结束加载更多
+     */
+    @Override
+    public void endLoadMore() {
+        isLoadingMore = false;
+    }
+
+    @Override
+    public void setLoadedAllItems(boolean has) {
+        this.hasLoadedAllItems = has;
+    }
+
+    /**
+     * 初始化Paginate,用于加载更多
+     */
+    private void initPaginate() {
+        if (mPaginate == null) {
+            Paginate.Callbacks callbacks = new Paginate.Callbacks() {
+                @Override
+                public void onLoadMore() {
+                    mPresenter.getAppointmentTime(false);
+                }
+
+                @Override
+                public boolean isLoading() {
+                    return isLoadingMore;
+                }
+
+                @Override
+                public boolean hasLoadedAllItems() {
+                    return hasLoadedAllItems;
+                }
+            };
+
+            mPaginate = Paginate.with(dateRV, callbacks)
+                    .setLoadingTriggerThreshold(0)
+                    .build();
+            mPaginate.setHasMoreDataToLoad(false);
+        }
+    }
+
 
     @Override
     public void onItemClick(View view, int viewType, Object data, int position) {
@@ -161,6 +219,7 @@ public class ChoiceTimeActivity extends BaseActivity<ChoiceTimePresenter> implem
                 }
                 provideCache().put("appointmentsTime", "");
                 provideCache().put("appointmentsDate", appointments.get(position).getDate());
+                provideCache().put("dateIndex", position);
                 dateAdapter.notifyDataSetChanged();
                 timeAdapter.notifyDataSetChanged();
                 break;
@@ -170,6 +229,7 @@ public class ChoiceTimeActivity extends BaseActivity<ChoiceTimePresenter> implem
                 }
                 timeAdapter.notifyDataSetChanged();
                 provideCache().put("appointmentsTime", timeList.get(position).getTime());
+                provideCache().put("timeIndex", position);
                 break;
         }
     }
@@ -179,5 +239,10 @@ public class ChoiceTimeActivity extends BaseActivity<ChoiceTimePresenter> implem
         DefaultAdapter.releaseAllHolder(dateRV);//super.onDestroy()之后会unbind,所有view被置为null,所以必须在之前调用
         DefaultAdapter.releaseAllHolder(timeRV);//super.onDestroy()之后会unbind,所有view被置为null,所以必须在之前调用
         super.onDestroy();
+    }
+
+    @Override
+    public void onRefresh() {
+        mPresenter.getAppointmentTime(true);
     }
 }

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_item_bg"
+    android:paddingBottom="20px"
+    android:paddingTop="20px">
+
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="44px"
+        android:textColor="#FF000000"
+        android:textSize="26px"
+        app:layout_auto_baseheight="width" />
+
+    <TextView
+        android:id="@+id/distance_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/name"
+        android:layout_below="@id/name"
+        android:layout_marginTop="16px"
+        android:text="距离："
+        android:textColor="#FF666666"
+        android:textSize="24px"
+        app:layout_auto_baseheight="width" />
+
+    <TextView
+        android:id="@+id/distance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/distance_tag"
+        android:layout_below="@id/name"
+        android:layout_toRightOf="@id/distance_tag"
+        android:textColor="#FF666666"
+        android:textSize="24px"
+        app:layout_auto_baseheight="width" />
+
+
+    <TextView
+        android:id="@+id/address_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/distance_tag"
+        android:layout_below="@id/distance_tag"
+        android:layout_marginTop="16px"
+        android:text="地址："
+        android:textColor="#FF666666"
+        android:textSize="24px"
+        app:layout_auto_baseheight="width" />
+
+    <TextView
+        android:id="@+id/address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/address_tag"
+        android:layout_below="@id/distance_tag"
+        android:layout_marginBottom="24px"
+        android:layout_toRightOf="@id/address_tag"
+        android:textColor="#FF666666"
+        android:textSize="24px"
+        app:layout_auto_baseheight="width" />
+
+    <View
+        android:id="@+id/check"
+        android:layout_width="24px"
+        android:layout_height="24px"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="16px"
+        android:background="@drawable/check_bg"
+        app:layout_auto_baseheight="width" />
+
+</RelativeLayout>
+
