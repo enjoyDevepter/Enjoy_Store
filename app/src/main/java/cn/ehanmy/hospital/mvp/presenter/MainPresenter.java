@@ -121,6 +121,7 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
                             SPUtils.put(SPUtils.KEY_FOR_HOSPITAL_INFO, s.getStore() );
                         } else {
                             mRootView.showMessage("用户信息失效，请重新登录");
+                            SPUtils.clear(ArmsUtils.getContext());
                             Intent intent = new Intent(ArmsUtils.getContext(),LoginActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
