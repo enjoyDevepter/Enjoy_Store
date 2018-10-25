@@ -12,6 +12,8 @@ import javax.inject.Inject;
 
 import cn.ehanmy.hospital.mvp.contract.OrderInfoContract;
 import cn.ehanmy.hospital.mvp.model.api.service.InterfaceService;
+import cn.ehanmy.hospital.mvp.model.entity.order.GetBuyInfoRequest;
+import cn.ehanmy.hospital.mvp.model.entity.order.GetBuyInfoResponse;
 import cn.ehanmy.hospital.mvp.model.entity.order.OrderInfoRequest;
 import cn.ehanmy.hospital.mvp.model.entity.order.OrderInfoResponse;
 import cn.ehanmy.hospital.mvp.model.entity.order.OrderListRequest;
@@ -42,5 +44,10 @@ public class OrderInfoModel extends BaseModel implements OrderInfoContract.Model
     public Observable<OrderInfoResponse> requestOrderInfo(OrderInfoRequest request) {
         return mRepositoryManager.obtainRetrofitService(InterfaceService.class)
                 .orderInfo(request);
+    }
+    @Override
+    public Observable<GetBuyInfoResponse> getBuyInfo(GetBuyInfoRequest request) {
+        return mRepositoryManager.obtainRetrofitService(InterfaceService.class)
+                .getBuyInfo(request);
     }
 }

@@ -34,6 +34,8 @@ import cn.ehanmy.hospital.mvp.model.entity.member_info.MemberInfoRequest;
 import cn.ehanmy.hospital.mvp.model.entity.member_info.MemberInfoResponse;
 import cn.ehanmy.hospital.mvp.model.entity.member_info.SendMessageRequest;
 import cn.ehanmy.hospital.mvp.model.entity.member_info.SendMessageResponse;
+import cn.ehanmy.hospital.mvp.model.entity.order.GetBuyInfoRequest;
+import cn.ehanmy.hospital.mvp.model.entity.order.GetBuyInfoResponse;
 import cn.ehanmy.hospital.mvp.model.entity.order.GetPayStatusRequest;
 import cn.ehanmy.hospital.mvp.model.entity.order.GetPayStatusResponse;
 import cn.ehanmy.hospital.mvp.model.entity.order.GoPayRequest;
@@ -230,6 +232,10 @@ public interface InterfaceService {
     // 删除活动
     @POST("gateway")
     Observable<DeleteActivityInfoResponse> deleteActivityInfo(@Body DeleteActivityInfoRequest request);
+
+    // 获取消费详情
+    @POST("gateway")
+    Observable<GetBuyInfoResponse> getBuyInfo(@Body GetBuyInfoRequest request);
 
 // --------------------------------------------------------------------------------
 

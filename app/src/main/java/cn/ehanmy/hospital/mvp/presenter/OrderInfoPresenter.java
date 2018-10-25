@@ -3,6 +3,7 @@ package cn.ehanmy.hospital.mvp.presenter;
 import android.app.Application;
 import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.OnLifecycleEvent;
+import android.support.v7.widget.RecyclerView;
 
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.di.scope.ActivityScope;
@@ -13,6 +14,9 @@ import com.jess.arms.utils.RxLifecycleUtils;
 import java.util.List;
 
 import cn.ehanmy.hospital.mvp.model.entity.UserBean;
+import cn.ehanmy.hospital.mvp.model.entity.order.GetBuyInfoRequest;
+import cn.ehanmy.hospital.mvp.model.entity.order.GetBuyInfoResponse;
+import cn.ehanmy.hospital.mvp.model.entity.order.GoodsOrderBean;
 import cn.ehanmy.hospital.mvp.model.entity.order.OrderBean;
 import cn.ehanmy.hospital.mvp.model.entity.order.OrderInfoRequest;
 import cn.ehanmy.hospital.mvp.model.entity.order.OrderInfoResponse;
@@ -59,6 +63,7 @@ public class OrderInfoPresenter extends BasePresenter<OrderInfoContract.Model, O
     public void init() {
         String orderId = mRootView.getActivity().getIntent().getStringExtra(OrderInfoActivity.KEY_FOR_ORDER_ID);
         requestOrderInfo(orderId);
+        requestOrderList();
     }
 
     public void requestOrderInfo(String orderId) {
@@ -89,4 +94,68 @@ public class OrderInfoPresenter extends BasePresenter<OrderInfoContract.Model, O
                     }
                 });
     }
+
+    @Inject
+    RecyclerView.Adapter mAdapter;
+    @Inject
+    List<GoodsOrderBean> orderBeanList;
+
+
+    public void requestOrderList(){
+        requestOrderList(1,true);
+    }
+
+    public void nextPage(){
+        requestOrderList(nextPageIndex,false);
+    }
+
+    private int nextPageIndex = 1;
+
+    private void requestOrderList(int pageIndex,final boolean clear) {
+        GetBuyInfoRequest request = new GetBuyInfoRequest();
+        request.setPageIndex(pageIndex);
+        request.setPageSize(10);
+        String stringExtra = mRootView.getActivity().getIntent().getStringExtra(OrderInfoActivity.KEY_FOR_ORDER_ID);
+        request.setOrderId(stringExtra);
+
+        UserBean ub = CacheUtil.getConstant(CacheUtil.CACHE_KEY_USER);
+        request.setToken(ub.getToken());
+
+        mModel.getBuyInfo(request)
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe(disposable -> {
+                    if (clear) {
+                        //                        mRootView.showLoading();//显示下拉刷新的进度条
+                    }else
+                        mRootView.startLoadMore();//显示上拉加载更多的进度条
+                }).subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> {
+                    if (clear)
+                        mRootView.hideLoading();//隐藏下拉刷新的进度条
+                    else
+                        mRootView.endLoadMore();//隐藏上拉加载更多的进度条
+                })
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))//使用 Rxlifecycle,使 Disposable 和 Activity 一起销毁
+                .subscribe(new ErrorHandleSubscriber<GetBuyInfoResponse>(mErrorHandler) {
+                    @Override
+                    public void onNext(GetBuyInfoResponse response) {
+                        if (response.isSuccess()) {
+                            if(clear){
+                                orderBeanList.clear();
+                            }
+                            nextPageIndex = response.getNextPageIndex();
+                            mRootView.setEnd(nextPageIndex == -1);
+                            mRootView.showError(response.getGoodsList().size() > 0);
+                            orderBeanList.addAll(response.getGoodsList());
+                            mAdapter.notifyDataSetChanged();
+                            mRootView.updateRecyclerViewHeight();
+                            mRootView.hideLoading();
+                        } else {
+                            mRootView.showMessage(response.getRetDesc());
+                        }
+                    }
+                });
+    }
+
 }
