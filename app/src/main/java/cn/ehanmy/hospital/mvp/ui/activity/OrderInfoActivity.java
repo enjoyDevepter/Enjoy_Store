@@ -70,6 +70,8 @@ public class OrderInfoActivity extends BaseActivity<OrderInfoPresenter> implemen
     TextView form_add;
     @BindView(R.id.skill)
     TextView skill;
+    @BindView(R.id.skill_info)
+    TextView skill_info;
     @BindView(R.id.image)
     ImageView image;
     @BindView(R.id.project_name)
@@ -92,6 +94,9 @@ public class OrderInfoActivity extends BaseActivity<OrderInfoPresenter> implemen
     RecyclerView.Adapter mAdapter;
     @BindView(R.id.contentList)
     RecyclerView contentList;
+
+    @BindView(R.id.times)
+    TextView times;
 
     @BindView(R.id.swipeRefreshLayout)
     SwipeRefreshLayout swipeRefreshLayout;
@@ -157,11 +162,14 @@ public class OrderInfoActivity extends BaseActivity<OrderInfoPresenter> implemen
             OrderMemberInfoBean member = orderInfoBean.getMember();
             name.setText(member.getMobile());
         }
-        skill.setText(goodsOrderBean.getGoodsSpecValue().getSpecValueName());
+        String specValueName = goodsOrderBean.getGoodsSpecValue().getSpecValueName();
+        skill.setText(specValueName);
+        skill_info.setText(specValueName);
         project_name.setText(goodsOrderBean.getName());
         if (!ArmsUtils.isEmpty(orderInfoBean.getAppointmentsDate())) {
-            order_time.setText("预约时间：" + orderInfoBean.getAppointmentsDate() + "  " + orderInfoBean.getAppointmentsTime());
+            order_time.setText(orderInfoBean.getAppointmentsDate() + "  " + orderInfoBean.getAppointmentsTime());
         }
+        times.setText(""+orderInfoBean.getGoodsList().get(0).getTimes());
     }
 
     @Override
