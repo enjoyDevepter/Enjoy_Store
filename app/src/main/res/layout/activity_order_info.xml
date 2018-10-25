@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <include layout="@layout/title" />
@@ -228,6 +228,7 @@
                 android:id="@+id/tab"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:layout_below="@id/divider4"
                 android:layout_gravity="left"
                 android:layout_marginTop="3dp"
                 android:background="@drawable/buttom_divider_bg"
@@ -240,15 +241,14 @@
                 app:tabPaddingStart="0dp"
                 app:tabSelectedTextColor="#FF50C8F5"
                 app:tabTextAppearance="@style/TabLayoutTextStyle"
-                android:layout_below="@id/divider4"
                 app:tabTextColor="#FF666666" />
 
             <LinearLayout
-                android:orientation="vertical"
                 android:id="@+id/info_parent"
                 android:layout_width="match_parent"
                 android:layout_height="309px"
-                android:layout_below="@id/tab">
+                android:layout_below="@id/tab"
+                android:orientation="vertical">
 
                 <RelativeLayout
                     android:id="@+id/project_info_parent"
@@ -272,19 +272,19 @@
                         android:layout_height="wrap_content"
                         android:layout_alignBottom="@id/image"
                         android:layout_marginLeft="15dp"
-                        android:textColor="#666666"
-                        android:textSize="28px"
+                        android:layout_toRightOf="@id/image"
                         android:text="预约时间："
-                        android:layout_toRightOf="@id/image" />
+                        android:textColor="#666666"
+                        android:textSize="28px" />
+
                     <TextView
                         android:id="@+id/order_time"
-                        android:textColor="#666666"
-                        android:textSize="28px"
-                        android:layout_toRightOf="@id/order_time_title"
-                        android:layout_alignBottom="@id/order_time_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        />
+                        android:layout_alignBottom="@id/order_time_title"
+                        android:layout_toRightOf="@id/order_time_title"
+                        android:textColor="#666666"
+                        android:textSize="28px" />
 
 
                     <TextView
@@ -300,44 +300,44 @@
 
                     <TextView
                         android:id="@+id/skill_info_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_alignLeft="@id/project_name"
                         android:layout_below="@id/project_name"
                         android:layout_marginTop="29px"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:text="规格："
                         android:textColor="#666666"
-                        android:textSize="26px"
-                        android:text="规格：" />
+                        android:textSize="26px" />
+
                     <TextView
                         android:id="@+id/skill_info"
-                        android:textColor="#666666"
-                        android:textSize="26px"
-                        android:layout_toRightOf="@id/skill_info_title"
-                        android:layout_alignBottom="@id/skill_info_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        />
+                        android:layout_alignBottom="@id/skill_info_title"
+                        android:layout_toRightOf="@id/skill_info_title"
+                        android:textColor="#666666"
+                        android:textSize="26px" />
 
                     <TextView
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="45px"
-                        android:layout_alignBottom="@id/skill_info_title"
-                        android:textColor="#666666"
-                        android:textSize="28px"
                         android:id="@+id/times"
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@id/skill_info_title"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="45px"
                         android:text="1"
-                        android:layout_height="wrap_content" />
+                        android:textColor="#666666"
+                        android:textSize="28px" />
 
 
                     <TextView
-                        android:text="x"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_alignBottom="@id/times"
                         android:layout_toLeftOf="@id/times"
+                        android:text="x"
                         android:textColor="#666666"
-                        android:textSize="28px"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:textSize="28px" />
 
                 </RelativeLayout>
 

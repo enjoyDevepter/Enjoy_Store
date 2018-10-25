@@ -31,18 +31,18 @@
 
     <style name="divider_3">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">3dp</item>
+        <item name="android:layout_height">6px</item>
         <item name="android:background">#EEEEEE</item>
     </style>
 
     <style name="divider_1">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_height">2px</item>
         <item name="android:background">#EEEEEE</item>
     </style>
 
     <style name="tab_divider">
-        <item name="android:layout_width">1dp</item>
+        <item name="android:layout_width">2px</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:background">#EEEEEE</item>
     </style>
@@ -74,11 +74,11 @@
     </style>
 
     <style name="form_info_text">
-        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:layout_marginTop">38px</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">#333333</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">24px</item>
     </style>
 
     <style name="BottomDialogCenter" parent="@android:style/Theme.Dialog">

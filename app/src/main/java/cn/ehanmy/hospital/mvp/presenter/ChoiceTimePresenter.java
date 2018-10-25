@@ -90,6 +90,9 @@ public class ChoiceTimePresenter extends BasePresenter<ChoiceTimeContract.Model,
             request.setCmd(10106);
         } else if ("makeKAppointment".equals(from)) {
             request.setCmd(10356);
+        } else if ("orderCenter".equals(from)) {
+            request.setCmd(10507);
+            request.setProjectId(mRootView.getActivity().getIntent().getStringExtra("projectId"));
         }
         request.setGoodsId(mRootView.getActivity().getIntent().getStringExtra("goodsId"));
         request.setMerchId(mRootView.getActivity().getIntent().getStringExtra("merchId"));
@@ -152,6 +155,11 @@ public class ChoiceTimePresenter extends BasePresenter<ChoiceTimeContract.Model,
             request.setCmd(10403);
         } else if ("makeKAppointment".equals(from)) {
             request.setCmd(10354);
+        } else if ("orderCenter_add".equals(from)) {
+            request.setCmd(10505);
+            request.setProjectId(mRootView.getActivity().getIntent().getStringExtra("projectId"));
+        } else if ("orderCenterDetail".equals(from)) {
+            request.setCmd(10506);
         }
         UserBean ub = CacheUtil.getConstant(CacheUtil.CACHE_KEY_USER);
         request.setToken(ub.getToken());

@@ -8,6 +8,7 @@ public class ChangeUserAppointmentTimeRequest extends BaseRequest {
     private String reservationId;
     private String reservationDate;
     private String reservationTime;
+    private String projectId;
 
     @Override
     public String toString() {
@@ -17,6 +18,7 @@ public class ChangeUserAppointmentTimeRequest extends BaseRequest {
                 ", reservationId='" + reservationId + '\'' +
                 ", reservationDate='" + reservationDate + '\'' +
                 ", reservationTime='" + reservationTime + '\'' +
+                ", projectId='" + projectId + '\'' +
                 '}';
     }
 
@@ -58,5 +60,13 @@ public class ChangeUserAppointmentTimeRequest extends BaseRequest {
 
     public void setReservationTime(String reservationTime) {
         this.reservationTime = reservationTime;
+    }
+
+    public String getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
     }
 }
