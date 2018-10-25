@@ -3,49 +3,39 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     android:orientation="vertical">
 
     <include layout="@layout/title" />
 
     <include layout="@layout/search_layout" />
 
-    <LinearLayout
+    <android.support.design.widget.TabLayout
+        android:id="@+id/typeTab"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="80px"
         android:layout_marginTop="6px"
-        android:divider="@null"
-        android:dividerPadding="2dp"
-        android:showDividers="middle">
+        android:background="@drawable/list_item_bg"
+        app:tabGravity="fill"
+        app:tabIndicatorColor="#FF3DBFE8"
+        app:tabIndicatorHeight="2px"
+        app:tabMaxWidth="0dp"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="#FF3DBFE8"
+        app:tabTextAppearance="@style/TabLayoutTextStyle"
+        app:tabTextColor="#FF333333" />
 
-        <TextView
-            android:id="@+id/new_appointment"
-            style="@style/tab_item"
-            android:text="新预约" />
-
-        <View style="@style/tab_divider" />
-
-        <TextView
-            android:id="@+id/confirmed"
-            style="@style/tab_item"
-            android:text="已确认" />
-
-        <View style="@style/tab_divider" />
-
-        <TextView
-            android:id="@+id/over"
-            style="@style/tab_item"
-            android:text="已完成" />
-
-        <View style="@style/tab_divider" />
-
-        <TextView
-            android:id="@+id/all"
-            style="@style/tab_item"
-            android:text="全部" />
-    </LinearLayout>
-
-    <View style="@style/divider_1" />
+    <android.support.design.widget.TabLayout
+        android:id="@+id/statusTab"
+        android:layout_width="match_parent"
+        android:layout_height="80px"
+        android:background="@drawable/list_item_bg"
+        app:tabGravity="fill"
+        app:tabIndicatorHeight="0dp"
+        app:tabMaxWidth="0dp"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="#FF3DBFE8"
+        app:tabTextAppearance="@style/TabLayoutTextStyle"
+        app:tabTextColor="#FF333333" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
@@ -88,10 +78,7 @@
                     android:textSize="26px" />
 
             </LinearLayout>
-
         </FrameLayout>
-
-
     </android.support.v4.widget.SwipeRefreshLayout>
 
 </LinearLayout>

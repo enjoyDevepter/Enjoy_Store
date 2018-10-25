@@ -16,7 +16,6 @@
 package cn.ehanmy.hospital.mvp.ui.holder;
 
 import android.graphics.Color;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -28,14 +27,8 @@ import java.util.Date;
 import butterknife.BindView;
 import cn.ehanmy.hospital.R;
 import cn.ehanmy.hospital.mvp.model.entity.shop_appointment.RelatedOrderBean;
-import cn.ehanmy.hospital.mvp.model.entity.user_appointment.OrderProjectDetailBean;
 
 import static cn.ehanmy.hospital.mvp.ui.holder.RelatedListHolder.ViewName.RELATED;
-import static cn.ehanmy.hospital.mvp.ui.holder.UserAppointmentHolder.ViewName.CANCEL;
-import static cn.ehanmy.hospital.mvp.ui.holder.UserAppointmentHolder.ViewName.CHANGE_APPOINTMENT;
-import static cn.ehanmy.hospital.mvp.ui.holder.UserAppointmentHolder.ViewName.HUAKOU;
-import static cn.ehanmy.hospital.mvp.ui.holder.UserAppointmentHolder.ViewName.INFO;
-import static cn.ehanmy.hospital.mvp.ui.holder.UserAppointmentHolder.ViewName.OK;
 
 
 /**
@@ -115,14 +108,6 @@ public class RelatedListHolder extends BaseHolder<RelatedOrderBean> {
         super.onClick(view);
     }
 
-    public interface OnChildItemClickLinstener {
-        void onChildItemClick(View v, ViewName viewname, int position);
-    }
-
-    public enum ViewName {
-        RELATED
-    }
-
     @Override
     protected void onRelease() {
         this.order_id = null;
@@ -131,5 +116,13 @@ public class RelatedListHolder extends BaseHolder<RelatedOrderBean> {
         this.related = null;
         this.order_time = null;
         this.button_group = null;
+    }
+
+    public enum ViewName {
+        RELATED
+    }
+
+    public interface OnChildItemClickLinstener {
+        void onChildItemClick(View v, ViewName viewname, int position);
     }
 }

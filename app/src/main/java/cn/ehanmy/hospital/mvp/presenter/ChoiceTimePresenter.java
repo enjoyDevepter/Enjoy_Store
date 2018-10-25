@@ -10,13 +10,10 @@ import com.jess.arms.integration.AppManager;
 import com.jess.arms.mvp.BasePresenter;
 import com.jess.arms.utils.RxLifecycleUtils;
 
-import org.simple.eventbus.EventBus;
-
 import java.util.List;
 
 import javax.inject.Inject;
 
-import cn.ehanmy.hospital.app.EventBusTags;
 import cn.ehanmy.hospital.mvp.contract.ChoiceTimeContract;
 import cn.ehanmy.hospital.mvp.model.entity.GetAppointmentTimeRequest;
 import cn.ehanmy.hospital.mvp.model.entity.GetAppointmentTimeResponse;
@@ -85,16 +82,18 @@ public class ChoiceTimePresenter extends BasePresenter<ChoiceTimeContract.Model,
 
         String from = mRootView.getActivity().getIntent().getStringExtra("from");
 
-        if ("hAppointment".equals(from)) {
+        if ("hAppointment".equals(from)) { // 医美预约
             request.setCmd(10106);
-            request.setGoodsId(mRootView.getActivity().getIntent().getStringExtra("goodsId"));
-            request.setMerchId(mRootView.getActivity().getIntent().getStringExtra("merchId"));
-        } else if ("placeOrder".equals(from)) {
+        } else if ("placeOrder".equals(from)) { // 下单中心
             request.setCmd(10160);
-        } else if ("userAppointment".equals(from)) {
+        } else if ("makeUserAppointment".equals(from)) {
+            request.setCmd(10106);
+        } else if ("makeKAppointment".equals(from)) {
             request.setCmd(10356);
-            request.setMerchId(mRootView.getActivity().getIntent().getStringExtra("projectId"));
         }
+        request.setGoodsId(mRootView.getActivity().getIntent().getStringExtra("goodsId"));
+        request.setMerchId(mRootView.getActivity().getIntent().getStringExtra("merchId"));
+
 
         if (pullToRefresh) lastPageIndex = 1;
         request.setPageIndex(lastPageIndex);//下拉刷新默认只请求第一页
@@ -146,6 +145,14 @@ public class ChoiceTimePresenter extends BasePresenter<ChoiceTimeContract.Model,
 
     public void modifyAppointmentTime() {
         ChangeUserAppointmentTimeRequest request = new ChangeUserAppointmentTimeRequest();
+
+        String from = mRootView.getActivity().getIntent().getStringExtra("from");
+
+        if ("makeUserAppointment".equals(from)) {
+            request.setCmd(10403);
+        } else if ("makeKAppointment".equals(from)) {
+            request.setCmd(10354);
+        }
         UserBean ub = CacheUtil.getConstant(CacheUtil.CACHE_KEY_USER);
         request.setToken(ub.getToken());
         request.setReservationId(mRootView.getActivity().getIntent().getStringExtra("reservationId"));
@@ -155,16 +162,12 @@ public class ChoiceTimePresenter extends BasePresenter<ChoiceTimeContract.Model,
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(disposable -> {
-                    mRootView.showLoading();//显示下拉刷新的进度条
-                }).doFinally(() -> {
-            mRootView.hideLoading();//隐藏下拉刷新的进度条
-        }).retryWhen(new RetryWithDelay(3, 2))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
+                }).retryWhen(new RetryWithDelay(3, 2))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))//使用 Rxlifecycle,使 Disposable 和 Activity 一起销毁
                 .subscribe(new ErrorHandleSubscriber<ChangeUserAppointmentTimeResponse>(mErrorHandler) {
                     @Override
                     public void onNext(ChangeUserAppointmentTimeResponse response) {
                         if (response.isSuccess()) {
-                            EventBus.getDefault().post(mRootView.getActivity().getIntent().getIntExtra("index", 0), EventBusTags.CHANGE_APPOINTMENT_TIME);
                             mRootView.killMyself();
                         } else {
                             mRootView.showMessage(response.getRetDesc());

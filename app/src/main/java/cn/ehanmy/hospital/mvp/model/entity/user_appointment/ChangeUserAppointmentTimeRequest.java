@@ -3,7 +3,7 @@ package cn.ehanmy.hospital.mvp.model.entity.user_appointment;
 import cn.ehanmy.hospital.mvp.model.entity.request.BaseRequest;
 
 public class ChangeUserAppointmentTimeRequest extends BaseRequest {
-    private final int cmd = 10354;
+    private int cmd = 10354;
     private String token;
     private String reservationId;
     private String reservationDate;
@@ -22,6 +22,10 @@ public class ChangeUserAppointmentTimeRequest extends BaseRequest {
 
     public int getCmd() {
         return cmd;
+    }
+
+    public void setCmd(int cmd) {
+        this.cmd = cmd;
     }
 
     public String getToken() {

@@ -245,6 +245,8 @@ public class OrderConfirmActivity extends BaseActivity<OrderConfirmPresenter> im
             case R.id.time_layout:
                 Intent intent = new Intent(this, ChoiceTimeActivity.class);
                 intent.putExtra("from", "placeOrder");
+                intent.putExtra("goodsId", response.getGoods().getGoodsId());
+                intent.putExtra("merchId", response.getGoods().getMerchId());
                 ArmsUtils.startActivity(intent);
                 break;
         }

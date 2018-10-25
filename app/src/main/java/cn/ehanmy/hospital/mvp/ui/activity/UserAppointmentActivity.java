@@ -2,17 +2,16 @@ package cn.ehanmy.hospital.mvp.ui.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jess.arms.base.BaseActivity;
@@ -29,140 +28,50 @@ import cn.ehanmy.hospital.R;
 import cn.ehanmy.hospital.di.component.DaggerUserAppointmentComponent;
 import cn.ehanmy.hospital.di.module.UserAppointmentModule;
 import cn.ehanmy.hospital.mvp.contract.UserAppointmentContract;
-import cn.ehanmy.hospital.mvp.model.UserAppointmentModel;
-import cn.ehanmy.hospital.mvp.model.entity.user_appointment.OrderProjectDetailBean;
 import cn.ehanmy.hospital.mvp.presenter.UserAppointmentPresenter;
 import cn.ehanmy.hospital.mvp.ui.adapter.HeightItemDecoration;
+import cn.ehanmy.hospital.mvp.ui.adapter.KAppointmentAdapter;
 import cn.ehanmy.hospital.mvp.ui.adapter.UserAppointmentAdapter;
-import cn.ehanmy.hospital.mvp.ui.holder.UserAppointmentHolder;
-import cn.ehanmy.hospital.mvp.ui.widget.CustomProgressDailog;
+import cn.ehanmy.hospital.mvp.ui.adapter.UserAppointmentAdapter.OnChildItemClickLinstener;
 
-import static android.view.View.INVISIBLE;
-import static android.view.View.VISIBLE;
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
 
-public class UserAppointmentActivity extends BaseActivity<UserAppointmentPresenter> implements UserAppointmentContract.View {
+public class UserAppointmentActivity extends BaseActivity<UserAppointmentPresenter> implements UserAppointmentContract.View, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, OnChildItemClickLinstener, TabLayout.OnTabSelectedListener, KAppointmentAdapter.OnChildItemClickLinstener {
 
-
+    @BindView(R.id.back)
+    View backV;
+    @BindView(R.id.title)
+    TextView titleTV;
     @BindView(R.id.title_Layout)
     View title_Layout;
     @BindView(R.id.search_layout)
     View search_layout;
-
-    @BindView(R.id.new_appointment)
-    TextView new_appointment;
-    @BindView(R.id.confirmed)
-    TextView confirmed;
-    @BindView(R.id.over)
-    TextView over;
-    @BindView(R.id.all)
-    TextView all;
-    @BindView(R.id.code)
-    View code;
     @BindView(R.id.search_btn)
     View search;
     @BindView(R.id.clear_btn)
     View clear;
     @BindView(R.id.search_key)
     EditText searchKey;
+    @BindView(R.id.typeTab)
+    TabLayout typeLayout;
+    @BindView(R.id.statusTab)
+    TabLayout statusLayout;
     @Inject
     RecyclerView.LayoutManager mLayoutManager;
     @Inject
     UserAppointmentAdapter mAdapter;
+    @Inject
+    KAppointmentAdapter kAdapter;
     @BindView(R.id.contentList)
     RecyclerView contentList;
     @BindView(R.id.swipeRefreshLayout)
     SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.no_date)
     View onDateV;
-    private TextView currTextView;
-    private String currType = UserAppointmentModel.SEARCH_TYPE_NEW;
-    private int normalColor = Color.parseColor("#333333");
-    private int currColor = Color.parseColor("#3DBFE8");
     private Paginate mPaginate;
     private boolean isLoadingMore;
-    private CustomProgressDailog progressDailog;
-    private boolean isEnd;
-    private View.OnClickListener onTypeClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if (v.getId() == currTextView.getId()) {
-                return;
-            }
-            currTextView.setTextColor(normalColor);
-            TextView newText = null;
-            switch (v.getId()) {
-                case R.id.new_appointment:
-                    newText = new_appointment;
-                    currType = UserAppointmentModel.SEARCH_TYPE_NEW;
-                    break;
-                case R.id.over:
-                    currType = UserAppointmentModel.SEARCH_TYPE_OVER;
-                    newText = over;
-                    break;
-                case R.id.confirmed:
-                    newText = confirmed;
-                    currType = UserAppointmentModel.SEARCH_TYPE_CONFIRMED;
-                    break;
-                case R.id.all:
-                    currType = UserAppointmentModel.SEARCH_TYPE_ALL;
-                    newText = all;
-                    break;
-            }
-
-            if (newText == null) {
-                return;
-            }
-
-            currTextView = newText;
-            currTextView.setTextColor(currColor);
-            mPresenter.requestOrderList(currType);
-        }
-    };
-    private View.OnClickListener onSearchClickListener = new View.OnClickListener() {
-
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.search_btn:
-                    doSearch();
-                    break;
-                case R.id.clear_btn:
-                    searchKey.setText("");
-                    provideCache().put("key",null);
-                    mPresenter.init();
-                    break;
-            }
-            hideImm();
-        }
-    };
-
-    private void initPaginate() {
-        if (mPaginate == null) {
-            Paginate.Callbacks callbacks = new Paginate.Callbacks() {
-                @Override
-                public void onLoadMore() {
-                    mPresenter.nextPage();
-                }
-
-                @Override
-                public boolean isLoading() {
-                    return isLoadingMore;
-                }
-
-                @Override
-                public boolean hasLoadedAllItems() {
-                    return isEnd;
-                }
-            };
-
-            mPaginate = Paginate.with(contentList, callbacks)
-                    .setLoadingTriggerThreshold(0)
-                    .build();
-            mPaginate.setHasMoreDataToLoad(false);
-        }
-    }
+    private boolean hasLoadedAllItems = true;
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -181,84 +90,57 @@ public class UserAppointmentActivity extends BaseActivity<UserAppointmentPresent
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        new TitleUtil(title_Layout, this, "用户预约");
-        currTextView = new_appointment;
-        new_appointment.setTextColor(currColor);
-
-        new_appointment.setOnClickListener(onTypeClickListener);
-        over.setOnClickListener(onTypeClickListener);
-        all.setOnClickListener(onTypeClickListener);
-        confirmed.setOnClickListener(onTypeClickListener);
-
-        code.setVisibility(View.GONE);
-        search.setOnClickListener(onSearchClickListener);
-        clear.setOnClickListener(onSearchClickListener);
+        titleTV.setText("预约中心");
+        backV.setOnClickListener(this);
+        typeLayout.addTab(typeLayout.newTab().setTag("type").setText("生美/科美"));
+        typeLayout.addTab(typeLayout.newTab().setTag("type").setText("医美"));
+        provideCache().put("type", 0);
+        provideCache().put("status", "0");
+        statusLayout.addTab(statusLayout.newTab().setTag("0").setText("新预约"));
+        statusLayout.addTab(statusLayout.newTab().setTag("1").setText("已确认"));
+        statusLayout.addTab(statusLayout.newTab().setTag("2").setText("已完成"));
+        statusLayout.addTab(statusLayout.newTab().setTag("").setText("全部"));
+        typeLayout.addOnTabSelectedListener(this);
+        statusLayout.addOnTabSelectedListener(this);
+        LinearLayout linearLayout = (LinearLayout) statusLayout.getChildAt(0);
+        linearLayout.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
+        linearLayout.setDividerDrawable(ContextCompat.getDrawable(this,
+                R.drawable.tablayout_divider_vertical));
+        statusLayout.addOnTabSelectedListener(this);
         ArmsUtils.configRecyclerView(contentList, mLayoutManager);
         contentList.addItemDecoration(new HeightItemDecoration(8));
-        mAdapter.setOnChildItemClickLinstener(new UserAppointmentHolder.OnChildItemClickLinstener() {
-            @Override
-            public void onChildItemClick(View v, UserAppointmentHolder.ViewName viewname, int position) {
-                switch (viewname) {
-                    case CHANGE_APPOINTMENT:
-                        Intent intent2 = new Intent(UserAppointmentActivity.this, ChoiceTimeActivity.class);
-                        intent2.putExtra("from", "userAppointment");
-                        intent2.putExtra("reservationId", mAdapter.getItem(position).getReservationId());
-                        intent2.putExtra("projectId", mAdapter.getItem(position).getProjectId());
-                        UserAppointmentActivity.this.startActivityForResult(intent2, 1);
-                        break;
-                    case OK:
-                        mPresenter.confirmAppointment(mAdapter.getItem(position).getReservationId());
-                        break;
-                    case CANCEL:
-                        mPresenter.cancelAppointment(mAdapter.getItem(position).getReservationId());
-                        break;
-                    case INFO:
-                        Intent intent = new Intent(ArmsUtils.getContext(), UserAppointmentInfoActivity.class);
-                        intent.putExtra(UserAppointmentInfoActivity.KEY_FOR_APPOINTMENT_ID, mAdapter.getItem(position).getReservationId());
-                        ArmsUtils.startActivity(intent);
-                        break;
-                    case HUAKOU:
-                        OrderProjectDetailBean item = mAdapter.getItem(position);
-                        mPresenter.huakou(item.getProjectId(), item.getReservationId());
-                }
-            }
-        });
-        contentList.setAdapter(mAdapter);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                mPresenter.init();
-            }
-        });
-
+        mAdapter.setOnChildItemClickLinstener(this);
+        kAdapter.setOnChildItemClickLinstener(this);
+        contentList.setAdapter(kAdapter);
+        swipeRefreshLayout.setOnRefreshListener(this);
         initPaginate();
-        searchKey.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                provideCache().put("key",s+"");
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
     }
 
-    @Override
-    public void showLoading() {
 
-    }
+    private void initPaginate() {
+        if (mPaginate == null) {
+            Paginate.Callbacks callbacks = new Paginate.Callbacks() {
+                @Override
+                public void onLoadMore() {
+                    mPresenter.getAppointment(false);
+                }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        mPresenter.init();
+                @Override
+                public boolean isLoading() {
+                    return isLoadingMore;
+                }
+
+                @Override
+                public boolean hasLoadedAllItems() {
+                    return hasLoadedAllItems;
+                }
+            };
+
+            mPaginate = Paginate.with(contentList, callbacks)
+                    .setLoadingTriggerThreshold(0)
+                    .build();
+            mPaginate.setHasMoreDataToLoad(false);
+        }
     }
 
     @Override
@@ -278,6 +160,17 @@ public class UserAppointmentActivity extends BaseActivity<UserAppointmentPresent
         finish();
     }
 
+
+    @Override
+    public void showLoading() {
+        swipeRefreshLayout.setRefreshing(true);
+    }
+
+    @Override
+    public void hideLoading() {
+        swipeRefreshLayout.setRefreshing(false);
+    }
+
     /**
      * 开始加载更多
      */
@@ -295,23 +188,21 @@ public class UserAppointmentActivity extends BaseActivity<UserAppointmentPresent
     }
 
     @Override
-    public void setEnd(boolean isEnd) {
-        this.isEnd = isEnd;
+    public void showError(boolean hasDate) {
+        contentList.setVisibility(hasDate ? View.VISIBLE : View.INVISIBLE);
+        onDateV.setVisibility(hasDate ? View.INVISIBLE : View.VISIBLE);
     }
+
+    @Override
+    public void setLoadedAllItems(boolean has) {
+        this.hasLoadedAllItems = has;
+    }
+
 
     public Activity getActivity() {
         return this;
     }
 
-    private void doSearch() {
-        String s = searchKey.getText().toString();
-        if (TextUtils.isEmpty(s)) {
-            showMessage("请输入搜索关键字后重试");
-            return;
-        }
-
-        mPresenter.init();
-    }
 
     @Override
     protected void onDestroy() {
@@ -321,18 +212,114 @@ public class UserAppointmentActivity extends BaseActivity<UserAppointmentPresent
     }
 
     @Override
-    public void hideLoading() {
-        swipeRefreshLayout.setRefreshing(false);
-    }
-
-    @Override
-    public void showError(boolean hasDate) {
-        onDateV.setVisibility(hasDate ? INVISIBLE : VISIBLE);
-        contentList.setVisibility(hasDate ? VISIBLE : INVISIBLE);
-    }
-
-    @Override
     public Cache getCache() {
         return provideCache();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.back:
+                killMyself();
+                break;
+        }
+    }
+
+    @Override
+    public void onRefresh() {
+        mPresenter.getAppointment(true);
+    }
+
+    @Override
+    public void onChildItemClick(View v, UserAppointmentAdapter.ViewName viewname, int position) {
+        switch (viewname) {
+            case CHANGE_APPOINTMENT:
+                Intent intent2 = new Intent(UserAppointmentActivity.this, ChoiceTimeActivity.class);
+                intent2.putExtra("from", "makeUserAppointment");
+                intent2.putExtra("reservationId", mAdapter.getItem(position).getReservationId());
+                intent2.putExtra("goodsId", mAdapter.getInfos().get(position).getGoods().getGoodsId());
+                intent2.putExtra("merchId", mAdapter.getInfos().get(position).getGoods().getMerchId());
+                UserAppointmentActivity.this.startActivityForResult(intent2, 1);
+                break;
+            case CANCEL:
+                provideCache().put("reservationId", mAdapter.getItem(position).getReservationId());
+                mPresenter.cancelAppointment();
+                break;
+            case INFO:
+                Intent intent = new Intent(ArmsUtils.getContext(), UserAppointmentInfoActivity.class);
+                intent.putExtra(UserAppointmentInfoActivity.KEY_FOR_APPOINTMENT_ID, mAdapter.getItem(position).getReservationId());
+                ArmsUtils.startActivity(intent);
+                break;
+        }
+    }
+
+    @Override
+    public void onChildItemClick(View v, KAppointmentAdapter.ViewName viewname, int position) {
+        switch (viewname) {
+            case INFO:
+                Intent intent = new Intent(ArmsUtils.getContext(), UserAppointmentInfoActivity.class);
+                intent.putExtra(UserAppointmentInfoActivity.KEY_FOR_APPOINTMENT_ID, mAdapter.getItem(position).getReservationId());
+                ArmsUtils.startActivity(intent);
+                break;
+            case OK:
+                provideCache().put("reservationId", mAdapter.getItem(position).getReservationId());
+                mPresenter.confirmAppointment();
+                break;
+            case CHANGE_APPOINTMENT:
+                Intent intent2 = new Intent(UserAppointmentActivity.this, ChoiceTimeActivity.class);
+                intent2.putExtra("from", "makeKAppointment");
+                intent2.putExtra("reservationId", mAdapter.getItem(position).getReservationId());
+                intent2.putExtra("goodsId", mAdapter.getInfos().get(position).getGoods().getGoodsId());
+                intent2.putExtra("merchId", mAdapter.getInfos().get(position).getGoods().getMerchId());
+                UserAppointmentActivity.this.startActivityForResult(intent2, 1);
+                break;
+            case HUAKOU:
+                provideCache().put("orderId", mAdapter.getItem(position).getProjectId());
+                provideCache().put("reservationId", mAdapter.getItem(position).getReservationId());
+                mPresenter.huakou();
+                break;
+            case CANCEL:
+                provideCache().put("reservationId", mAdapter.getItem(position).getReservationId());
+                mPresenter.cancelAppointment();
+                break;
+        }
+    }
+
+    @Override
+    public void onTabSelected(TabLayout.Tab tab) {
+        if ("type".equals(tab.getTag())) {
+            statusLayout.removeAllTabs();
+            provideCache().put("type", tab.getPosition());
+            provideCache().put("status", "0");
+            switch (tab.getPosition()) {
+                case 0:
+                    contentList.setAdapter(kAdapter);
+                    statusLayout.addTab(statusLayout.newTab().setTag("0").setText("新预约"));
+                    statusLayout.addTab(statusLayout.newTab().setTag("1").setText("已确认"));
+                    statusLayout.addTab(statusLayout.newTab().setTag("2").setText("已完成"));
+                    statusLayout.addTab(statusLayout.newTab().setTag("").setText("全部"));
+                    break;
+                case 1:
+                    contentList.setAdapter(mAdapter);
+                    statusLayout.addTab(statusLayout.newTab().setTag("0").setText("未确认"));
+                    statusLayout.addTab(statusLayout.newTab().setTag("2").setText("已完成"));
+                    statusLayout.addTab(statusLayout.newTab().setTag("").setText("全部"));
+                    break;
+            }
+            initPaginate();
+        } else {
+            provideCache().put("status", tab.getTag());
+            mPresenter.getAppointment(true);
+        }
+    }
+
+    @Override
+    public void onTabUnselected(TabLayout.Tab tab) {
+
+    }
+
+    @Override
+    public void onTabReselected(TabLayout.Tab tab) {
+
     }
 }

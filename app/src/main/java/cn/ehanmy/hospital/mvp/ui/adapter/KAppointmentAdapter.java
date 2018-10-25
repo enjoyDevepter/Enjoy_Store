@@ -24,8 +24,8 @@ import java.util.List;
 
 import cn.ehanmy.hospital.R;
 import cn.ehanmy.hospital.mvp.model.entity.user_appointment.OrderProjectDetailBean;
-import cn.ehanmy.hospital.mvp.ui.holder.UserAppointmentHolder;
-import cn.ehanmy.hospital.mvp.ui.holder.UserAppointmentTitleHolder;
+import cn.ehanmy.hospital.mvp.ui.holder.KAppointmentHolder;
+import cn.ehanmy.hospital.mvp.ui.holder.KAppointmentTitleHolder;
 
 /**
  * ================================================
@@ -36,13 +36,13 @@ import cn.ehanmy.hospital.mvp.ui.holder.UserAppointmentTitleHolder;
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
-public class UserAppointmentAdapter extends DefaultAdapter<OrderProjectDetailBean> {
+public class KAppointmentAdapter extends DefaultAdapter<OrderProjectDetailBean> {
 
     public static final int ITEM_TYPE_TITLE = 1;
     public static final int ITEM_TYPE_ITEM = 2;
     private OnChildItemClickLinstener onChildItemClickLinstener;
 
-    public UserAppointmentAdapter(List<OrderProjectDetailBean> ordres) {
+    public KAppointmentAdapter(List<OrderProjectDetailBean> ordres) {
         super(ordres);
     }
 
@@ -54,9 +54,9 @@ public class UserAppointmentAdapter extends DefaultAdapter<OrderProjectDetailBea
     @Override
     public BaseHolder<OrderProjectDetailBean> getHolder(View v, int viewType) {
         if (viewType == ITEM_TYPE_TITLE) {
-            return new UserAppointmentTitleHolder(v);
+            return new KAppointmentTitleHolder(v);
         }
-        return new UserAppointmentHolder(v, new OnChildItemClickLinstener() {
+        return new KAppointmentHolder(v, new OnChildItemClickLinstener() {
             @Override
             public void onChildItemClick(View v, ViewName viewname, int position) {
                 if (onChildItemClickLinstener != null) {
@@ -68,7 +68,7 @@ public class UserAppointmentAdapter extends DefaultAdapter<OrderProjectDetailBea
 
     @Override
     public int getLayoutId(int viewType) {
-        return R.layout.user_appointment_item;
+        return R.layout.k_appointment_item;
     }
 
 
@@ -76,14 +76,17 @@ public class UserAppointmentAdapter extends DefaultAdapter<OrderProjectDetailBea
         this.onChildItemClickLinstener = onChildItemClickLinstener;
     }
 
+
     public enum ViewName {
-        CANCEL,
-        CHANGE_APPOINTMENT,
         INFO,
+        OK,
+        CHANGE_APPOINTMENT,
+        HUAKOU,
+        CANCEL,
     }
 
     public interface OnChildItemClickLinstener {
-        void onChildItemClick(View v, UserAppointmentAdapter.ViewName viewname, int position);
+        void onChildItemClick(View v, KAppointmentAdapter.ViewName viewname, int position);
     }
 
 }

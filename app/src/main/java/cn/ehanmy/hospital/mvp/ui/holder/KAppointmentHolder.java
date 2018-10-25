@@ -26,11 +26,13 @@ import com.jess.arms.base.BaseHolder;
 import butterknife.BindView;
 import cn.ehanmy.hospital.R;
 import cn.ehanmy.hospital.mvp.model.entity.user_appointment.OrderProjectDetailBean;
-import cn.ehanmy.hospital.mvp.ui.adapter.UserAppointmentAdapter;
+import cn.ehanmy.hospital.mvp.ui.adapter.KAppointmentAdapter;
 
-import static cn.ehanmy.hospital.mvp.ui.adapter.UserAppointmentAdapter.ViewName.CANCEL;
-import static cn.ehanmy.hospital.mvp.ui.adapter.UserAppointmentAdapter.ViewName.CHANGE_APPOINTMENT;
-import static cn.ehanmy.hospital.mvp.ui.adapter.UserAppointmentAdapter.ViewName.INFO;
+import static cn.ehanmy.hospital.mvp.ui.adapter.KAppointmentAdapter.ViewName.CANCEL;
+import static cn.ehanmy.hospital.mvp.ui.adapter.KAppointmentAdapter.ViewName.CHANGE_APPOINTMENT;
+import static cn.ehanmy.hospital.mvp.ui.adapter.KAppointmentAdapter.ViewName.HUAKOU;
+import static cn.ehanmy.hospital.mvp.ui.adapter.KAppointmentAdapter.ViewName.INFO;
+import static cn.ehanmy.hospital.mvp.ui.adapter.KAppointmentAdapter.ViewName.OK;
 
 
 /**
@@ -42,7 +44,7 @@ import static cn.ehanmy.hospital.mvp.ui.adapter.UserAppointmentAdapter.ViewName.
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
-public class UserAppointmentHolder extends BaseHolder<OrderProjectDetailBean> {
+public class KAppointmentHolder extends BaseHolder<OrderProjectDetailBean> {
 
     @BindView(R.id.line1)
     View line1;
@@ -50,6 +52,8 @@ public class UserAppointmentHolder extends BaseHolder<OrderProjectDetailBean> {
     View line2;
     @BindView(R.id.order_id)
     TextView order_id;
+    @BindView(R.id.statusDesc)
+    TextView statusDescTV;
 
     @BindView(R.id.change)
     View change;
@@ -57,24 +61,27 @@ public class UserAppointmentHolder extends BaseHolder<OrderProjectDetailBean> {
     View cancel;
     @BindView(R.id.info)
     View info;
+    @BindView(R.id.ok)
+    TextView okV;
 
     @BindView(R.id.order_project)
     TextView order_project;
     @BindView(R.id.order_phone)
     TextView order_phone;
-    @BindView(R.id.statusDesc)
-    TextView relateStatusTV;
-    @BindView(R.id.order_status)
-    TextView order_status;
-    @BindView(R.id.order_time)
+    @BindView(R.id.count)
+    TextView countTV;
+    @BindView(R.id.surplusNum)
+    TextView surplusNumTV;
+    @BindView(R.id.time)
     TextView order_time;
 
-    private UserAppointmentAdapter.OnChildItemClickLinstener onChildItemClickLinstener;
+    private KAppointmentAdapter.OnChildItemClickLinstener onChildItemClickLinstener;
 
-    public UserAppointmentHolder(View itemView, UserAppointmentAdapter.OnChildItemClickLinstener onChildItemClickLinstener) {
+    public KAppointmentHolder(View itemView, KAppointmentAdapter.OnChildItemClickLinstener onChildItemClickLinstener) {
         super(itemView);
         change.setOnClickListener(this);
         cancel.setOnClickListener(this);
+        okV.setOnClickListener(this);
         info.setOnClickListener(this);
         this.onChildItemClickLinstener = onChildItemClickLinstener;
     }
@@ -87,25 +94,32 @@ public class UserAppointmentHolder extends BaseHolder<OrderProjectDetailBean> {
         order_id.setText(order.getReservationId());
         order_phone.setText(order.getPhone());
         order_time.setText(order.getReservationDate());
-        relateStatusTV.setText(order.getReservationStatusDesc());
-        order_status.setText(order.getRelateStatusDesc());
+        surplusNumTV.setText(order.getSurplusNum() + "");
+        statusDescTV.setText(order.getReservationStatusDesc());
         order_project.setText(order.getGoods().getName());
         order_project.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
         String status = order.getReservationStatus();
         if (!TextUtils.isEmpty(status)) {
             switch (status) {
                 case "0":
+                    okV.setText("确认");
+                    okV.setTag(status);
                     info.setVisibility(View.VISIBLE);
+                    okV.setVisibility(View.VISIBLE);
                     change.setVisibility(View.VISIBLE);
                     cancel.setVisibility(View.VISIBLE);
                     break;
-                case "2":
+                case "1":
+                    okV.setTag(status);
+                    okV.setText("划扣");
                     info.setVisibility(View.VISIBLE);
+                    okV.setVisibility(View.VISIBLE);
                     change.setVisibility(View.GONE);
                     cancel.setVisibility(View.GONE);
                     break;
-                case "3":
+                case "2":
                     info.setVisibility(View.VISIBLE);
+                    okV.setVisibility(View.GONE);
                     change.setVisibility(View.GONE);
                     cancel.setVisibility(View.GONE);
                     break;
@@ -126,6 +140,9 @@ public class UserAppointmentHolder extends BaseHolder<OrderProjectDetailBean> {
                 case R.id.info:
                     onChildItemClickLinstener.onChildItemClick(view, INFO, getAdapterPosition());
                     return;
+                case R.id.ok:
+                    onChildItemClickLinstener.onChildItemClick(view, "1".equals(view.getTag()) ? HUAKOU : OK, getAdapterPosition());
+                    return;
             }
         }
         super.onClick(view);
@@ -136,13 +153,15 @@ public class UserAppointmentHolder extends BaseHolder<OrderProjectDetailBean> {
         this.order_id = null;
         this.order_phone = null;
         this.order_project = null;
-        this.order_status = null;
-        this.relateStatusTV = null;
+        this.statusDescTV = null;
+        this.surplusNumTV = null;
         this.order_time = null;
+        this.countTV = null;
         this.change = null;
         this.cancel = null;
         this.info = null;
         this.line1 = null;
+        this.okV = null;
         this.line2 = null;
     }
 

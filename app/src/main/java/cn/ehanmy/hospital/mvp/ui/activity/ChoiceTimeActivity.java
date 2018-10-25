@@ -134,9 +134,11 @@ public class ChoiceTimeActivity extends BaseActivity<ChoiceTimePresenter> implem
                     return;
                 }
                 String from = getIntent().getStringExtra("from");
-                if ("hAppointment".equals(from) || "placeOrder".equals(from) || "userAppointment".equals(from)) {
+                if ("hAppointment".equals(from) || "placeOrder".equals(from)) {
                     EventBus.getDefault().post(dateAdapter.getInfos().get((int) provideCache().get("dateIndex")), EventBusTags.CHANGE_APPOINTMENT_TIME);
                     killMyself();
+                } else {
+                    mPresenter.modifyAppointmentTime();
                 }
                 break;
         }

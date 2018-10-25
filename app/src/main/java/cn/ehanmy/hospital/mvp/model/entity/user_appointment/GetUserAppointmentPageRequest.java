@@ -3,10 +3,10 @@ package cn.ehanmy.hospital.mvp.model.entity.user_appointment;
 import cn.ehanmy.hospital.mvp.model.entity.request.BaseRequest;
 
 public class GetUserAppointmentPageRequest extends BaseRequest {
-    private final int cmd = 10351;
+    private int cmd = 10351;
     private String token;
-    private int pageIndex;
-    private int pageSize;
+    private int pageIndex = 1;
+    private int pageSize = 10;
     private String status;  // 0:新预约;1:已确认;2:已完成 为空时，查询全部
     private String search;
 
@@ -24,6 +24,10 @@ public class GetUserAppointmentPageRequest extends BaseRequest {
 
     public int getCmd() {
         return cmd;
+    }
+
+    public void setCmd(int cmd) {
+        this.cmd = cmd;
     }
 
     public String getToken() {

@@ -6,6 +6,8 @@ public class OrderProjectDetailBean implements Serializable {
     private String projectId;
     private int surplusNum;
     private String status;
+    private String relateStatus;
+    private String relateStatusDesc;
     private String statusDesc;
     private String createDate;
     private String reservationDate;
@@ -21,8 +23,6 @@ public class OrderProjectDetailBean implements Serializable {
     private String address;
     private UserAppointmentGoodsBean goods;
     private UserAppointmentMember member;
-    private int maxNum;
-    private String searcyType;
 
     public String getReservationStatusDesc() {
         return reservationStatusDesc;
@@ -32,20 +32,21 @@ public class OrderProjectDetailBean implements Serializable {
         this.reservationStatusDesc = reservationStatusDesc;
     }
 
-    public int getMaxNum() {
-        return maxNum;
+
+    public String getRelateStatus() {
+        return relateStatus;
     }
 
-    public void setMaxNum(int maxNum) {
-        this.maxNum = maxNum;
+    public void setRelateStatus(String relateStatus) {
+        this.relateStatus = relateStatus;
     }
 
-    public String getSearcyType() {
-        return searcyType;
+    public String getRelateStatusDesc() {
+        return relateStatusDesc;
     }
 
-    public void setSearcyType(String searcyType) {
-        this.searcyType = searcyType;
+    public void setRelateStatusDesc(String relateStatusDesc) {
+        this.relateStatusDesc = relateStatusDesc;
     }
 
     @Override
@@ -54,6 +55,8 @@ public class OrderProjectDetailBean implements Serializable {
                 "projectId='" + projectId + '\'' +
                 ", surplusNum=" + surplusNum +
                 ", status='" + status + '\'' +
+                ", relateStatus='" + relateStatus + '\'' +
+                ", relateStatusDesc='" + relateStatusDesc + '\'' +
                 ", statusDesc='" + statusDesc + '\'' +
                 ", createDate='" + createDate + '\'' +
                 ", reservationDate='" + reservationDate + '\'' +
@@ -69,10 +72,9 @@ public class OrderProjectDetailBean implements Serializable {
                 ", address='" + address + '\'' +
                 ", goods=" + goods +
                 ", member=" + member +
-                ", maxNum=" + maxNum +
-                ", searcyType='" + searcyType + '\'' +
                 '}';
     }
+
 
     public String getProjectId() {
         return projectId;

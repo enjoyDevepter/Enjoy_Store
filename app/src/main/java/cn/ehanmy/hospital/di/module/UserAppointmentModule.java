@@ -8,16 +8,13 @@ import com.jess.arms.di.scope.ActivityScope;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.ehanmy.hospital.mvp.model.entity.order.OrderBean;
+import cn.ehanmy.hospital.mvp.contract.UserAppointmentContract;
+import cn.ehanmy.hospital.mvp.model.UserAppointmentModel;
 import cn.ehanmy.hospital.mvp.model.entity.user_appointment.OrderProjectDetailBean;
-import cn.ehanmy.hospital.mvp.model.entity.user_appointment.UserAppointmentGoodsBean;
-import cn.ehanmy.hospital.mvp.ui.adapter.OrderCenterListAdapter;
+import cn.ehanmy.hospital.mvp.ui.adapter.KAppointmentAdapter;
 import cn.ehanmy.hospital.mvp.ui.adapter.UserAppointmentAdapter;
 import dagger.Module;
 import dagger.Provides;
-
-import cn.ehanmy.hospital.mvp.contract.UserAppointmentContract;
-import cn.ehanmy.hospital.mvp.model.UserAppointmentModel;
 
 
 @Module
@@ -45,13 +42,17 @@ public class UserAppointmentModule {
         return model;
     }
 
-
     @ActivityScope
     @Provides
     UserAppointmentAdapter provideStoreAdapter(List<OrderProjectDetailBean> list) {
         return new UserAppointmentAdapter(list);
     }
 
+    @ActivityScope
+    @Provides
+    KAppointmentAdapter provideKStoreAdapter(List<OrderProjectDetailBean> list) {
+        return new KAppointmentAdapter(list);
+    }
 
     @ActivityScope
     @Provides

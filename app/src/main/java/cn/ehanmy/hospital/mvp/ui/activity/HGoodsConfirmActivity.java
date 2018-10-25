@@ -167,6 +167,8 @@ public class HGoodsConfirmActivity extends BaseActivity<HGoodsConfirmPresenter> 
             case R.id.time_layout:
                 Intent intent = new Intent(this, ChoiceTimeActivity.class);
                 intent.putExtra("from", "hAppointment");
+                intent.putExtra("goodsId", response.getGoods().getGoodsId());
+                intent.putExtra("merchId", response.getGoods().getMerchId());
                 ArmsUtils.startActivity(intent);
                 break;
             case R.id.confirm:

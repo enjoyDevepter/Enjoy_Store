@@ -3,25 +3,19 @@ package cn.ehanmy.hospital.mvp.presenter;
 import android.app.Application;
 import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.OnLifecycleEvent;
-import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 
-import com.jess.arms.integration.AppManager;
 import com.jess.arms.di.scope.ActivityScope;
-import com.jess.arms.mvp.BasePresenter;
 import com.jess.arms.http.imageloader.ImageLoader;
+import com.jess.arms.integration.AppManager;
+import com.jess.arms.mvp.BasePresenter;
 import com.jess.arms.utils.RxLifecycleUtils;
 
 import java.util.List;
 
-import cn.ehanmy.hospital.mvp.model.OrderFormCenterModel;
-import cn.ehanmy.hospital.mvp.model.UserAppointmentModel;
-import cn.ehanmy.hospital.mvp.model.entity.ShopAppointment;
-import cn.ehanmy.hospital.mvp.model.entity.UserAppointment;
+import javax.inject.Inject;
+
+import cn.ehanmy.hospital.mvp.contract.UserAppointmentContract;
 import cn.ehanmy.hospital.mvp.model.entity.UserBean;
-import cn.ehanmy.hospital.mvp.model.entity.order.OrderBean;
-import cn.ehanmy.hospital.mvp.model.entity.order.OrderListRequest;
-import cn.ehanmy.hospital.mvp.model.entity.order.OrderListResponse;
 import cn.ehanmy.hospital.mvp.model.entity.user_appointment.CancelAppointmentRequest;
 import cn.ehanmy.hospital.mvp.model.entity.user_appointment.CancelAppointmentResponse;
 import cn.ehanmy.hospital.mvp.model.entity.user_appointment.ConfirmAppointmentRequest;
@@ -31,16 +25,12 @@ import cn.ehanmy.hospital.mvp.model.entity.user_appointment.GetUserAppointmentPa
 import cn.ehanmy.hospital.mvp.model.entity.user_appointment.HuakouRequest;
 import cn.ehanmy.hospital.mvp.model.entity.user_appointment.HuakouResponse;
 import cn.ehanmy.hospital.mvp.model.entity.user_appointment.OrderProjectDetailBean;
+import cn.ehanmy.hospital.mvp.ui.adapter.KAppointmentAdapter;
 import cn.ehanmy.hospital.mvp.ui.adapter.UserAppointmentAdapter;
 import cn.ehanmy.hospital.util.CacheUtil;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
-
-import javax.inject.Inject;
-
-import cn.ehanmy.hospital.mvp.contract.UserAppointmentContract;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 
 
@@ -54,6 +44,15 @@ public class UserAppointmentPresenter extends BasePresenter<UserAppointmentContr
     ImageLoader mImageLoader;
     @Inject
     AppManager mAppManager;
+    @Inject
+    UserAppointmentAdapter mAdapter;
+    @Inject
+    KAppointmentAdapter kAdapter;
+    @Inject
+    List<OrderProjectDetailBean> orderBeanList;
+
+    private int preEndIndex;
+    private int lastPageIndex = 1;
 
     @Inject
     public UserAppointmentPresenter(UserAppointmentContract.Model model, UserAppointmentContract.View rootView) {
@@ -69,53 +68,44 @@ public class UserAppointmentPresenter extends BasePresenter<UserAppointmentContr
         this.mApplication = null;
     }
 
-
-    @Inject
-    UserAppointmentAdapter mAdapter;
-    @Inject
-    List<OrderProjectDetailBean> orderBeanList;
-
-    public void requestOrderList(String type){
-        requestOrderList(1,type,true);
+    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+    void onCreate() {
+        getAppointment(true);
     }
 
-//    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-    public void init(){
-        requestOrderList(currType);
-    }
-
-    public void nextPage(){
-        requestOrderList(nextPageIndex,currType,false);
-    }
-
-    private String currType = UserAppointmentModel.SEARCH_TYPE_NEW;
-    private int nextPageIndex = 1;
-
-    private void requestOrderList(int pageIndex,String type,final boolean clear) {
-        GetUserAppointmentPageRequest request = new GetUserAppointmentPageRequest();
-        request.setPageIndex(pageIndex);
-        request.setStatus(type);
-        request.setPageSize(10);
-
-        String key = mRootView.getCache().get("key") + "";
-        if(!TextUtils.isEmpty(key)){
-            request.setSearch(key);
+    public void getAppointment(boolean pullToRefresh) {
+        switch (((int) mRootView.getCache().get("type"))) {
+            case 0: // 生美/科美
+                getAppointment(pullToRefresh, 10351);
+                break;
+            case 1: // 医美
+                getAppointment(pullToRefresh, 10401);
+                break;
         }
+    }
+
+    private void getAppointment(boolean pullToRefresh, int cmd) {
+        GetUserAppointmentPageRequest request = new GetUserAppointmentPageRequest();
+        request.setCmd(cmd);
+        request.setSearch((String) mRootView.getCache().get("key"));
+        request.setStatus((String) mRootView.getCache().get("status"));
+        if (pullToRefresh) lastPageIndex = 1;
+        request.setPageIndex(lastPageIndex);//下拉刷新默认只请求第一页
 
         UserBean cacheUserBean = CacheUtil.getConstant(CacheUtil.CACHE_KEY_USER);
         request.setToken(cacheUserBean.getToken());
 
         mModel.getUserAppintmentPage(request)
                 .subscribeOn(Schedulers.io())
-                .doOnSubscribe(disposable -> {
-                    if (clear) {
-//                        mRootView.showLoading();//显示下拉刷新的进度条
-                    }else
-                        mRootView.startLoadMore();//显示上拉加载更多的进度条
-                }).subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(disposable -> {
+                    if (pullToRefresh)
+                        mRootView.showLoading();//显示下拉刷新的进度条
+                    else
+                        mRootView.startLoadMore();//显示上拉加载更多的进度条
+                })
                 .doFinally(() -> {
-                    if (clear)
+                    if (pullToRefresh)
                         mRootView.hideLoading();//隐藏下拉刷新的进度条
                     else
                         mRootView.endLoadMore();//隐藏上拉加载更多的进度条
@@ -125,93 +115,82 @@ public class UserAppointmentPresenter extends BasePresenter<UserAppointmentContr
                     @Override
                     public void onNext(GetUserAppointmentPageResponse response) {
                         if (response.isSuccess()) {
-                            if(clear){
+                            mRootView.showError(response.getOrderProjectDetailList().size() > 0);
+                            if (pullToRefresh) {
                                 orderBeanList.clear();
                                 orderBeanList.add(new OrderProjectDetailBean());
                             }
-                            currType = type;
-                            nextPageIndex = response.getNextPageIndex();
-                            mRootView.setEnd(nextPageIndex == -1);
-                            mRootView.showError(response.getOrderProjectDetailList().size() > 0);
-                            List<OrderProjectDetailBean> orderList = response.getOrderProjectDetailList();
-                            orderBeanList.addAll(orderList);
-                            for(OrderProjectDetailBean ob : orderBeanList){
-                                ob.setSearcyType(currType);
+                            mRootView.setLoadedAllItems(response.getNextPageIndex() == -1);
+                            orderBeanList.addAll(response.getOrderProjectDetailList());
+                            preEndIndex = orderBeanList.size() - 1;
+                            lastPageIndex = (orderBeanList.size() - 1) / 10 + 1;
+                            if (pullToRefresh) {
+                                kAdapter.notifyDataSetChanged();
+                                mAdapter.notifyDataSetChanged();
+                            } else {
+                                mAdapter.notifyItemRangeInserted(preEndIndex, orderBeanList.size());
+                                kAdapter.notifyItemRangeInserted(preEndIndex, orderBeanList.size());
                             }
-                            mAdapter.notifyDataSetChanged();
-                            mRootView.hideLoading();
-                        } else {
-                            mRootView.showMessage(response.getRetDesc());
                         }
                     }
                 });
     }
 
-    public void huakou(String orderId,String reservationId) {
+
+    public void huakou() {
         HuakouRequest request = new HuakouRequest();
-        request.setOrderId(orderId);
-        request.setReservationId(reservationId);
+        request.setOrderId((String) mRootView.getCache().get("orderId"));
+        request.setReservationId((String) mRootView.getCache().get("reservationId"));
         UserBean ub = CacheUtil.getConstant(CacheUtil.CACHE_KEY_USER);
         request.setToken(ub.getToken());
 
         mModel.huakou(request)
                 .subscribeOn(Schedulers.io())
-                .doOnSubscribe(disposable -> {
-                    mRootView.showLoading();//显示下拉刷新的进度条
-                }).subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doFinally(() -> {
-                    mRootView.hideLoading();//隐藏下拉刷新的进度条
-                })
+                .subscribeOn(AndroidSchedulers.mainThread())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))//使用 Rxlifecycle,使 Disposable 和 Activity 一起销毁
                 .subscribe(new ErrorHandleSubscriber<HuakouResponse>(mErrorHandler) {
                     @Override
                     public void onNext(HuakouResponse response) {
                         if (response.isSuccess()) {
-                            mRootView.showMessage("划扣成功");
-                            init();
-                        } else {
-                            mRootView.showMessage(response.getRetDesc());
+                            getAppointment(true);
                         }
                     }
                 });
     }
 
 
-    public void confirmAppointment(String id) {
+    public void confirmAppointment() {
         ConfirmAppointmentRequest request = new ConfirmAppointmentRequest();
-        request.setReservationId(id);
-
+        request.setReservationId((String) mRootView.getCache().get("reservationId"));
         UserBean ub = CacheUtil.getConstant(CacheUtil.CACHE_KEY_USER);
         request.setToken(ub.getToken());
 
         mModel.confirmAppointment(request)
                 .subscribeOn(Schedulers.io())
-                .doOnSubscribe(disposable -> {
-                    mRootView.showLoading();//显示下拉刷新的进度条
-                }).subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doFinally(() -> {
-                    mRootView.hideLoading();//隐藏下拉刷新的进度条
-                })
+                .subscribeOn(AndroidSchedulers.mainThread())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))//使用 Rxlifecycle,使 Disposable 和 Activity 一起销毁
                 .subscribe(new ErrorHandleSubscriber<ConfirmAppointmentResponse>(mErrorHandler) {
                     @Override
                     public void onNext(ConfirmAppointmentResponse response) {
                         if (response.isSuccess()) {
-                            mRootView.showMessage("确定成功");
-                            init();
-                        } else {
-                            mRootView.showMessage(response.getRetDesc());
+                            getAppointment(true);
                         }
                     }
                 });
     }
 
 
-    public void cancelAppointment(String id) {
+    public void cancelAppointment() {
         CancelAppointmentRequest request = new CancelAppointmentRequest();
-        request.setReservationId(id);
+        switch (((int) mRootView.getCache().get("type"))) {
+            case 0: // 生美/科美
+                request.setCmd(10355);
+                break;
+            case 1: // 医美
+                request.setCmd(10404);
+                break;
+        }
+        request.setReservationId((String) mRootView.getCache().get("reservationId"));
 
         UserBean ub = CacheUtil.getConstant(CacheUtil.CACHE_KEY_USER);
         request.setToken(ub.getToken());
@@ -230,18 +209,10 @@ public class UserAppointmentPresenter extends BasePresenter<UserAppointmentContr
                     @Override
                     public void onNext(CancelAppointmentResponse response) {
                         if (response.isSuccess()) {
-                            mRootView.showMessage("取消成功");
-                            init();
-                        } else {
-                            mRootView.showMessage(response.getRetDesc());
+                            getAppointment(true);
                         }
                     }
                 });
     }
 
-//
-//    public void doSearch(String key,int searchType){
-//        List<UserAppointment> shopAppointments = mModel.doSearch(key, searchType);
-////        mRootView.updateList(shopAppointments);
-//    }
 }
