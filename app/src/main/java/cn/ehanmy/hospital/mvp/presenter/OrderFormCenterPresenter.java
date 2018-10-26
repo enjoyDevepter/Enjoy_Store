@@ -16,6 +16,8 @@ import javax.inject.Inject;
 import cn.ehanmy.hospital.mvp.contract.OrderFormCenterContract;
 import cn.ehanmy.hospital.mvp.model.entity.UserBean;
 import cn.ehanmy.hospital.mvp.model.entity.order.OrderBean;
+import cn.ehanmy.hospital.mvp.model.entity.order.OrderHuakouRequest;
+import cn.ehanmy.hospital.mvp.model.entity.order.OrderHuakouResponse;
 import cn.ehanmy.hospital.mvp.model.entity.order.OrderListRequest;
 import cn.ehanmy.hospital.mvp.model.entity.order.OrderListResponse;
 import cn.ehanmy.hospital.mvp.ui.adapter.OrderCenterListAdapter;
@@ -106,6 +108,39 @@ public class OrderFormCenterPresenter extends BasePresenter<OrderFormCenterContr
                                 mAdapter.notifyItemRangeInserted(preEndIndex, orderBeanList.size());
                             }
                         } else {
+                            mRootView.showMessage(response.getRetDesc());
+                        }
+                    }
+                });
+    }
+
+
+    public void orderHuakou(String reservationId,String orderId,int nums) {
+        OrderHuakouRequest request = new OrderHuakouRequest();
+        request.setNum(nums);
+        request.setOrderId(orderId);
+        request.setReservationId(reservationId);
+        UserBean ub = CacheUtil.getConstant(CacheUtil.CACHE_KEY_USER);
+        request.setToken(ub.getToken());
+
+        mModel.orderHuakou(request)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(disposable -> {
+                    mRootView.showLoading();//显示下拉刷新的进度条
+                })
+                .doFinally(() -> {
+                    mRootView.hideLoading();//隐藏下拉刷新的进度条
+                })
+                .retryWhen(new RetryWithDelay(3, 2))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))//使用 Rxlifecycle,使 Disposable 和 Activity 一起销毁
+                .subscribe(new ErrorHandleSubscriber<OrderHuakouResponse>(mErrorHandler) {
+                    @Override
+                    public void onNext(OrderHuakouResponse response) {
+                        if (response.isSuccess()) {
+                            mRootView.huakouOk(true);
+                        } else {
+                            mRootView.huakouOk(false);
                             mRootView.showMessage(response.getRetDesc());
                         }
                     }

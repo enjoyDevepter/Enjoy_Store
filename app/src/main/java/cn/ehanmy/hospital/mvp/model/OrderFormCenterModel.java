@@ -11,6 +11,8 @@ import javax.inject.Inject;
 
 import cn.ehanmy.hospital.mvp.contract.OrderFormCenterContract;
 import cn.ehanmy.hospital.mvp.model.api.service.InterfaceService;
+import cn.ehanmy.hospital.mvp.model.entity.order.OrderHuakouRequest;
+import cn.ehanmy.hospital.mvp.model.entity.order.OrderHuakouResponse;
 import cn.ehanmy.hospital.mvp.model.entity.order.OrderListRequest;
 import cn.ehanmy.hospital.mvp.model.entity.order.OrderListResponse;
 import io.reactivex.Observable;
@@ -39,5 +41,10 @@ public class OrderFormCenterModel extends BaseModel implements OrderFormCenterCo
     public Observable<OrderListResponse> requestOrderListPage(OrderListRequest request) {
         return mRepositoryManager.obtainRetrofitService(InterfaceService.class)
                 .requestOrderListPage(request);
+    }
+    @Override
+    public Observable<OrderHuakouResponse> orderHuakou(OrderHuakouRequest request) {
+        return mRepositoryManager.obtainRetrofitService(InterfaceService.class)
+                .orderHuakou(request);
     }
 }

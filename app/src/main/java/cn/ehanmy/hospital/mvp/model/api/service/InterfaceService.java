@@ -40,6 +40,8 @@ import cn.ehanmy.hospital.mvp.model.entity.order.GetPayStatusRequest;
 import cn.ehanmy.hospital.mvp.model.entity.order.GetPayStatusResponse;
 import cn.ehanmy.hospital.mvp.model.entity.order.GoPayRequest;
 import cn.ehanmy.hospital.mvp.model.entity.order.GoPayResponse;
+import cn.ehanmy.hospital.mvp.model.entity.order.OrderHuakouRequest;
+import cn.ehanmy.hospital.mvp.model.entity.order.OrderHuakouResponse;
 import cn.ehanmy.hospital.mvp.model.entity.order.OrderInfoRequest;
 import cn.ehanmy.hospital.mvp.model.entity.order.OrderInfoResponse;
 import cn.ehanmy.hospital.mvp.model.entity.order.OrderListRequest;
@@ -236,6 +238,10 @@ public interface InterfaceService {
     // 获取消费详情
     @POST("gateway")
     Observable<GetBuyInfoResponse> getBuyInfo(@Body GetBuyInfoRequest request);
+
+    // 划扣订单
+    @POST("gateway")
+    Observable<OrderHuakouResponse> orderHuakou(@Body OrderHuakouRequest request);
 
 // --------------------------------------------------------------------------------
 

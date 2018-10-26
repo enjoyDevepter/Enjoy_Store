@@ -1,16 +1,16 @@
-package cn.ehanmy.hospital.mvp.model.entity.user_appointment;
+package cn.ehanmy.hospital.mvp.model.entity.order;
 
 import cn.ehanmy.hospital.mvp.model.entity.request.BaseRequest;
 
 /**
- * 用户预约划扣请求
- * 划扣表示这项预约已经执行
+ * 订单页面中的划扣接口
  * */
-public class HuakouRequest extends BaseRequest {
-    private final int cmd = 10357;
+public class OrderHuakouRequest extends BaseRequest {
+    private final int cmd = 10508;
     private String token;
     private String reservationId;
     private String orderId;
+    private int num;
 
     @Override
     public String toString() {
@@ -19,6 +19,7 @@ public class HuakouRequest extends BaseRequest {
                 ", token='" + token + '\'' +
                 ", reservationId='" + reservationId + '\'' +
                 ", orderId='" + orderId + '\'' +
+                ", num=" + num +
                 '}';
     }
 
@@ -48,5 +49,13 @@ public class HuakouRequest extends BaseRequest {
 
     public void setOrderId(String orderId) {
         this.orderId = orderId;
+    }
+
+    public int getNum() {
+        return num;
+    }
+
+    public void setNum(int num) {
+        this.num = num;
     }
 }

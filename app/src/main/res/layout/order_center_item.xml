@@ -63,6 +63,18 @@
                 app:layout_auto_baseheight="width" />
 
             <TextView
+                android:id="@+id/appointment"
+                style="@style/btn_in_list"
+                android:text="预约"
+                app:layout_auto_baseheight="width" />
+
+            <TextView
+                android:id="@+id/huakou"
+                style="@style/btn_in_list"
+                android:text="划扣"
+                app:layout_auto_baseheight="width" />
+
+            <TextView
                 android:id="@+id/pay"
                 style="@style/btn_in_list"
                 android:layout_marginRight="0dp"

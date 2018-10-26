@@ -6,6 +6,8 @@ import com.jess.arms.integration.cache.Cache;
 import com.jess.arms.mvp.IModel;
 import com.jess.arms.mvp.IView;
 
+import cn.ehanmy.hospital.mvp.model.entity.order.OrderHuakouRequest;
+import cn.ehanmy.hospital.mvp.model.entity.order.OrderHuakouResponse;
 import cn.ehanmy.hospital.mvp.model.entity.order.OrderListRequest;
 import cn.ehanmy.hospital.mvp.model.entity.order.OrderListResponse;
 import io.reactivex.Observable;
@@ -26,12 +28,13 @@ public interface OrderFormCenterContract {
         void showError(boolean hasDate);
 
         void setLoadedAllItems(boolean has);
-
+        void huakouOk(boolean isOk);
 
     }
 
     //Model层定义接口,外部只需关心Model返回的数据,无需关心内部细节,即是否使用缓存
     interface Model extends IModel {
         Observable<OrderListResponse> requestOrderListPage(OrderListRequest request);
+        Observable<OrderHuakouResponse> orderHuakou(OrderHuakouRequest request);
     }
 }

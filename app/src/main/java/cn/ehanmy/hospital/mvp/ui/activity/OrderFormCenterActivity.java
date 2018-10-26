@@ -13,11 +13,15 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.base.DefaultAdapter;
 import com.jess.arms.di.component.AppComponent;
+import com.jess.arms.http.imageloader.ImageLoader;
+import com.jess.arms.http.imageloader.glide.ImageConfigImpl;
 import com.jess.arms.integration.cache.Cache;
 import com.jess.arms.utils.ArmsUtils;
 import com.paginate.Paginate;
@@ -29,9 +33,16 @@ import cn.ehanmy.hospital.R;
 import cn.ehanmy.hospital.di.component.DaggerOrderFormCenterComponent;
 import cn.ehanmy.hospital.di.module.OrderFormCenterModule;
 import cn.ehanmy.hospital.mvp.contract.OrderFormCenterContract;
+import cn.ehanmy.hospital.mvp.model.entity.order.GoodsOrderBean;
+import cn.ehanmy.hospital.mvp.model.entity.order.OrderBean;
+import cn.ehanmy.hospital.mvp.model.entity.order.OrderInfoBean;
 import cn.ehanmy.hospital.mvp.presenter.OrderFormCenterPresenter;
 import cn.ehanmy.hospital.mvp.ui.adapter.HeightItemDecoration;
 import cn.ehanmy.hospital.mvp.ui.adapter.OrderCenterListAdapter;
+import cn.ehanmy.hospital.mvp.ui.widget.CustomDialog;
+import cn.ehanmy.hospital.mvp.ui.widget.MoneyView;
+import cn.ehanmy.hospital.util.EdittextUtil;
+import io.rx_cache2.internal.Disk;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
@@ -294,6 +305,72 @@ public class OrderFormCenterActivity extends BaseActivity<OrderFormCenterPresent
                 payIntent.putExtra(CommitOrderActivity.KEY_FOR_ORDER_BEAN,mAdapter.getItem(position));
                 startActivity(payIntent);
                 break;
+            case APPOINTMENT:
+                // 预约
+                break;
+            case HUAKOU:
+                confirmPay(mAdapter.getItem(position));
+                break;
+        }
+    }
+
+    @Inject
+    ImageLoader mImageLoader;
+
+    CustomDialog confirmPayDialog = null;
+    private void confirmPay(final OrderBean orderBean){
+        confirmPayDialog = CustomDialog.create(getSupportFragmentManager())
+                .setViewListener(new CustomDialog.ViewListener() {
+                    @Override
+                    public void bindView(View view) {
+                        EditText et = view.findViewById(R.id.et_time);
+                        GoodsOrderBean goodsOrderBean = orderBean.getGoodsList().get(0);
+                        OrderFormCenterActivity.this.mImageLoader.loadImage(OrderFormCenterActivity.this,
+                                ImageConfigImpl
+                                        .builder()
+                                        .placeholder(R.drawable.place_holder_img)
+                                        .url(goodsOrderBean.getImage())
+                                        .imageView(view.findViewById(R.id.image))
+                                        .build());
+                        ((TextView)view.findViewById(R.id.name)).setText(goodsOrderBean.getName());
+                        MoneyView moneyView = view.findViewById(R.id.price);
+                        moneyView.setMoneyText(ArmsUtils.formatLong(orderBean.getPayMoney()));
+                        view.findViewById(R.id.ok).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (EdittextUtil.isEmpty(et)) {
+                                    showMessage("请输入划扣次数");
+                                    return;
+                                }
+                                int times = Integer.parseInt(et.getText()+"");
+                                if(times <= 0 || times > goodsOrderBean.getSurplusTimes()){
+                                    showMessage("输入的次数无效，当前最大可使用次数为"+goodsOrderBean.getSurplusTimes());
+                                    return;
+                                }
+
+                                GoodsOrderBean goodsOrderBean1 = orderBean.getGoodsList().get(0);
+                                mPresenter.orderHuakou(goodsOrderBean1.getReservationId(),orderBean.getOrderId(),times);
+                            }
+                        });
+                    }
+                })
+                .setLayoutRes(R.layout.order_center_huakou_dialog_layout)
+                .setDimAmount(0.5f)
+                .isCenter(true)
+                .setCancelOutside(false)
+                .setWidth(556)
+                .show();
+    }
+
+    public void huakouOk(boolean isOk){
+        if(isOk){
+            if(confirmPayDialog != null){
+                confirmPayDialog.dismiss();
+                confirmPayDialog = null;
+                mPresenter.getOrderList(true);
+            }
+        }else{
+
         }
     }
 }

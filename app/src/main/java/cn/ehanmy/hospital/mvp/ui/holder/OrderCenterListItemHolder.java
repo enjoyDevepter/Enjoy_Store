@@ -81,6 +81,10 @@ public class OrderCenterListItemHolder extends BaseHolder<OrderBean> {
     View detail;
     @BindView(R.id.pay)
     View pay;
+    @BindView(R.id.appointment)
+    View appointment;
+    @BindView(R.id.huakou)
+    View huakou;
 
     @BindView(R.id.all_times)
     TextView all_times;
@@ -93,6 +97,8 @@ public class OrderCenterListItemHolder extends BaseHolder<OrderBean> {
     public OrderCenterListItemHolder(View itemView, OrderCenterListAdapter.OnChildItemClickLinstener onChildItemClickLinstener) {
         super(itemView);
         detail.setOnClickListener(this);
+        huakou.setOnClickListener(this);
+        appointment.setOnClickListener(this);
         pay.setOnClickListener(this);
         this.onChildItemClickLinstener = onChildItemClickLinstener;
     }
@@ -106,6 +112,12 @@ public class OrderCenterListItemHolder extends BaseHolder<OrderBean> {
                     return;
                 case R.id.pay:
                     onChildItemClickLinstener.onChildItemClick(view, OrderCenterListAdapter.ViewName.PAY, getAdapterPosition());
+                    return;
+                case R.id.appointment:
+                    onChildItemClickLinstener.onChildItemClick(view, OrderCenterListAdapter.ViewName.APPOINTMENT,getAdapterPosition());
+                    return;
+                case R.id.huakou:
+                    onChildItemClickLinstener.onChildItemClick(view, OrderCenterListAdapter.ViewName.HUAKOU,getAdapterPosition());
                     return;
             }
         }
@@ -157,12 +169,19 @@ public class OrderCenterListItemHolder extends BaseHolder<OrderBean> {
         line2.setBackgroundColor(Color.WHITE);
         line1.setVisibility(View.VISIBLE);
         String orderListStatus = order.getOrderListStatus();
+        pay.setVisibility(View.GONE);
+        appointment.setVisibility(View.GONE);
+        huakou.setVisibility(View.GONE);
+        detail.setVisibility(View.VISIBLE);
         if (TextUtils.isEmpty(orderListStatus)) {
             order_secend_parent.setVisibility(View.VISIBLE);
             switch (order.getOrderStatus()) {
                 case "1":
-                case "2":
                     pay.setVisibility(View.VISIBLE);
+                    break;
+                case "31":
+                    appointment.setVisibility(View.VISIBLE);
+                    huakou.setVisibility(View.VISIBLE);
                     break;
                 default:
                     pay.setVisibility(View.GONE);
@@ -175,7 +194,9 @@ public class OrderCenterListItemHolder extends BaseHolder<OrderBean> {
                     order_secend_parent.setVisibility(View.GONE);
                     break;
                 case "31":
-                    pay.setVisibility(View.VISIBLE);
+                    pay.setVisibility(View.GONE);
+                    appointment.setVisibility(View.VISIBLE);
+                    huakou.setVisibility(View.VISIBLE);
                     order_secend_parent.setVisibility(View.VISIBLE);
                     break;
                 case "5":

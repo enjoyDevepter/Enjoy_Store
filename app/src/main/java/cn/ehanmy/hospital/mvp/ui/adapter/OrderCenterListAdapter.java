@@ -79,7 +79,7 @@ public class OrderCenterListAdapter extends DefaultAdapter<OrderBean> {
 
 
     public enum ViewName {
-        DETAIL, PAY
+        DETAIL, PAY,APPOINTMENT,HUAKOU
     }
 
 
