@@ -10,10 +10,6 @@ import com.jess.arms.mvp.BaseModel;
 import javax.inject.Inject;
 
 import cn.ehanmy.hospital.mvp.contract.MainContract;
-import cn.ehanmy.hospital.mvp.model.api.service.InterfaceService;
-import cn.ehanmy.hospital.mvp.model.entity.store.GetStoreInfoRequest;
-import cn.ehanmy.hospital.mvp.model.entity.store.GetStoreInfoResponse;
-import io.reactivex.Observable;
 
 
 @ActivityScope
@@ -34,12 +30,4 @@ public class MainModel extends BaseModel implements MainContract.Model {
         this.mGson = null;
         this.mApplication = null;
     }
-
-    @Override
-    public Observable<GetStoreInfoResponse> getStoreInfo(GetStoreInfoRequest request) {
-        return mRepositoryManager.obtainRetrofitService(InterfaceService.class)
-                .getStoreInfo(request);
-    }
-
-
 }
