@@ -166,8 +166,8 @@ public class OrderInfoActivity extends BaseActivity<OrderInfoPresenter> implemen
         skill.setText(specValueName);
         skill_info.setText(specValueName);
         project_name.setText(goodsOrderBean.getName());
-        if (!ArmsUtils.isEmpty(orderInfoBean.getAppointmentsDate())) {
-            order_time.setText(orderInfoBean.getAppointmentsDate() + "  " + orderInfoBean.getAppointmentsTime());
+        if (!ArmsUtils.isEmpty(orderInfoBean.getReservationDate())) {
+            order_time.setText(orderInfoBean.getReservationDate() + "  " + orderInfoBean.getReservationTime());
         }
         times.setText(""+orderInfoBean.getGoodsList().get(0).getTimes());
     }
