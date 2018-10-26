@@ -29,4 +29,5 @@ import cn.ehanmy.hospital.BuildConfig;
 public interface Api {
     String APP_DOMAIN = BuildConfig.API_HOST;
     int RequestSuccess = 0;
+    int LoginOvertime = 1001; // 登录超时
 }

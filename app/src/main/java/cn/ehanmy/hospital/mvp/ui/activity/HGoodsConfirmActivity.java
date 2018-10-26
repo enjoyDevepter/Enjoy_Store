@@ -199,9 +199,11 @@ public class HGoodsConfirmActivity extends BaseActivity<HGoodsConfirmPresenter> 
 //                        ((TextView) view.findViewById(R.id.project_id)).setText(orderId);
 //                        ((TextView) view.findViewById(R.id.project_leader)).setText(name.getText());
 //                        ((TextView) view.findViewById(R.id.project_time)).setText(sdf.format(orderTime));
-                        view.findViewById(R.id.project).setOnClickListener(new View.OnClickListener() {
+                        view.findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                ArmsUtils.startActivity(HGoodsListActivity.class);
+                                killMyself();
                                 payOkDialog.dismiss();
                             }
                         });

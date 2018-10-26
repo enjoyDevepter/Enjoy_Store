@@ -477,7 +477,7 @@
                                 android:background="@drawable/invite_bg"
                                 android:drawableRight="@mipmap/drop_down_icon"
                                 android:padding="10px"
-                                android:text="邀请码"
+                                android:text="请选择"
                                 android:textColor="#FF666666"
                                 android:textSize="26px"
                                 app:layout_auto_baseheight="width" />

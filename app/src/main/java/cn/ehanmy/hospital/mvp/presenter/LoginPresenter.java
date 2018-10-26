@@ -1,13 +1,17 @@
 package cn.ehanmy.hospital.mvp.presenter;
 
 import android.app.Application;
+import android.arch.lifecycle.Lifecycle;
+import android.arch.lifecycle.OnLifecycleEvent;
 
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.http.imageloader.ImageLoader;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.mvp.BasePresenter;
+import com.jess.arms.utils.ArmsUtils;
 import com.jess.arms.utils.PermissionUtil;
 import com.jess.arms.utils.RxLifecycleUtils;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.List;
 
@@ -37,10 +41,92 @@ public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginCont
     Application mApplication;
     @Inject
     ImageLoader mImageLoader;
+    @Inject
+    RxPermissions mRxPermissions;
 
     @Inject
     public LoginPresenter(LoginContract.Model model, LoginContract.View rootView) {
         super(model, rootView);
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    public void checkUser() {
+        requestPermissions();
+    }
+
+    private void requestPermissions() {
+        PermissionUtil.requestPermissionForInit(new PermissionUtil.RequestPermission() {
+            @Override
+            public void onRequestPermissionSuccess() {
+                checkToken();
+            }
+
+            @Override
+            public void onRequestPermissionFailure(List<String> permissions) {
+                mRootView.killMyself();
+            }
+
+            @Override
+            public void onRequestPermissionFailureWithAskNeverAgain(List<String> permissions) {
+                mRootView.killMyself();
+            }
+        }, mRxPermissions, mErrorHandler);
+    }
+
+    private void checkToken() {
+        UserBean spUserbean = SPUtils.get(SPUtils.KEY_FOR_USER_INFO, new UserBean("", "", ""));
+        if (!ArmsUtils.isEmpty(spUserbean.getToken())) {
+            getStroeInfo();
+        }
+    }
+
+    public void login(String username, String password) {
+        LoginRequest request = new LoginRequest();
+        request.setUsername(username);
+        request.setPassword(password);
+        mModel.login(request)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))//使用 Rxlifecycle,使 Disposable 和 Activity 一起销毁
+                .subscribe(new ErrorHandleSubscriber<LoginResponse>(mErrorHandler) {
+                    @Override
+                    public void onNext(LoginResponse response) {
+                        if (response.isSuccess()) {
+                            UserBean value = new UserBean(username, response.getToken(), response.getSignkey());
+                            CacheUtil.saveConstant(CacheUtil.CACHE_KEY_USER, value);
+                            CacheUtil.saveConstant(CacheUtil.CACHE_KEY_USER_LOGIN_NAME, username);
+                            SPUtils.put(SPUtils.KEY_FOR_USER_INFO, value);
+                            SPUtils.put(SPUtils.KEY_FOR_USER_NAME, username);
+                            getStroeInfo();
+                        } else {
+                            mRootView.showMessage(response.getRetDesc());
+                        }
+                    }
+                });
+
+    }
+
+    private void getStroeInfo() {
+        UserBean spUserbean = SPUtils.get(SPUtils.KEY_FOR_USER_INFO, new UserBean("", "", ""));
+        GetStoreInfoRequest getStoreInfoRequest = new GetStoreInfoRequest();
+        getStoreInfoRequest.setToken(spUserbean.getToken());
+        mModel.getStroeInfo(getStoreInfoRequest)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))//使用 Rxlifecycle,使 Disposable 和 Activity 一起销毁
+                .subscribe(new ErrorHandleSubscriber<GetStoreInfoResponse>(mErrorHandler) {
+                    @Override
+                    public void onNext(GetStoreInfoResponse response) {
+                        if (response.isSuccess()) {
+                            CacheUtil.saveConstant(CacheUtil.CACHE_KEY_USER, spUserbean);
+                            CacheUtil.saveConstant(CacheUtil.CACHE_KEY_USER_LOGIN_NAME, spUserbean.getUserName());
+                            CacheUtil.saveConstant(CacheUtil.CACHE_KEY_STORE_INFO, response.getStore());
+                            SPUtils.put(SPUtils.KEY_FOR_STORE_INFO, response.getStore());
+                            mRootView.goMainPage();
+                            mRootView.killMyself();
+                        }
+                    }
+                });
     }
 
     @Override
@@ -50,75 +136,5 @@ public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginCont
         this.mAppManager = null;
         this.mImageLoader = null;
         this.mApplication = null;
-    }
-
-    public void requestPermissions() {
-        //请求外部存储权限用于适配android6.0的权限管理机制
-        PermissionUtil.readPhoneState(new PermissionUtil.RequestPermission() {
-            @Override
-            public void onRequestPermissionSuccess() {
-                //request permission success, do something.
-            }
-
-            @Override
-            public void onRequestPermissionFailure(List<String> permissions) {
-                mRootView.showMessage("Request permissions failure");
-            }
-
-            @Override
-            public void onRequestPermissionFailureWithAskNeverAgain(List<String> permissions) {
-                mRootView.showMessage("Need to go to the settings");
-            }
-        }, mRootView.getRxPermissions(), mErrorHandler);
-    }
-
-
-    public void login(String username, String password) {
-        mRootView.showLoading();
-        LoginRequest request = new LoginRequest();
-        request.setUsername(username);
-        request.setPassword(password);
-        mModel.login(request)
-                .subscribeOn(Schedulers.io())
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))//使用 Rxlifecycle,使 Disposable 和 Activity 一起销毁
-                .subscribe(new ErrorHandleSubscriber<LoginResponse>(mErrorHandler) {
-                    @Override
-                    public void onNext(LoginResponse response) {
-                        if (response.isSuccess()) {
-                            UserBean value = new UserBean(username, response.getToken(), response.getSignkey());
-                            CacheUtil.saveConstant(CacheUtil.CACHE_KEY_USER, value);
-                            CacheUtil.saveConstant(CacheUtil.CACHE_KEY_USER_LOGIN_NAME,username);
-                            GetStoreInfoRequest getStoreInfoRequest = new GetStoreInfoRequest();
-                            getStoreInfoRequest.setToken(response.getToken());
-                            mModel.getStroeInfo(getStoreInfoRequest)
-                                    .subscribeOn(Schedulers.io())
-                                    .doOnSubscribe(disposable -> {
-                                    }).subscribeOn(AndroidSchedulers.mainThread())
-                                    .observeOn(AndroidSchedulers.mainThread())
-                                    .compose(RxLifecycleUtils.bindToLifecycle(mRootView))//使用 Rxlifecycle,使 Disposable 和 Activity 一起销毁
-                                    .subscribe(new ErrorHandleSubscriber<GetStoreInfoResponse>(mErrorHandler) {
-                                        @Override
-                                        public void onNext(GetStoreInfoResponse s) {
-                                            mRootView.hideLoading();
-                                            if (s.isSuccess()) {
-                                                CacheUtil.saveConstant(CacheUtil.CACHE_KEY_STORE_INFO, s.getStore());
-                                                SPUtils.put(SPUtils.KEY_FOR_HOSPITAL_INFO, s.getStore() );
-                                                SPUtils.put(SPUtils.KEY_FOR_USER_INFO,value);
-                                                SPUtils.put(SPUtils.KEY_FOR_USER_NAME,username);
-                                                mRootView.killMyself();
-                                                mRootView.goMainPage();
-                                            } else {
-                                                mRootView.showMessage(s.getRetDesc());
-                                            }
-                                        }
-                                    });
-                        } else {
-                            mRootView.showMessage(response.getRetDesc());
-                        }
-                    }
-                });
-
     }
 }

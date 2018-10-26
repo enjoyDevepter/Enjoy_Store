@@ -292,7 +292,7 @@ public class GoodsListActivity extends BaseActivity<GoodsListPresenter> implemen
                     return;
                 }
                 priceV.setSelected(!priceV.isSelected());
-                saleV.setSelected(false);
+                priceV.setSelected(false);
                 provideCache().put("orderByField", "salesPrice");
                 provideCache().put("orderByAsc", priceV.isSelected());
                 saleTV.setTextColor(Color.BLACK);

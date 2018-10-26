@@ -42,25 +42,6 @@ public class BaseResponse implements Serializable {
     private String retDesc;
     private ImageUrl result;
 
-    public class ImageUrl {
-        private String url;
-
-        public String getUrl() {
-            return url;
-        }
-
-        public void setUrl(String url) {
-            this.url = url;
-        }
-
-        @Override
-        public String toString() {
-            return "ImageUrl{" +
-                    "url='" + url + '\'' +
-                    '}';
-        }
-    }
-
     public ImageUrl getResult() {
         return result;
     }
@@ -159,6 +140,32 @@ public class BaseResponse implements Serializable {
             return true;
         } else {
             return false;
+        }
+    }
+
+    public boolean isNeedLogin() {
+        if (retCode == Api.LoginOvertime) {
+            return true;
+        }
+        return false;
+    }
+
+    public class ImageUrl {
+        private String url;
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
+
+        @Override
+        public String toString() {
+            return "ImageUrl{" +
+                    "url='" + url + '\'' +
+                    '}';
         }
     }
 }

@@ -85,6 +85,7 @@ public class ChoiceTimeActivity extends BaseActivity<ChoiceTimePresenter> implem
         confrimTV.setOnClickListener(this);
         dateAdapter.setOnItemClickListener(this);
         timeAdapter.setOnItemClickListener(this);
+        provideCache().put("dateIndex", 0);
         ArmsUtils.configRecyclerView(dateRV, layoutManager);
         ArmsUtils.configRecyclerView(timeRV, new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         dateRV.setAdapter(dateAdapter);
