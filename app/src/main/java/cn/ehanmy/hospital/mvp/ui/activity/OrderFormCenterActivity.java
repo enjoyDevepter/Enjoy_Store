@@ -316,6 +316,7 @@ public class OrderFormCenterActivity extends BaseActivity<OrderFormCenterPresent
 
     @Inject
     ImageLoader mImageLoader;
+    private int times = 1;
 
     CustomDialog confirmPayDialog = null;
     private void confirmPay(final OrderBean orderBean){
@@ -323,7 +324,26 @@ public class OrderFormCenterActivity extends BaseActivity<OrderFormCenterPresent
                 .setViewListener(new CustomDialog.ViewListener() {
                     @Override
                     public void bindView(View view) {
-                        EditText et = view.findViewById(R.id.et_time);
+                        TextView et = view.findViewById(R.id.count);
+                        et.setText(""+times);
+                        view.findViewById(R.id.add).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if(times < orderBean.getGoodsList().get(0).getSurplusTimes()){
+                                    times++;
+                                    et.setText(""+times);
+                                }
+                            }
+                        });
+                        view.findViewById(R.id.minus).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if(times > 1){
+                                    times--;
+                                    et.setText(""+times);
+                                }
+                            }
+                        });
                         GoodsOrderBean goodsOrderBean = orderBean.getGoodsList().get(0);
                         OrderFormCenterActivity.this.mImageLoader.loadImage(OrderFormCenterActivity.this,
                                 ImageConfigImpl
@@ -338,16 +358,6 @@ public class OrderFormCenterActivity extends BaseActivity<OrderFormCenterPresent
                         view.findViewById(R.id.ok).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                if (EdittextUtil.isEmpty(et)) {
-                                    showMessage("请输入划扣次数");
-                                    return;
-                                }
-                                int times = Integer.parseInt(et.getText()+"");
-                                if(times <= 0 || times > goodsOrderBean.getSurplusTimes()){
-                                    showMessage("输入的次数无效，当前最大可使用次数为"+goodsOrderBean.getSurplusTimes());
-                                    return;
-                                }
-
                                 GoodsOrderBean goodsOrderBean1 = orderBean.getGoodsList().get(0);
                                 mPresenter.orderHuakou(goodsOrderBean1.getReservationId(),orderBean.getOrderId(),times);
                             }

@@ -38,19 +38,67 @@
                 android:layout_gravity="center_vertical"
                 android:text="次数 X"
                 android:textSize="28px"
+                android:layout_marginRight="15px"
                 android:textColor="#666666"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
-            <EditText
-                android:layout_marginLeft="16px"
-                android:text="1"
-                android:inputType="number"
-                android:id="@+id/et_time"
-                android:textSize="28px"
-                android:textColor="#666666"
-                android:layout_width="45px"
-                android:layout_height="match_parent" />
+            <LinearLayout
+                android:id="@+id/operation"
+                android:layout_width="60dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/order_center_huakou_times_selector"
+                >
+
+                <LinearLayout
+                    android:id="@+id/minus"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <View
+                        android:layout_width="9dp"
+                        android:layout_height="2dp"
+                        android:background="@mipmap/minus" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="#FFDADADA" />
+
+                <TextView
+                    android:id="@+id/count"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textColor="#FF000000"
+                    android:textSize="13sp" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="#FFDADADA" />
+
+                <LinearLayout
+                    android:id="@+id/add"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <View
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
+                        android:background="@mipmap/add" />
+
+                </LinearLayout>
+            </LinearLayout>
 
         </LinearLayout>
 
