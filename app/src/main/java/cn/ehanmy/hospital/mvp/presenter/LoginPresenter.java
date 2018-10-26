@@ -75,7 +75,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginCont
 
     private void checkToken() {
         UserBean spUserbean = SPUtils.get(SPUtils.KEY_FOR_USER_INFO, new UserBean("", "", ""));
-        if (!ArmsUtils.isEmpty(spUserbean.getToken())) {
+        if (null != spUserbean && !ArmsUtils.isEmpty(spUserbean.getToken())) {
             getStroeInfo();
         }
     }
