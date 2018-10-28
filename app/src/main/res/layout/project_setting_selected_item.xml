@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="30dp"
+    android:layout_height="60px"
     android:background="#FFDDDDDD"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:paddingLeft="15dp">
+    android:paddingLeft="30px">
 
     <TextView
         android:id="@+id/content"
-        android:layout_width="0dp"
+        android:layout_width="0px"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center_vertical"
         android:text="所有分类"
         android:textColor="#ff333333"
-        android:textSize="13sp" />
+        android:textSize="26px" />
 
     <View
-        android:layout_width="6dp"
-        android:layout_height="12dp"
-        android:layout_marginRight="9dp"
+        android:layout_width="12px"
+        android:layout_height="24px"
+        android:layout_marginRight="18px"
         android:background="@mipmap/more_right" />
 </LinearLayout>
