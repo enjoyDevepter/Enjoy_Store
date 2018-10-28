@@ -24,8 +24,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="23dp"
-                android:layout_marginTop="19dp"
+                android:layout_marginLeft="46px"
+                android:layout_marginTop="40px"
                 android:orientation="horizontal">
 
                 <TextView
@@ -34,37 +34,37 @@
                     android:layout_gravity="center_vertical"
                     android:text="标题"
                     android:textColor="#ff333333"
-                    android:textSize="13sp" />
+                    android:textSize="26px" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="7dp"
+                    android:layout_marginLeft="14px"
                     android:text="(3-25个字)"
                     android:textColor="#ffcbcbcb"
-                    android:textSize="13sp" />
+                    android:textSize="26px" />
 
             </LinearLayout>
 
             <EditText
                 android:id="@+id/et_title"
                 android:layout_width="match_parent"
-                android:layout_height="32dp"
-                android:layout_marginLeft="23dp"
-                android:layout_marginRight="23dp"
-                android:layout_marginTop="8dp"
+                android:layout_height="64px"
+                android:layout_marginLeft="46px"
+                android:layout_marginRight="46px"
+                android:layout_marginTop="16px"
                 android:background="@drawable/xiaofeibi_edit_back"
-                android:paddingLeft="11dp"
+                android:paddingLeft="22px"
                 android:textColor="#ff7b7b7b"
-                android:textSize="13sp" />
+                android:textSize="26px" />
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="23dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginLeft="46px"
+                android:layout_marginTop="32px"
                 android:orientation="horizontal">
 
                 <TextView
@@ -73,84 +73,84 @@
                     android:layout_gravity="center_vertical"
                     android:text="活动详情"
                     android:textColor="#ff333333"
-                    android:textSize="13sp" />
+                    android:textSize="26px" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="7dp"
+                    android:layout_marginLeft="14px"
                     android:text="(60字以内)"
                     android:textColor="#ffcbcbcb"
-                    android:textSize="13sp" />
+                    android:textSize="26px" />
 
             </LinearLayout>
 
             <EditText
                 android:id="@+id/et_content"
                 android:layout_width="match_parent"
-                android:layout_height="91dp"
-                android:layout_marginBottom="22dp"
-                android:layout_marginLeft="23dp"
-                android:layout_marginRight="23dp"
-                android:layout_marginTop="8dp"
+                android:layout_height="180px"
+                android:layout_marginBottom="44px"
+                android:layout_marginLeft="46px"
+                android:layout_marginRight="46px"
+                android:layout_marginTop="16px"
                 android:background="@drawable/xiaofeibi_edit_back"
                 android:gravity="left|top"
-                android:padding="11dp"
+                android:padding="22px"
                 android:textColor="#ff7b7b7b"
-                android:textSize="13sp" />
+                android:textSize="26px" />
 
             <View style="@style/divider_3" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="23dp"
-                android:layout_marginTop="19dp"
+                android:layout_marginLeft="46px"
+                android:layout_marginTop="40px"
                 android:text="添加图片"
                 android:textColor="#ff333333"
-                android:textSize="13sp" />
+                android:textSize="26px" />
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="23dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginLeft="46px"
+                android:layout_marginTop="24px"
                 android:orientation="horizontal">
 
                 <View
                     android:id="@+id/add"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_marginRight="8dp"
+                    android:layout_width="160px"
+                    android:layout_height="160px"
+                    android:layout_marginRight="16px"
                     android:background="@mipmap/add_activity_add_icon" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/images"
                     android:layout_width="match_parent"
-                    android:layout_height="80dp" />
+                    android:layout_height="160px" />
 
             </LinearLayout>
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:layout_marginTop="15dp"
+                android:layout_height="140px"
+                android:layout_marginTop="30px"
                 android:background="#F2F2F2">
 
                 <TextView
                     android:id="@+id/commit"
                     android:layout_width="match_parent"
-                    android:layout_height="38dp"
+                    android:layout_height="76px"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="28dp"
-                    android:layout_marginRight="28dp"
+                    android:layout_marginLeft="56px"
+                    android:layout_marginRight="56px"
                     android:background="@drawable/activity_info_add_btn_back"
                     android:gravity="center"
                     android:text="提交"
                     android:textColor="#ffffffff"
-                    android:textSize="12sp" />
+                    android:textSize="24px" />
 
             </FrameLayout>
         </LinearLayout>
