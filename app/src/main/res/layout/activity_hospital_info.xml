@@ -17,8 +17,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="172dp"
-                android:layout_marginTop="3dp"
+                android:layout_height="344px"
+                android:layout_marginTop="6px"
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
@@ -28,8 +28,8 @@
                     android:layout_width="516px"
                     android:src="@mipmap/default_image"
                     android:layout_height="327px"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="30px"
+                    android:layout_marginRight="20px"
                     android:layout_weight="1"
                     />
 
@@ -44,17 +44,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginRight="20dp"
+                        android:layout_marginRight="40px"
                         android:text="修改 >"
                         android:textColor="#ff333333"
-                        android:textSize="12sp" />
+                        android:textSize="24px" />
                 </LinearLayout>
             </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10px"
                 android:background="@color/white">
 
                 <TextView
@@ -63,10 +63,10 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="18dp"
+                    android:layout_marginLeft="30px"
+                    android:layout_marginTop="36px"
                     android:textColor="#ff333333"
-                    android:textSize="14sp" />
+                    android:textSize="28px" />
 
                 <TextView
                     android:id="@+id/phone"
@@ -74,10 +74,10 @@
                     android:layout_height="wrap_content"
                     android:layout_alignLeft="@id/name"
                     android:layout_below="@id/name"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="16px"
                     android:text="联系电话："
                     android:textColor="#ff333333"
-                    android:textSize="12sp" />
+                    android:textSize="24px" />
 
                 <TextView
                     android:id="@+id/time"
@@ -85,10 +85,10 @@
                     android:layout_height="wrap_content"
                     android:layout_alignLeft="@id/name"
                     android:layout_below="@id/phone"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="16px"
                     android:text="营业时间："
                     android:textColor="#ff333333"
-                    android:textSize="12sp" />
+                    android:textSize="24px" />
 
 
                 <TextView
@@ -97,12 +97,12 @@
                     android:layout_height="wrap_content"
                     android:layout_alignLeft="@id/name"
                     android:layout_below="@id/time"
-                    android:layout_marginBottom="20dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="40px"
+                    android:layout_marginTop="16px"
                     android:drawableLeft="@mipmap/location_icon"
-                    android:drawablePadding="3dp"
+                    android:drawablePadding="6px"
                     android:textColor="#FF8A8A8A"
-                    android:textSize="12sp" />
+                    android:textSize="24px" />
 
                 <TextView
                     android:id="@+id/modify_info"
@@ -110,10 +110,10 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_alignTop="@id/name"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginRight="40px"
                     android:text="修改 >"
                     android:textColor="#ff333333"
-                    android:textSize="12dp" />
+                    android:textSize="24px" />
 
             </RelativeLayout>
 
