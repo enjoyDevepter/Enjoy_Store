@@ -59,7 +59,7 @@
         android:paddingLeft="23dp"
         app:tabIndicatorColor="#FF50C8F5"
         app:tabIndicatorHeight="2dp"
-        app:tabMinWidth="50dp"
+        app:tabMinWidth="120px"
         app:tabMode="scrollable"
         app:tabPaddingEnd="0dp"
         app:tabPaddingStart="0dp"
