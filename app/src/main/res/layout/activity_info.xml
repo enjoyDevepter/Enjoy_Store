@@ -9,22 +9,22 @@
     <RelativeLayout
         android:id="@+id/title_Layout"
         android:layout_width="match_parent"
-        android:layout_height="46dp"
+        android:layout_height="92px"
         android:background="@drawable/title_bg"
         android:orientation="horizontal">
 
         <LinearLayout
             android:id="@+id/back"
-            android:layout_width="40dp"
+            android:layout_width="80px"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="4dp"
+            android:layout_marginLeft="8px"
             android:gravity="center">
 
             <View
-                android:layout_width="10dp"
-                android:layout_height="17dp"
+                android:layout_width="20px"
+                android:layout_height="34px"
                 android:background="@mipmap/back" />
 
         </LinearLayout>
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:textColor="#FF333333"
-            android:textSize="18sp" />
+            android:textSize="36px" />
 
         <TextView
             android:id="@+id/add_activity"
@@ -46,26 +46,26 @@
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="40px"
             android:text="添加活动"
             android:textColor="#ff333333"
-            android:textSize="14sp" />
+            android:textSize="28px" />
     </RelativeLayout>
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tab"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="100px"
         android:layout_gravity="left"
-        android:layout_marginTop="3dp"
+        android:layout_marginTop="6px"
         android:background="@drawable/buttom_divider_bg"
-        android:paddingLeft="23dp"
+        android:paddingLeft="46px"
         app:tabIndicatorColor="#FF50C8F5"
-        app:tabIndicatorHeight="2dp"
+        app:tabIndicatorHeight="4px"
         app:tabMinWidth="120px"
         app:tabMode="scrollable"
-        app:tabPaddingEnd="0dp"
-        app:tabPaddingStart="0dp"
+        app:tabPaddingEnd="0px"
+        app:tabPaddingStart="0px"
         app:tabSelectedTextColor="#FF50C8F5"
         app:tabTextAppearance="@style/TabLayoutTextStyle"
         app:tabTextColor="#FF666666" />
@@ -86,10 +86,10 @@
                 android:id="@+id/contentList"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="19dp"
-                android:layout_marginRight="19dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="40px"
+                android:layout_marginRight="40px"
+                android:layout_marginTop="20px"
+                android:layout_marginBottom="20px"
                 android:scrollbars="none"
                 tools:listitem="@layout/recycle_list" />
 
@@ -104,17 +104,17 @@
                 android:visibility="gone">
 
                 <View
-                    android:layout_width="94dp"
-                    android:layout_height="60dp"
+                    android:layout_width="188px"
+                    android:layout_height="120px"
                     android:background="@mipmap/nodata" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="60px"
                     android:text="暂无数据"
                     android:textColor="#FF666666"
-                    android:textSize="13sp" />
+                    android:textSize="26px" />
 
             </LinearLayout>
         </FrameLayout>
