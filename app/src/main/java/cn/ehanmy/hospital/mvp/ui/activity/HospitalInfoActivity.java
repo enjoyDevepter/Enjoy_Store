@@ -236,8 +236,8 @@ public class HospitalInfoActivity extends BaseActivity<HospitalInfoPresenter> im
                     }
                 })
                 .setLayoutRes(R.layout.dialog_change_hospital_info)
-                .setWidth(ArmsUtils.getDimens(this, R.dimen.modify_hospital_width))
-                .setHeight(ArmsUtils.getDimens(this, R.dimen.modify_hospital_height))
+                .setWidth(608)
+                .setHeight(452)
                 .setDimAmount(0.5f)
                 .isCenter(true)
                 .show();
