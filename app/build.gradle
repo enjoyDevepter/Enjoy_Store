@@ -93,6 +93,8 @@ dependencies {
     implementation rootProject.ext.dependencies["bottomBarLayout"]
     implementation rootProject.ext.dependencies["pickerview"]
     implementation 'com.qiniu:qiniu-android-sdk:7.3.+'
+    implementation rootProject.ext.dependencies['location']
+
     //view
     annotationProcessor(rootProject.ext.dependencies["butterknife-compiler"]) {
         exclude module: 'support-annotations'

@@ -4,6 +4,8 @@ import cn.ehanmy.hospital.mvp.model.entity.GetAppointmentTimeRequest;
 import cn.ehanmy.hospital.mvp.model.entity.GetAppointmentTimeResponse;
 import cn.ehanmy.hospital.mvp.model.entity.QiniuRequest;
 import cn.ehanmy.hospital.mvp.model.entity.QiniuResponse;
+import cn.ehanmy.hospital.mvp.model.entity.UpdateRequest;
+import cn.ehanmy.hospital.mvp.model.entity.UpdateResponse;
 import cn.ehanmy.hospital.mvp.model.entity.activity.AddActivityRequest;
 import cn.ehanmy.hospital.mvp.model.entity.activity.AddActivityResponse;
 import cn.ehanmy.hospital.mvp.model.entity.activity.ChangeActivityInfoRequest;
@@ -117,6 +119,9 @@ public interface InterfaceService {
     @POST("gateway")
     Observable<MemberInfoByIdResponse> requestMemberInfoById(@Body MemberInfoByIdRequest request);
 
+    // 升级检查
+    @POST("gateway")
+    Observable<UpdateResponse> checkUpdate(@Body UpdateRequest request);
 
     @POST("gateway")
         // 获取七牛上传信息

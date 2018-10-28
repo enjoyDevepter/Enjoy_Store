@@ -9,5 +9,7 @@
     <dimen name="image_upload_height">120dp</dimen>
     <dimen name="modify_hospital_width">304dp</dimen>
     <dimen name="modify_hospital_height">226dp</dimen>
+    <dimen name="update_dialog_height">386dp</dimen>
+    <dimen name="update_dialog_width">294dp</dimen>
 
 </resources>

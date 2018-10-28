@@ -49,6 +49,12 @@
             android:value="768" />
         <!-- arms配置 -->
 
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="2512ca1233ef1f50f5e3e9248872924d">
+            //开发者申请的key
+        </meta-data>
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="cn.ehanmy.store.fileprovider"
@@ -147,6 +153,9 @@
         <activity
             android:name=".mvp.ui.activity.ChoiceHospitalActivity"
             android:screenOrientation="landscape" />
+
+        <service android:name="com.amap.api.location.APSService" />
+
     </application>
 
 </manifest>

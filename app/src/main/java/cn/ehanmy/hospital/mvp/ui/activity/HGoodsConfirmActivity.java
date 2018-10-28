@@ -195,10 +195,6 @@ public class HGoodsConfirmActivity extends BaseActivity<HGoodsConfirmPresenter> 
                 .setViewListener(new CustomDialog.ViewListener() {
                     @Override
                     public void bindView(View view) {
-                        ((TextView) view.findViewById(R.id.project_name)).setText(response.getGoods().getName());
-//                        ((TextView) view.findViewById(R.id.project_id)).setText(response.getGoods().getp);
-//                        ((TextView) view.findViewById(R.id.project_leader)).setText(name.getText());
-//                        ((TextView) view.findViewById(R.id.project_time)).setText(sdf.format(orderTime));
                         view.findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
