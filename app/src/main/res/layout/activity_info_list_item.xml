@@ -6,61 +6,64 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
-        android:layout_marginTop="9dp"
-        android:layout_marginBottom="11dp"
         android:layout_width="match_parent"
         android:orientation="horizontal"
-        android:layout_height="14dp">
+        android:layout_height="67px">
 
         <TextView
             android:id="@+id/name"
-            android:layout_width="0dp"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:layout_width="0px"
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:gravity="left|center_vertical"
-            android:text="双眼皮套餐优惠活动"
-            android:paddingLeft="13dp"
+            android:paddingLeft="25px"
             android:textColor="#ff333333"
-            android:textSize="12sp"
+            android:textSize="22px"
             />
         
         <ImageView
             android:id="@+id/delete"
-            android:layout_width="14dp"
-            android:layout_marginRight="9dp"
+            android:layout_width="28px"
+            android:layout_marginRight="18px"
+            android:layout_gravity="center_vertical"
             android:background="@mipmap/activity_info_delete"
-            android:layout_height="match_parent" />
+            android:layout_height="26px" />
 
         <TextView
             android:id="@+id/edit"
-            android:layout_marginRight="11dp"
+            android:layout_marginRight="22px"
             android:background="@drawable/activity_info_edit_btn_back"
             android:text="编辑"
             android:textColor="#ffffffff"
-            android:textSize="10sp"
+            android:textSize="22px"
             android:gravity="center"
-            android:layout_width="29dp"
-            android:layout_height="match_parent" />
+            android:layout_width="58px"
+            android:layout_gravity="center_vertical"
+            android:layout_height="27px" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="horizontal"
-        android:layout_marginBottom="15dp"
-        android:layout_height="52dp">
+        android:layout_marginBottom="30px"
+        android:layout_height="104px">
 
         <ImageView
             android:id="@+id/image"
-            android:layout_width="92dp"
-            android:layout_marginLeft="13dp"
+            android:layout_width="180px"
+            android:layout_marginLeft="26px"
             android:src="@mipmap/default_image"
             android:scaleType="fitXY"
             android:layout_height="match_parent" />
 
         <TextView
             android:id="@+id/content"
-            android:layout_marginRight="9dp"
-            android:layout_marginLeft="9dp"
+            android:layout_marginRight="18px"
+            android:layout_marginLeft="18px"
+            android:textColor="#333333"
+            android:textSize="22px"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             />

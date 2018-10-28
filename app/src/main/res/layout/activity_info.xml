@@ -40,7 +40,10 @@
         <TextView
             android:id="@+id/add_activity"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:paddingLeft="10px"
+            android:paddingRight="10px"
+            android:gravity="center"
+            android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="20dp"
