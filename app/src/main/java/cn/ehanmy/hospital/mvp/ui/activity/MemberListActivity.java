@@ -9,7 +9,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Toast;
 
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.base.DefaultAdapter;
@@ -18,20 +17,16 @@ import com.jess.arms.integration.cache.Cache;
 import com.jess.arms.utils.ArmsUtils;
 import com.paginate.Paginate;
 
-import java.lang.reflect.Member;
-
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import cn.ehanmy.hospital.R;
 import cn.ehanmy.hospital.di.component.DaggerMemberListComponent;
 import cn.ehanmy.hospital.di.module.MemberListModule;
 import cn.ehanmy.hospital.mvp.contract.MemberListContract;
 import cn.ehanmy.hospital.mvp.model.entity.member_info.MemberMiniInfoBean;
 import cn.ehanmy.hospital.mvp.presenter.MemberListPresenter;
-
-import cn.ehanmy.hospital.R;
 import cn.ehanmy.hospital.mvp.ui.adapter.MemberInfoListAdapter;
-
 
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
@@ -49,15 +44,13 @@ public class MemberListActivity extends BaseActivity<MemberListPresenter> implem
 
     @BindView(R.id.swipeRefreshLayout)
     SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.no_date)
+    View onDateV;
+    @BindView(R.id.title_Layout)
+    View title;
     private Paginate mPaginate;
     private boolean isLoadingMore;
     private boolean isEnd;
-    @BindView(R.id.no_date)
-    View onDateV;
-
-    @BindView(R.id.title_Layout)
-    View title;
-
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -76,14 +69,14 @@ public class MemberListActivity extends BaseActivity<MemberListPresenter> implem
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        new TitleUtil(title,this,"本店会员");
+        new TitleUtil(title, this, "本店会员");
         ArmsUtils.configRecyclerView(contentList, mLayoutManager);
-        ((MemberInfoListAdapter)mAdapter).setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        ((MemberInfoListAdapter) mAdapter).setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(MemberListActivity.this,MemberInfoActivity.class);
+                Intent intent = new Intent(MemberListActivity.this, MemberInfoActivity.class);
                 MemberMiniInfoBean item = ((MemberInfoListAdapter) mAdapter).getItem(position);
-                intent.putExtra(MemberInfoActivity.KEY_FOR_MEMBER_ID,item.getMemberId());
+                intent.putExtra(MemberInfoActivity.KEY_FOR_MEMBER_ID, item.getMemberId());
                 ArmsUtils.startActivity(intent);
             }
         });
@@ -103,13 +96,14 @@ public class MemberListActivity extends BaseActivity<MemberListPresenter> implem
     public void showLoading() {
 
     }
+
     @Override
     public void hideLoading() {
         swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
-    public Activity getActivity(){
+    public Activity getActivity() {
         return this;
     }
 
@@ -125,6 +119,7 @@ public class MemberListActivity extends BaseActivity<MemberListPresenter> implem
     public void endLoadMore() {
         isLoadingMore = false;
     }
+
     @Override
     public void showError(boolean hasDate) {
         onDateV.setVisibility(hasDate ? INVISIBLE : VISIBLE);
@@ -135,16 +130,19 @@ public class MemberListActivity extends BaseActivity<MemberListPresenter> implem
     public void setEnd(boolean isEnd) {
         this.isEnd = isEnd;
     }
+
     @Override
     protected void onDestroy() {
         DefaultAdapter.releaseAllHolder(contentList);//super.onDestroy()之后会unbind,所有view被置为null,所以必须在之前调用
         super.onDestroy();
         this.mPaginate = null;
     }
+
     @Override
     public Cache getCache() {
         return provideCache();
     }
+
     @Override
     public void showMessage(@NonNull String message) {
         checkNotNull(message);

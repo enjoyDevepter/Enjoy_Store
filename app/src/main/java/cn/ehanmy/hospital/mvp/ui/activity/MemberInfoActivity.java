@@ -29,14 +29,12 @@ import com.paginate.Paginate;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import cn.ehanmy.hospital.R;
 import cn.ehanmy.hospital.di.component.DaggerMemberInfoComponent;
 import cn.ehanmy.hospital.di.module.MemberInfoModule;
 import cn.ehanmy.hospital.mvp.contract.MemberInfoContract;
 import cn.ehanmy.hospital.mvp.model.entity.member_info.MemberBean;
 import cn.ehanmy.hospital.mvp.presenter.MemberInfoPresenter;
-
-import cn.ehanmy.hospital.R;
-
 
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
@@ -80,12 +78,11 @@ public class MemberInfoActivity extends BaseActivity<MemberInfoPresenter> implem
 
     @BindView(R.id.swipeRefreshLayout)
     SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.no_date)
+    View onDateV;
     private Paginate mPaginate;
     private boolean isLoadingMore;
     private boolean isEnd;
-    @BindView(R.id.no_date)
-    View onDateV;
-
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -131,10 +128,10 @@ public class MemberInfoActivity extends BaseActivity<MemberInfoPresenter> implem
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        new TitleUtil(title,this,"本店会员");
+        new TitleUtil(title, this, "本店会员");
         ArmsUtils.configRecyclerView(contentList, mLayoutManager);
         contentList.setAdapter(mAdapter);
-
+        contentList.setNestedScrollingEnabled(false);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -180,7 +177,7 @@ public class MemberInfoActivity extends BaseActivity<MemberInfoPresenter> implem
         ArmsUtils.makeText1(this, "提交评论成功");
     }
 
-    public void updateMemberInfo(MemberBean memberBean){
+    public void updateMemberInfo(MemberBean memberBean) {
         mImageLoader.loadImage(this,
                 ImageConfigImpl
                         .builder()
@@ -192,17 +189,17 @@ public class MemberInfoActivity extends BaseActivity<MemberInfoPresenter> implem
         name.setText(memberBean.getRealName());
         phone.setText(memberBean.getMobile());
         String sex = memberBean.getSex();
-        if("0".equals(sex)){
+        if ("0".equals(sex)) {
             sex = "保密";
-        }else if("1".equals(sex)){
+        } else if ("1".equals(sex)) {
             sex = "男";
-        }else{
+        } else {
             sex = "女";
         }
         this.sex.setText(sex);
         area.setText(memberBean.getCity().getName());
         addr.setText(memberBean.getAddress());
-        age.setText(""+memberBean.getAge());
+        age.setText("" + memberBean.getAge());
     }
 
     @Override
@@ -240,13 +237,14 @@ public class MemberInfoActivity extends BaseActivity<MemberInfoPresenter> implem
     public void endLoadMore() {
         isLoadingMore = false;
     }
+
     @Override
     public void showError(boolean hasDate) {
         onDateV.setVisibility(hasDate ? INVISIBLE : VISIBLE);
         contentList.setVisibility(hasDate ? VISIBLE : INVISIBLE);
-        if(hasDate){
+        if (hasDate) {
             updateRecyclerViewHeight();
-        }else{
+        } else {
             ViewGroup.LayoutParams layoutParams = swipeRefreshLayout.getLayoutParams();
             layoutParams.height = 200;
             swipeRefreshLayout.setLayoutParams(layoutParams);
@@ -257,12 +255,14 @@ public class MemberInfoActivity extends BaseActivity<MemberInfoPresenter> implem
     public void setEnd(boolean isEnd) {
         this.isEnd = isEnd;
     }
+
     @Override
     protected void onDestroy() {
         DefaultAdapter.releaseAllHolder(contentList);//super.onDestroy()之后会unbind,所有view被置为null,所以必须在之前调用
         super.onDestroy();
         this.mPaginate = null;
     }
+
     @Override
     public Cache getCache() {
         return provideCache();
@@ -286,7 +286,7 @@ public class MemberInfoActivity extends BaseActivity<MemberInfoPresenter> implem
         finish();
     }
 
-    public Activity getActivity(){
+    public Activity getActivity() {
         return this;
     }
 }

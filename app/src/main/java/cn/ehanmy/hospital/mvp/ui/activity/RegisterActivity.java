@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.base.DefaultAdapter;
 import com.jess.arms.di.component.AppComponent;
+import com.jess.arms.integration.AppManager;
 import com.jess.arms.integration.cache.Cache;
 import com.jess.arms.utils.ArmsUtils;
 
@@ -109,7 +110,8 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
     DatePicker timeDP;
     @Inject
     RecyclerView.Adapter mAdapter;
-
+    @Inject
+    AppManager appManager;
 
     private int time = time_limit;
     private Timer timer;
@@ -211,6 +213,7 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
             case R.id.info_btn:
                 if ("去下单".equals(infoBTNV.getText().toString())) {
                     ArmsUtils.startActivity(BuyCenterActivity.class);
+                    appManager.killAllBeforeClass(MainActivity.class);
                 } else {
                     hasRegister(false);
                 }
