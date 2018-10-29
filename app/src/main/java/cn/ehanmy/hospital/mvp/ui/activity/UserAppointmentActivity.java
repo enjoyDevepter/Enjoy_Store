@@ -21,10 +21,13 @@ import com.jess.arms.integration.cache.Cache;
 import com.jess.arms.utils.ArmsUtils;
 import com.paginate.Paginate;
 
+import org.simple.eventbus.Subscriber;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import cn.ehanmy.hospital.R;
+import cn.ehanmy.hospital.app.EventBusTags;
 import cn.ehanmy.hospital.di.component.DaggerUserAppointmentComponent;
 import cn.ehanmy.hospital.di.module.UserAppointmentModule;
 import cn.ehanmy.hospital.mvp.contract.UserAppointmentContract;
@@ -224,6 +227,12 @@ public class UserAppointmentActivity extends BaseActivity<UserAppointmentPresent
                 break;
         }
     }
+
+    @Subscriber(tag = EventBusTags.CHANGE_APPOINTMENT_TIME)
+    private void updateAppointmentInfo(int index) {
+        mPresenter.getAppointment(true);
+    }
+
 
     @Override
     public void onRefresh() {

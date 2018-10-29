@@ -16,7 +16,6 @@
 package cn.ehanmy.hospital.mvp.ui.holder;
 
 import android.graphics.Color;
-import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
@@ -32,6 +31,7 @@ import static cn.ehanmy.hospital.mvp.ui.adapter.KAppointmentAdapter.ViewName.CAN
 import static cn.ehanmy.hospital.mvp.ui.adapter.KAppointmentAdapter.ViewName.CHANGE_APPOINTMENT;
 import static cn.ehanmy.hospital.mvp.ui.adapter.KAppointmentAdapter.ViewName.HUAKOU;
 import static cn.ehanmy.hospital.mvp.ui.adapter.KAppointmentAdapter.ViewName.INFO;
+import static cn.ehanmy.hospital.mvp.ui.adapter.KAppointmentAdapter.ViewName.ITEM;
 import static cn.ehanmy.hospital.mvp.ui.adapter.KAppointmentAdapter.ViewName.OK;
 
 
@@ -99,31 +99,35 @@ public class KAppointmentHolder extends BaseHolder<OrderProjectDetailBean> {
         order_project.setText(order.getGoods().getName());
         order_project.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
         String status = order.getReservationStatus();
-        if (!TextUtils.isEmpty(status)) {
-            switch (status) {
-                case "0":
-                    okV.setText("确认");
-                    okV.setTag(status);
-                    info.setVisibility(View.VISIBLE);
-                    okV.setVisibility(View.VISIBLE);
-                    change.setVisibility(View.VISIBLE);
-                    cancel.setVisibility(View.VISIBLE);
-                    break;
-                case "1":
-                    okV.setTag(status);
-                    okV.setText("划扣");
-                    info.setVisibility(View.VISIBLE);
-                    okV.setVisibility(View.VISIBLE);
-                    change.setVisibility(View.GONE);
-                    cancel.setVisibility(View.GONE);
-                    break;
-                case "2":
-                    info.setVisibility(View.VISIBLE);
-                    okV.setVisibility(View.GONE);
-                    change.setVisibility(View.GONE);
-                    cancel.setVisibility(View.GONE);
-                    break;
-            }
+        switch (status) {
+            case "0":
+                okV.setText("确认");
+                okV.setTag(status);
+                info.setVisibility(View.VISIBLE);
+                okV.setVisibility(View.VISIBLE);
+                change.setVisibility(View.VISIBLE);
+                cancel.setVisibility(View.VISIBLE);
+                break;
+            case "1":
+                okV.setTag(status);
+                okV.setText("划扣");
+                info.setVisibility(View.VISIBLE);
+                okV.setVisibility(View.VISIBLE);
+                change.setVisibility(View.GONE);
+                cancel.setVisibility(View.GONE);
+                break;
+            case "2":
+                info.setVisibility(View.VISIBLE);
+                okV.setVisibility(View.GONE);
+                change.setVisibility(View.GONE);
+                cancel.setVisibility(View.GONE);
+                break;
+            case "3":
+                info.setVisibility(View.VISIBLE);
+                okV.setVisibility(View.GONE);
+                change.setVisibility(View.GONE);
+                cancel.setVisibility(View.GONE);
+                break;
         }
     }
 
@@ -145,7 +149,7 @@ public class KAppointmentHolder extends BaseHolder<OrderProjectDetailBean> {
                     return;
             }
         }
-        super.onClick(view);
+        onChildItemClickLinstener.onChildItemClick(view, ITEM, getAdapterPosition());
     }
 
     @Override

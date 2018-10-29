@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -11,7 +12,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="6px"
         android:background="@color/white"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_auto_baseheight="width">
 
         <TextView
             android:id="@+id/name"
@@ -20,7 +22,8 @@
             android:layout_marginLeft="30px"
             android:layout_marginTop="36px"
             android:textColor="#ff333333"
-            android:textSize="28px" />
+            android:textSize="28px"
+            app:layout_auto_baseheight="width" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -28,21 +31,24 @@
             android:layout_marginBottom="46px"
             android:layout_marginLeft="30px"
             android:layout_marginTop="22px"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            app:layout_auto_baseheight="width">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="医院ID："
                 android:textColor="#ff333333"
-                android:textSize="24px" />
+                android:textSize="24px"
+                app:layout_auto_baseheight="width" />
 
             <TextView
                 android:id="@+id/id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#ff333333"
-                android:textSize="24px" />
+                android:textSize="24px"
+                app:layout_auto_baseheight="width" />
 
         </LinearLayout>
     </LinearLayout>
@@ -54,7 +60,8 @@
         android:layout_marginTop="5px"
         android:background="@color/white"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        app:layout_auto_baseheight="width">
 
         <TextView
             android:layout_width="0px"
@@ -64,13 +71,15 @@
             android:gravity="left"
             android:text="修改密码"
             android:textColor="#ff333333"
-            android:textSize="24px" />
+            android:textSize="24px"
+            app:layout_auto_baseheight="width" />
 
         <View
             android:layout_width="16px"
             android:layout_height="28px"
             android:layout_marginRight="30px"
-            android:background="@mipmap/arrow_right" />
+            android:background="@mipmap/arrow_right"
+            app:layout_auto_baseheight="width" />
 
     </LinearLayout>
 
@@ -82,7 +91,8 @@
         android:layout_marginTop="6px"
         android:background="@color/white"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        app:layout_auto_baseheight="width">
 
         <TextView
             android:layout_width="0px"
@@ -92,13 +102,15 @@
             android:gravity="left"
             android:text="退出登录"
             android:textColor="#ff333333"
-            android:textSize="24px" />
+            android:textSize="24px"
+            app:layout_auto_baseheight="width" />
 
         <View
             android:layout_width="16px"
             android:layout_height="28px"
             android:layout_marginRight="30px"
-            android:background="@mipmap/arrow_right" />
+            android:background="@mipmap/arrow_right"
+            app:layout_auto_baseheight="width" />
 
     </LinearLayout>
 </LinearLayout>

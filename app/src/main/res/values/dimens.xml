@@ -4,6 +4,7 @@
     <dimen name="main_padding_space">50dp</dimen>
     <dimen name="dialog_height">100dp</dimen>
     <dimen name="dialog_width">220dp</dimen>
+    <dimen name="code_width">62dp</dimen>
     <dimen name="address_list_item_space">5dp</dimen>
     <dimen name="image_upload_width">160dp</dimen>
     <dimen name="image_upload_height">120dp</dimen>

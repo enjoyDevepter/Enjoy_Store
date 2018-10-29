@@ -83,6 +83,7 @@ public class KAppointmentAdapter extends DefaultAdapter<OrderProjectDetailBean> 
         CHANGE_APPOINTMENT,
         HUAKOU,
         CANCEL,
+        ITEM,
     }
 
     public interface OnChildItemClickLinstener {

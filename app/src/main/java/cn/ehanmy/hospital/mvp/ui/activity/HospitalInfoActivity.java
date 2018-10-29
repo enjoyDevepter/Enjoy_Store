@@ -142,7 +142,7 @@ public class HospitalInfoActivity extends BaseActivity<HospitalInfoPresenter> im
 
     @Override
     public void changeOk() {
-        if(dialog != null){
+        if (dialog != null) {
             dialog.dismiss();
             dialog = null;
         }
@@ -212,32 +212,32 @@ public class HospitalInfoActivity extends BaseActivity<HospitalInfoPresenter> im
                                     showMessage("请输入结束营业时间");
                                     return;
                                 }
-                                String startTimeText = startTime.getText()+"";
-                                String endTimeText = endTime.getText()+"";
+                                String startTimeText = startTime.getText() + "";
+                                String endTimeText = endTime.getText() + "";
                                 String reg = "0[0-9]:[0-5][0-9]|1[0-9]:[0-5][0-9]|2[0-3]:[0-5][0-9]";  // 00:00
                                 Pattern pattern = Pattern.compile(reg);
                                 Matcher matcherStart = pattern.matcher(startTimeText);
                                 boolean startRight = matcherStart.matches();
-                                if(!startRight){
+                                if (!startRight) {
                                     showMessage("开始时间输入格式错误，请输入00:00格式");
                                     return;
                                 }
                                 Matcher matcherEnd = pattern.matcher(endTimeText);
                                 boolean endRight = matcherEnd.matches();
-                                if(!endRight){
+                                if (!endRight) {
                                     showMessage("结束时间输入格式错误，请输入00:00格式");
                                     return;
                                 }
                                 provideCache().put("tellphone", phone.getText().toString());
-                                mPresenter.changeHospitalInfo(phone.getText()+"",startTimeText,endTimeText);
+                                mPresenter.changeHospitalInfo(phone.getText() + "", startTimeText, endTimeText);
                             }
                         });
 
                     }
                 })
                 .setLayoutRes(R.layout.dialog_change_hospital_info)
-                .setWidth(608)
-                .setHeight(452)
+                .setWidth(ArmsUtils.getDimens(this, R.dimen.modify_hospital_width))
+                .setHeight(ArmsUtils.getDimens(this, R.dimen.modify_hospital_height))
                 .setDimAmount(0.5f)
                 .isCenter(true)
                 .show();

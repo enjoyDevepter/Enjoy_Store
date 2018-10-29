@@ -230,7 +230,6 @@
                 android:layout_marginBottom="42px"
                 android:layout_marginLeft="48px"
                 android:layout_marginTop="36px"
-                android:background="@mipmap/default_image"
                 app:layout_auto_baseheight="width" />
 
             <TextView

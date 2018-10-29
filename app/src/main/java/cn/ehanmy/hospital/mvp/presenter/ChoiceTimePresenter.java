@@ -10,10 +10,13 @@ import com.jess.arms.integration.AppManager;
 import com.jess.arms.mvp.BasePresenter;
 import com.jess.arms.utils.RxLifecycleUtils;
 
+import org.simple.eventbus.EventBus;
+
 import java.util.List;
 
 import javax.inject.Inject;
 
+import cn.ehanmy.hospital.app.EventBusTags;
 import cn.ehanmy.hospital.mvp.contract.ChoiceTimeContract;
 import cn.ehanmy.hospital.mvp.model.entity.GetAppointmentTimeRequest;
 import cn.ehanmy.hospital.mvp.model.entity.GetAppointmentTimeResponse;
@@ -176,6 +179,7 @@ public class ChoiceTimePresenter extends BasePresenter<ChoiceTimeContract.Model,
                     @Override
                     public void onNext(ChangeUserAppointmentTimeResponse response) {
                         if (response.isSuccess()) {
+                            EventBus.getDefault().post(mRootView.getCache().get("dateIndex"), EventBusTags.CHANGE_APPOINTMENT_TIME);
                             mRootView.killMyself();
                         } else {
                             mRootView.showMessage(response.getRetDesc());

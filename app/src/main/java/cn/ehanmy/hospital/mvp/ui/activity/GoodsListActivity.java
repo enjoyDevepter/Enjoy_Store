@@ -279,7 +279,7 @@ public class GoodsListActivity extends BaseActivity<GoodsListPresenter> implemen
                 priceV.setSelected(false);
                 provideCache().put("orderByField", "sales");
                 provideCache().put("orderByAsc", saleTV.isSelected());
-                saleTV.setTextColor(saleV.isSelected() ? choiceColor : Color.BLACK);
+                saleTV.setTextColor(choiceColor);
                 priceTV.setTextColor(Color.BLACK);
                 saleStatusV.setBackground(saleV.isSelected() ? asceD : descD);
                 priceStautsV.setBackground(descD);
@@ -292,11 +292,11 @@ public class GoodsListActivity extends BaseActivity<GoodsListPresenter> implemen
                     return;
                 }
                 priceV.setSelected(!priceV.isSelected());
-                priceV.setSelected(false);
+                saleV.setSelected(false);
                 provideCache().put("orderByField", "salesPrice");
                 provideCache().put("orderByAsc", priceV.isSelected());
                 saleTV.setTextColor(Color.BLACK);
-                priceTV.setTextColor(priceV.isSelected() ? choiceColor : Color.BLACK);
+                priceTV.setTextColor(choiceColor);
                 priceStautsV.setBackground(priceV.isSelected() ? asceD : descD);
                 saleStatusV.setBackground(descD);
                 showFilter(false);

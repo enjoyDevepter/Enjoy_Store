@@ -70,7 +70,7 @@ public class UserAppointmentInfoActivity extends BaseActivity<UserAppointmentInf
                         .build());
 
         form_id.setText(orderInfoBean.getReservationId());
-        form_state.setText(orderInfoBean.getStatusDesc());
+        form_state.setText(orderInfoBean.getReservationStatusDesc());
         time.setText(orderInfoBean.getCreateDate());
         name.setText(orderInfoBean.getMember().getMemberId());
         form_tel.setText(orderInfoBean.getMember().getMobile());

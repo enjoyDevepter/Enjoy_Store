@@ -2,6 +2,8 @@ package cn.ehanmy.hospital.mvp.ui.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +13,8 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.jess.arms.base.BaseActivity;
@@ -98,10 +102,6 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
 
     @BindView(R.id.invite_layout)
     TextView inviteTV;
-    @BindView(R.id.inviteTypes)
-    RecyclerView inviteTypesRV;
-    @BindView(R.id.mask_invite)
-    View inviteMaskV;
     @BindView(R.id.close)
     View closeV;
     @BindView(R.id.mask_birth)
@@ -116,6 +116,40 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
     private int time = time_limit;
     private Timer timer;
     private TimerTask timerTask;
+    //    private void showInviteTypes() {
+//        if (!inviteMaskV.isShown()) {
+//            ArmsUtils.configRecyclerView(inviteTypesRV, new LinearLayoutManager(this));
+//            inviteTypesRV.setAdapter(mAdapter);
+//            ((CodeAdapter) mAdapter).setOnItemClickListener(new DefaultAdapter.OnRecyclerViewItemClickListener() {
+//                @Override
+//                public void onItemClick(View view, int viewType, Object data, int position) {
+//                    inviteTV.setText(String.valueOf(data));
+//                    switch (position) {
+//                        case 0:
+//                            provideCache().put("type", "");
+//                            break;
+//                        case 1:
+//                            provideCache().put("type", "1");
+//                            break;
+//                        case 2:
+//                            provideCache().put("type", "2");
+//                            break;
+//                    }
+//                    showInviteTypes();
+//                }
+//            });
+//            inviteMaskV.setVisibility(View.VISIBLE);
+//            inviteMaskV.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.mask_in));
+//            inviteTypesRV.setVisibility(View.VISIBLE);
+//            inviteTypesRV.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.for_butom_in));
+//        } else {
+//            inviteMaskV.setVisibility(View.GONE);
+//            inviteMaskV.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.mask_out));
+//            inviteTypesRV.setVisibility(View.GONE);
+//            inviteTypesRV.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.for_buttom_out));
+//        }
+//    }
+    private PopupWindow popupWindow;
 
     @Override
     public void setupActivityComponent(AppComponent appComponent) {
@@ -143,7 +177,6 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
         maleLayoutV.setOnClickListener(this);
         femaleLayoutV.setOnClickListener(this);
         inviteTV.setOnClickListener(this);
-        inviteMaskV.setOnClickListener(this);
         prevV.setOnClickListener(this);
         nextV.setOnClickListener(this);
         birthTV.setOnClickListener(this);
@@ -152,7 +185,6 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
         infoBTNV.setOnClickListener(this);
         getCache().put("sex", "1");
     }
-
 
     @Override
     public void showLoading() {
@@ -180,7 +212,6 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
     public void killMyself() {
         finish();
     }
-
 
     @Override
     public void onClick(View v) {
@@ -218,9 +249,8 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
                     hasRegister(false);
                 }
                 break;
-            case R.id.mask_invite:
             case R.id.invite_layout:
-                showInviteTypes();
+                showType();
                 break;
             case R.id.birth:
             case R.id.mask_birth:
@@ -264,39 +294,40 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
         }
     }
 
+    private void showType() {
 
-    private void showInviteTypes() {
-        if (!inviteMaskV.isShown()) {
-            ArmsUtils.configRecyclerView(inviteTypesRV, new LinearLayoutManager(this));
-            inviteTypesRV.setAdapter(mAdapter);
-            ((CodeAdapter) mAdapter).setOnItemClickListener(new DefaultAdapter.OnRecyclerViewItemClickListener() {
-                @Override
-                public void onItemClick(View view, int viewType, Object data, int position) {
-                    inviteTV.setText(String.valueOf(data));
-                    switch (position) {
-                        case 0:
-                            provideCache().put("type", "");
-                            break;
-                        case 1:
-                            provideCache().put("type", "1");
-                            break;
-                        case 2:
-                            provideCache().put("type", "2");
-                            break;
-                    }
-                    showInviteTypes();
-                }
-            });
-            inviteMaskV.setVisibility(View.VISIBLE);
-            inviteMaskV.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.mask_in));
-            inviteTypesRV.setVisibility(View.VISIBLE);
-            inviteTypesRV.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.for_butom_in));
-        } else {
-            inviteMaskV.setVisibility(View.GONE);
-            inviteMaskV.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.mask_out));
-            inviteTypesRV.setVisibility(View.GONE);
-            inviteTypesRV.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.for_buttom_out));
+        if (popupWindow != null && popupWindow.isShowing()) {
+            return;
         }
+
+        RecyclerView recyclerView = new RecyclerView(this);
+        ArmsUtils.configRecyclerView(recyclerView, new LinearLayoutManager(this));
+        recyclerView.setAdapter(mAdapter);
+        ((CodeAdapter) mAdapter).setOnItemClickListener(new DefaultAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, int viewType, Object data, int position) {
+                switch (position) {
+                    case 0:
+                        provideCache().put("type", "");
+                        break;
+                    case 1:
+                        provideCache().put("type", "1");
+                        break;
+                    case 2:
+                        provideCache().put("type", "2");
+                        break;
+                }
+                if (popupWindow != null) {
+                    popupWindow.dismiss();
+                    popupWindow = null;
+                }
+            }
+        });
+        popupWindow = new PopupWindow(recyclerView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));//设置背景
+        popupWindow.setFocusable(true);
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.showAsDropDown(inviteTV, 0, -ArmsUtils.dip2px(this, 40));
     }
 
     private void getVerify() {
