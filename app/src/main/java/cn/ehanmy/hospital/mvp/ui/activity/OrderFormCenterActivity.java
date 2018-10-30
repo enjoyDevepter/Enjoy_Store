@@ -13,7 +13,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -26,23 +25,23 @@ import com.jess.arms.integration.cache.Cache;
 import com.jess.arms.utils.ArmsUtils;
 import com.paginate.Paginate;
 
+import org.simple.eventbus.Subscriber;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import cn.ehanmy.hospital.R;
+import cn.ehanmy.hospital.app.EventBusTags;
 import cn.ehanmy.hospital.di.component.DaggerOrderFormCenterComponent;
 import cn.ehanmy.hospital.di.module.OrderFormCenterModule;
 import cn.ehanmy.hospital.mvp.contract.OrderFormCenterContract;
 import cn.ehanmy.hospital.mvp.model.entity.order.GoodsOrderBean;
 import cn.ehanmy.hospital.mvp.model.entity.order.OrderBean;
-import cn.ehanmy.hospital.mvp.model.entity.order.OrderInfoBean;
 import cn.ehanmy.hospital.mvp.presenter.OrderFormCenterPresenter;
 import cn.ehanmy.hospital.mvp.ui.adapter.HeightItemDecoration;
 import cn.ehanmy.hospital.mvp.ui.adapter.OrderCenterListAdapter;
 import cn.ehanmy.hospital.mvp.ui.widget.CustomDialog;
 import cn.ehanmy.hospital.mvp.ui.widget.MoneyView;
-import cn.ehanmy.hospital.util.EdittextUtil;
-import io.rx_cache2.internal.Disk;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
@@ -75,10 +74,13 @@ public class OrderFormCenterActivity extends BaseActivity<OrderFormCenterPresent
     RecyclerView.LayoutManager mLayoutManager;
     @Inject
     OrderCenterListAdapter mAdapter;
-
+    @Inject
+    ImageLoader mImageLoader;
+    CustomDialog confirmPayDialog = null;
     private Paginate mPaginate;
     private boolean isLoadingMore;
     private boolean hasLoadedAllItems;
+    private int times = 1;
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -127,7 +129,7 @@ public class OrderFormCenterActivity extends BaseActivity<OrderFormCenterPresent
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                provideCache().put("key",s+"");
+                provideCache().put("key", s + "");
             }
 
             @Override
@@ -183,7 +185,7 @@ public class OrderFormCenterActivity extends BaseActivity<OrderFormCenterPresent
                 break;
             case R.id.clear_btn:
                 searchKey.setText("");
-                provideCache().put("key",null);
+                provideCache().put("key", null);
                 mPresenter.getOrderList(true);
                 break;
         }
@@ -221,11 +223,15 @@ public class OrderFormCenterActivity extends BaseActivity<OrderFormCenterPresent
         noDataV.setVisibility(hasDate ? View.INVISIBLE : View.VISIBLE);
     }
 
+    @Subscriber(tag = EventBusTags.CHANGE_APPOINTMENT_TIME)
+    private void updateAppointmentInfo(int index) {
+        mPresenter.getOrderList(true);
+    }
+
     @Override
     public void setLoadedAllItems(boolean has) {
         this.hasLoadedAllItems = has;
     }
-
 
     /**
      * 初始化Paginate,用于加载更多
@@ -260,7 +266,6 @@ public class OrderFormCenterActivity extends BaseActivity<OrderFormCenterPresent
     public void onRefresh() {
         mPresenter.getOrderList(true);
     }
-
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
@@ -300,13 +305,17 @@ public class OrderFormCenterActivity extends BaseActivity<OrderFormCenterPresent
                 startActivity(intent);
                 break;
             case PAY:
-                Intent payIntent = new Intent(OrderFormCenterActivity.this,CommitOrderActivity.class);
-                payIntent.putExtra(CommitOrderActivity.KEY_FOR_GO_IN_TYPE,CommitOrderActivity.GO_IN_TYPE_ORDER_LIST);
-                payIntent.putExtra(CommitOrderActivity.KEY_FOR_ORDER_BEAN,mAdapter.getItem(position));
+                Intent payIntent = new Intent(OrderFormCenterActivity.this, CommitOrderActivity.class);
+                payIntent.putExtra(CommitOrderActivity.KEY_FOR_GO_IN_TYPE, CommitOrderActivity.GO_IN_TYPE_ORDER_LIST);
+                payIntent.putExtra(CommitOrderActivity.KEY_FOR_ORDER_BEAN, mAdapter.getItem(position));
                 startActivity(payIntent);
                 break;
             case APPOINTMENT:
                 // 预约
+                Intent intent2 = new Intent(this, ChoiceTimeActivity.class);
+                intent2.putExtra("from", "orderCenter_add");
+                intent2.putExtra("projectId", mAdapter.getItem(position).getOrderId());
+                ArmsUtils.startActivity(intent2);
                 break;
             case HUAKOU:
                 confirmPay(mAdapter.getItem(position));
@@ -314,33 +323,28 @@ public class OrderFormCenterActivity extends BaseActivity<OrderFormCenterPresent
         }
     }
 
-    @Inject
-    ImageLoader mImageLoader;
-    private int times = 1;
-
-    CustomDialog confirmPayDialog = null;
-    private void confirmPay(final OrderBean orderBean){
+    private void confirmPay(final OrderBean orderBean) {
         confirmPayDialog = CustomDialog.create(getSupportFragmentManager())
                 .setViewListener(new CustomDialog.ViewListener() {
                     @Override
                     public void bindView(View view) {
                         TextView et = view.findViewById(R.id.count);
-                        et.setText(""+times);
+                        et.setText("" + times);
                         view.findViewById(R.id.add).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                if(times < orderBean.getGoodsList().get(0).getSurplusTimes()){
+                                if (times < orderBean.getGoodsList().get(0).getSurplusTimes()) {
                                     times++;
-                                    et.setText(""+times);
+                                    et.setText("" + times);
                                 }
                             }
                         });
                         view.findViewById(R.id.minus).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                if(times > 1){
+                                if (times > 1) {
                                     times--;
-                                    et.setText(""+times);
+                                    et.setText("" + times);
                                 }
                             }
                         });
@@ -352,14 +356,14 @@ public class OrderFormCenterActivity extends BaseActivity<OrderFormCenterPresent
                                         .url(goodsOrderBean.getImage())
                                         .imageView(view.findViewById(R.id.image))
                                         .build());
-                        ((TextView)view.findViewById(R.id.name)).setText(goodsOrderBean.getName());
+                        ((TextView) view.findViewById(R.id.name)).setText(goodsOrderBean.getName());
                         MoneyView moneyView = view.findViewById(R.id.price);
                         moneyView.setMoneyText(ArmsUtils.formatLong(orderBean.getPayMoney()));
                         view.findViewById(R.id.ok).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 GoodsOrderBean goodsOrderBean1 = orderBean.getGoodsList().get(0);
-                                mPresenter.orderHuakou(goodsOrderBean1.getReservationId(),orderBean.getOrderId(),times);
+                                mPresenter.orderHuakou(goodsOrderBean1.getReservationId(), orderBean.getOrderId(), times);
                             }
                         });
                     }
@@ -372,14 +376,14 @@ public class OrderFormCenterActivity extends BaseActivity<OrderFormCenterPresent
                 .show();
     }
 
-    public void huakouOk(boolean isOk){
-        if(isOk){
-            if(confirmPayDialog != null){
+    public void huakouOk(boolean isOk) {
+        if (isOk) {
+            if (confirmPayDialog != null) {
                 confirmPayDialog.dismiss();
                 confirmPayDialog = null;
                 mPresenter.getOrderList(true);
             }
-        }else{
+        } else {
 
         }
     }

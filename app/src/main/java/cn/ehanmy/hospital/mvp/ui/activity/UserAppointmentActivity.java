@@ -248,7 +248,7 @@ public class UserAppointmentActivity extends BaseActivity<UserAppointmentPresent
                 intent2.putExtra("reservationId", mAdapter.getItem(position).getReservationId());
                 intent2.putExtra("goodsId", mAdapter.getInfos().get(position).getGoods().getGoodsId());
                 intent2.putExtra("merchId", mAdapter.getInfos().get(position).getGoods().getMerchId());
-                UserAppointmentActivity.this.startActivityForResult(intent2, 1);
+                ArmsUtils.startActivity(intent2);
                 break;
             case CANCEL:
                 provideCache().put("reservationId", mAdapter.getItem(position).getReservationId());
@@ -280,7 +280,7 @@ public class UserAppointmentActivity extends BaseActivity<UserAppointmentPresent
                 intent2.putExtra("reservationId", mAdapter.getItem(position).getReservationId());
                 intent2.putExtra("goodsId", mAdapter.getInfos().get(position).getGoods().getGoodsId());
                 intent2.putExtra("merchId", mAdapter.getInfos().get(position).getGoods().getMerchId());
-                UserAppointmentActivity.this.startActivityForResult(intent2, 1);
+                ArmsUtils.startActivity(intent2);
                 break;
             case HUAKOU:
                 provideCache().put("orderId", mAdapter.getItem(position).getProjectId());
