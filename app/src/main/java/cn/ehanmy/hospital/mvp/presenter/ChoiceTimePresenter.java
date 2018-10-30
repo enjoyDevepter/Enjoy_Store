@@ -158,7 +158,7 @@ public class ChoiceTimePresenter extends BasePresenter<ChoiceTimeContract.Model,
             request.setCmd(10403);
         } else if ("makeKAppointment".equals(from)) {
             request.setCmd(10354);
-        } else if ("orderCenter_add".equals(from)) {
+        } else if ("orderCenter".equals(from)) {
             request.setCmd(10505);
             request.setProjectId(mRootView.getActivity().getIntent().getStringExtra("projectId"));
         } else if ("orderCenterDetail".equals(from)) {

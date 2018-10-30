@@ -313,8 +313,8 @@ public class OrderFormCenterActivity extends BaseActivity<OrderFormCenterPresent
             case APPOINTMENT:
                 // 预约
                 Intent intent2 = new Intent(this, ChoiceTimeActivity.class);
-                intent2.putExtra("from", "orderCenter_add");
-                intent2.putExtra("projectId", mAdapter.getItem(position).getOrderId());
+                intent2.putExtra("from", "orderCenter");
+                intent2.putExtra("projectId", mAdapter.getItem(position).getGoodsList().get(0).getProjectId());
                 ArmsUtils.startActivity(intent2);
                 break;
             case HUAKOU:
