@@ -376,14 +376,14 @@ public class OrderFormCenterActivity extends BaseActivity<OrderFormCenterPresent
                 .show();
     }
 
-    public void huakouOk(boolean isOk) {
-        if (isOk) {
-            if (confirmPayDialog != null) {
-                confirmPayDialog.dismiss();
-                confirmPayDialog = null;
-                mPresenter.getOrderList(true);
-            }
-        } else {
+    public void huakouOk(boolean isOk){
+        if(confirmPayDialog != null){
+            confirmPayDialog.dismiss();
+            confirmPayDialog = null;
+        }
+        if(isOk){
+            mPresenter.getOrderList(true);
+        }else{
 
         }
     }

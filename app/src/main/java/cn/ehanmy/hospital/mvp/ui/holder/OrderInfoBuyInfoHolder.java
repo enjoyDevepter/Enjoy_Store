@@ -40,6 +40,7 @@ public class OrderInfoBuyInfoHolder extends BaseHolder<GoodsOrderBean> {
                 ImageConfigImpl
                         .builder()
                         .url(data.getImage())
+                        .placeholder(R.drawable.place_holder_img)
                         .imageView(image)
                         .build());
 

@@ -216,7 +216,7 @@ public class OrderInfoActivity extends BaseActivity<OrderInfoPresenter> implemen
         }
         contentList.setVisibility(View.VISIBLE);
         ViewGroup.LayoutParams layoutParams = swipeRefreshLayout.getLayoutParams();
-        layoutParams.height = 150 * (adapter.getItemCount() < 10 ? adapter.getItemCount() : 10);
+        layoutParams.height = 230 * (adapter.getItemCount() < 10 ? adapter.getItemCount() : 10);
         if(layoutParams.height < 100){
             layoutParams.height = 100;
         }
