@@ -67,6 +67,17 @@
                 style="@style/btn_in_list"
                 android:text="预约"
                 app:layout_auto_baseheight="width" />
+            <TextView
+                android:id="@+id/unappointment"
+                style="@style/btn_in_list"
+                android:text="取消"
+                app:layout_auto_baseheight="width" />
+
+            <TextView
+                android:id="@+id/change"
+                style="@style/btn_in_list"
+                android:text="改约"
+                app:layout_auto_baseheight="width" />
 
             <TextView
                 android:id="@+id/huakou"

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,7 @@ import cn.ehanmy.hospital.mvp.model.entity.order.GoPayResponse;
 import cn.ehanmy.hospital.mvp.model.entity.order.GoodsOrderBean;
 import cn.ehanmy.hospital.mvp.model.entity.order.OrderBean;
 import cn.ehanmy.hospital.mvp.model.entity.placeOrder.GoodsBuyResponse;
+import cn.ehanmy.hospital.mvp.model.entity.store.StoreBean;
 import cn.ehanmy.hospital.mvp.presenter.CommitOrderPresenter;
 import cn.ehanmy.hospital.mvp.ui.adapter.PayItemAdapter;
 import cn.ehanmy.hospital.mvp.ui.widget.CustomDialog;
@@ -172,10 +174,19 @@ public class CommitOrderActivity extends BaseActivity<CommitOrderPresenter> impl
                         .placeholder(R.drawable.place_holder_img)
                         .imageView(head_image)
                         .build());
-        name.setText(memberBean.getRealName());
+        String nameStr = memberBean.getNickName();
+        String realName = memberBean.getRealName();
+        if(!TextUtils.isEmpty(realName)){
+            nameStr += "(";
+            nameStr += realName;
+            nameStr += ")";
+        }
+        name.setText(nameStr);
         phone.setText(memberBean.getMobile());
         member_code.setText(memberBean.getUserName());
-
+        StoreBean storeBean = CacheUtil.getConstant(CacheUtil.CACHE_KEY_STORE_INFO);
+        addr.setText(storeBean.getAddress());
+        hospital.setText(storeBean.getName());
     }
 
     @Override

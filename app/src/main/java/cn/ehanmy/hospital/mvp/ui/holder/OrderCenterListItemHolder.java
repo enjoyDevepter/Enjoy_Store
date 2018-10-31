@@ -85,6 +85,10 @@ public class OrderCenterListItemHolder extends BaseHolder<OrderBean> {
     View appointment;
     @BindView(R.id.huakou)
     View huakou;
+    @BindView(R.id.unappointment)
+    View unappointment;  // 取消预约
+    @BindView(R.id.change)
+    View change;  // 改约
 
     @BindView(R.id.all_times)
     TextView all_times;
@@ -149,6 +153,8 @@ public class OrderCenterListItemHolder extends BaseHolder<OrderBean> {
         GoodsOrderBean goodsOrderBean = order.getGoodsList().get(0);
         OrderMemberInfoBean member = order.getMember();
         order_price_title.setVisibility(View.GONE);
+        unappointment.setVisibility(View.GONE);
+        change.setVisibility(View.GONE);
         order_secend_price_title.setVisibility(View.GONE);
         order_price.setVisibility(View.VISIBLE);
         all_times.setVisibility(View.VISIBLE);
@@ -180,8 +186,28 @@ public class OrderCenterListItemHolder extends BaseHolder<OrderBean> {
                     pay.setVisibility(View.VISIBLE);
                     break;
                 case "31":
-                    appointment.setVisibility(View.VISIBLE);
-                    huakou.setVisibility(View.VISIBLE);
+                    pay.setVisibility(View.GONE);
+                    String status = order.getGoodsList().get(0).getStatus();
+                    if(!TextUtils.isEmpty(status)){
+                        switch (status){
+                            case "1":
+                                appointment.setVisibility(View.VISIBLE);
+                                break;
+                            case "2":
+                                change.setVisibility(View.VISIBLE);
+                                unappointment.setVisibility(View.VISIBLE);
+                                huakou.setVisibility(View.VISIBLE);
+                                break;
+                            case "3":
+                                huakou.setVisibility(View.VISIBLE);
+                                break;
+                            case "4":
+                                break;
+                            case "5":
+                                break;
+                        }
+                    }
+                    order_secend_parent.setVisibility(View.GONE);
                     break;
                 default:
                     pay.setVisibility(View.GONE);
@@ -195,9 +221,27 @@ public class OrderCenterListItemHolder extends BaseHolder<OrderBean> {
                     break;
                 case "31":
                     pay.setVisibility(View.GONE);
-                    appointment.setVisibility(View.VISIBLE);
-                    huakou.setVisibility(View.VISIBLE);
-                    order_secend_parent.setVisibility(View.VISIBLE);
+                    String status = order.getGoodsList().get(0).getStatus();
+                    if(!TextUtils.isEmpty(status)){
+                        switch (status){
+                            case "1":
+                                appointment.setVisibility(View.VISIBLE);
+                                break;
+                            case "2":
+                                change.setVisibility(View.VISIBLE);
+                                unappointment.setVisibility(View.VISIBLE);
+                                huakou.setVisibility(View.VISIBLE);
+                                break;
+                            case "3":
+                                huakou.setVisibility(View.VISIBLE);
+                                break;
+                            case "4":
+                                break;
+                            case "5":
+                                break;
+                        }
+                    }
+                    order_secend_parent.setVisibility(View.GONE);
                     break;
                 case "5":
                     order_secend_parent.setVisibility(View.GONE);
