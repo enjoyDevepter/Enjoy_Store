@@ -339,6 +339,20 @@
                         android:textColor="#666666"
                         android:textSize="28px" />
 
+                    <TextView
+                        android:visibility="gone"
+                        android:layout_marginRight="46px"
+                        android:layout_marginTop="57px"
+                        android:textSize="24px"
+                        android:textColor="@color/white"
+                        android:text="预约"
+                        android:background="@drawable/order_info_appointment_btn_back"
+                        android:id="@+id/appointment"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@id/image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
                 </RelativeLayout>
 
 

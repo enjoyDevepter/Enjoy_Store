@@ -78,6 +78,8 @@ public class OrderInfoActivity extends BaseActivity<OrderInfoPresenter> implemen
     TextView project_name;
     @BindView(R.id.order_time)
     TextView order_time;
+    @BindView(R.id.appointment)
+    View appointment;
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     @BindView(R.id.perple_info_parent)
@@ -142,7 +144,12 @@ public class OrderInfoActivity extends BaseActivity<OrderInfoPresenter> implemen
                         .url(goodsOrderBean.getImage())
                         .imageView(image)
                         .build());
+        appointment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+            }
+        });
         form_id.setText(orderInfoBean.getOrderId());
         form_state.setText(orderInfoBean.getOrderStatusDesc());
         form_remark.setText(orderInfoBean.getRemark());
