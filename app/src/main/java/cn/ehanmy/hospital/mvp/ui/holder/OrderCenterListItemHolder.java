@@ -104,6 +104,8 @@ public class OrderCenterListItemHolder extends BaseHolder<OrderBean> {
         huakou.setOnClickListener(this);
         appointment.setOnClickListener(this);
         pay.setOnClickListener(this);
+        change.setOnClickListener(this);
+        unappointment.setOnClickListener(this);
         this.onChildItemClickLinstener = onChildItemClickLinstener;
     }
 
@@ -122,6 +124,12 @@ public class OrderCenterListItemHolder extends BaseHolder<OrderBean> {
                     return;
                 case R.id.huakou:
                     onChildItemClickLinstener.onChildItemClick(view, OrderCenterListAdapter.ViewName.HUAKOU,getAdapterPosition());
+                    return;
+                case R.id.unappointment:
+                    onChildItemClickLinstener.onChildItemClick(view, OrderCenterListAdapter.ViewName.UNAPPOINTMENT,getAdapterPosition());
+                    return;
+                case R.id.change:
+                    onChildItemClickLinstener.onChildItemClick(view, OrderCenterListAdapter.ViewName.CHANGE,getAdapterPosition());
                     return;
             }
         }

@@ -10,6 +10,8 @@ import cn.ehanmy.hospital.mvp.model.entity.order.OrderHuakouRequest;
 import cn.ehanmy.hospital.mvp.model.entity.order.OrderHuakouResponse;
 import cn.ehanmy.hospital.mvp.model.entity.order.OrderListRequest;
 import cn.ehanmy.hospital.mvp.model.entity.order.OrderListResponse;
+import cn.ehanmy.hospital.mvp.model.entity.order.UnAppointmentRequest;
+import cn.ehanmy.hospital.mvp.model.entity.order.UnAppointmentResponse;
 import io.reactivex.Observable;
 
 
@@ -36,5 +38,6 @@ public interface OrderFormCenterContract {
     interface Model extends IModel {
         Observable<OrderListResponse> requestOrderListPage(OrderListRequest request);
         Observable<OrderHuakouResponse> orderHuakou(OrderHuakouRequest request);
+        Observable<UnAppointmentResponse> unappointment(UnAppointmentRequest request);
     }
 }

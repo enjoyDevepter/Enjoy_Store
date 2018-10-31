@@ -320,6 +320,19 @@ public class OrderFormCenterActivity extends BaseActivity<OrderFormCenterPresent
             case HUAKOU:
                 confirmPay(mAdapter.getItem(position));
                 break;
+            case UNAPPOINTMENT:
+                OrderBean item = mAdapter.getItem(position);
+                mPresenter.unappointment(item.getGoodsList().get(0).getReservationId());
+                break;
+            case CHANGE:
+                // 修改预约
+                Intent intent3 = new Intent(this, ChoiceTimeActivity.class);
+                intent3.putExtra("from", "orderCenterDetail");
+                GoodsOrderBean goodsOrderBean = mAdapter.getItem(position).getGoodsList().get(0);
+                intent3.putExtra("projectId", goodsOrderBean.getProjectId());
+                intent3.putExtra("reservationId",goodsOrderBean.getReservationId());
+                ArmsUtils.startActivity(intent3);
+                break;
         }
     }
 

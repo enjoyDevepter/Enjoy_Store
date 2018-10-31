@@ -1,6 +1,8 @@
 package cn.ehanmy.hospital.mvp.presenter;
 
 import android.app.Application;
+import android.arch.lifecycle.Lifecycle;
+import android.arch.lifecycle.OnLifecycleEvent;
 import android.text.TextUtils;
 
 import com.jess.arms.di.scope.ActivityScope;
@@ -20,6 +22,8 @@ import cn.ehanmy.hospital.mvp.model.entity.order.OrderHuakouRequest;
 import cn.ehanmy.hospital.mvp.model.entity.order.OrderHuakouResponse;
 import cn.ehanmy.hospital.mvp.model.entity.order.OrderListRequest;
 import cn.ehanmy.hospital.mvp.model.entity.order.OrderListResponse;
+import cn.ehanmy.hospital.mvp.model.entity.order.UnAppointmentRequest;
+import cn.ehanmy.hospital.mvp.model.entity.order.UnAppointmentResponse;
 import cn.ehanmy.hospital.mvp.ui.adapter.OrderCenterListAdapter;
 import cn.ehanmy.hospital.util.CacheUtil;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -50,6 +54,11 @@ public class OrderFormCenterPresenter extends BasePresenter<OrderFormCenterContr
     @Inject
     public OrderFormCenterPresenter(OrderFormCenterContract.Model model, OrderFormCenterContract.View rootView) {
         super(model, rootView);
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    public void initOrderList(){
+        getOrderList(true);
     }
 
     public void getOrderList(boolean pullToRefresh) {
@@ -141,6 +150,36 @@ public class OrderFormCenterPresenter extends BasePresenter<OrderFormCenterContr
                             mRootView.huakouOk(true);
                         } else {
                             mRootView.huakouOk(false);
+                            mRootView.showMessage(response.getRetDesc());
+                        }
+                    }
+                });
+    }
+
+
+    public void unappointment(String reservationId) {
+        UnAppointmentRequest request = new UnAppointmentRequest();
+        request.setReservationId(reservationId);
+        UserBean ub = CacheUtil.getConstant(CacheUtil.CACHE_KEY_USER);
+        request.setToken(ub.getToken());
+
+        mModel.unappointment(request)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(disposable -> {
+                    mRootView.showLoading();//显示下拉刷新的进度条
+                })
+                .doFinally(() -> {
+                    mRootView.hideLoading();//隐藏下拉刷新的进度条
+                })
+                .retryWhen(new RetryWithDelay(3, 2))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))//使用 Rxlifecycle,使 Disposable 和 Activity 一起销毁
+                .subscribe(new ErrorHandleSubscriber<UnAppointmentResponse>(mErrorHandler) {
+                    @Override
+                    public void onNext(UnAppointmentResponse response) {
+                        if (response.isSuccess()) {
+                            getOrderList(true);
+                        } else {
                             mRootView.showMessage(response.getRetDesc());
                         }
                     }

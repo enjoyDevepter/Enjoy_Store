@@ -50,6 +50,8 @@ import cn.ehanmy.hospital.mvp.model.entity.order.OrderListRequest;
 import cn.ehanmy.hospital.mvp.model.entity.order.OrderListResponse;
 import cn.ehanmy.hospital.mvp.model.entity.order.OrderPayRequest;
 import cn.ehanmy.hospital.mvp.model.entity.order.OrderPayResponse;
+import cn.ehanmy.hospital.mvp.model.entity.order.UnAppointmentRequest;
+import cn.ehanmy.hospital.mvp.model.entity.order.UnAppointmentResponse;
 import cn.ehanmy.hospital.mvp.model.entity.placeOrder.GoodsBuyRequest;
 import cn.ehanmy.hospital.mvp.model.entity.placeOrder.GoodsBuyResponse;
 import cn.ehanmy.hospital.mvp.model.entity.reg.RegisterRequest;
@@ -188,6 +190,11 @@ public interface InterfaceService {
     @POST("gateway")
     Observable<ChangeUserAppointmentTimeResponse> changeUserAppointmentTime
     (@Body ChangeUserAppointmentTimeRequest request);
+
+    // 解除用户预约
+    @POST("gateway")
+    Observable<UnAppointmentResponse> unappointment
+    (@Body UnAppointmentRequest request);
 
 
     @POST("gateway")
