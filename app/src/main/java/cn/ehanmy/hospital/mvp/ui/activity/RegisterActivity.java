@@ -309,12 +309,15 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
                 switch (position) {
                     case 0:
                         provideCache().put("type", "");
+                        inviteTV.setText("请选择");
                         break;
                     case 1:
                         provideCache().put("type", "1");
+                        inviteTV.setText("邀请码");
                         break;
                     case 2:
                         provideCache().put("type", "2");
+                        inviteTV.setText("邀请人");
                         break;
                 }
                 if (popupWindow != null) {

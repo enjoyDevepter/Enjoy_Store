@@ -76,7 +76,7 @@ public class UserAppointmentInfoActivity extends BaseActivity<UserAppointmentInf
         form_tel.setText(orderInfoBean.getMember().getMobile());
         form_add.setText("");
         project_name.setText(goodsOrderBean.getName());
-        order_time.setText(orderInfoBean.getReservationTime());
+        order_time.setText(orderInfoBean.getReservationDate()+"  "+orderInfoBean.getReservationTime());
     }
 
     @Override

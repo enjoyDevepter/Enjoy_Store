@@ -9,6 +9,8 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -94,6 +96,8 @@ public class UserAppointmentActivity extends BaseActivity<UserAppointmentPresent
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         titleTV.setText("预约中心");
+        search.setOnClickListener(this);
+        clear.setOnClickListener(this);
         backV.setOnClickListener(this);
         typeLayout.addTab(typeLayout.newTab().setTag("type").setText("生美/科美"));
         typeLayout.addTab(typeLayout.newTab().setTag("type").setText("医美"));
@@ -117,6 +121,22 @@ public class UserAppointmentActivity extends BaseActivity<UserAppointmentPresent
         contentList.setAdapter(kAdapter);
         swipeRefreshLayout.setOnRefreshListener(this);
         initPaginate();
+        searchKey.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                provideCache().put("key", s + "");
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
 
@@ -224,6 +244,19 @@ public class UserAppointmentActivity extends BaseActivity<UserAppointmentPresent
         switch (v.getId()) {
             case R.id.back:
                 killMyself();
+                break;
+            case R.id.search_btn:
+                String s = searchKey.getText().toString();
+                if (ArmsUtils.isEmpty(s)) {
+                    showMessage("请输入搜索关键字后重试");
+                    return;
+                }
+                mPresenter.getAppointment(true);
+                break;
+            case R.id.clear_btn:
+                searchKey.setText("");
+                provideCache().put("key", null);
+                mPresenter.getAppointment(true);
                 break;
         }
     }
