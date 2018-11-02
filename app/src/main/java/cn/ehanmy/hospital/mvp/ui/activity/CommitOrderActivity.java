@@ -318,7 +318,7 @@ public class CommitOrderActivity extends BaseActivity<CommitOrderPresenter> impl
                 .setDimAmount(0.5f)
                 .isCenter(true)
                 .setCancelOutside(false)
-                .setWidth(ArmsUtils.dip2px(CommitOrderActivity.this, 228))
+                .setWidth(456)
                 .show();
     }
 
@@ -367,7 +367,7 @@ public class CommitOrderActivity extends BaseActivity<CommitOrderPresenter> impl
                 .setDimAmount(0.5f)
                 .isCenter(true)
                 .setCancelOutside(false)
-                .setWidth(ArmsUtils.dip2px(CommitOrderActivity.this, 228))
+                .setWidth(456)
                 .show();
     }
 
