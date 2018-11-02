@@ -98,6 +98,7 @@ public class KAppointmentHolder extends BaseHolder<OrderProjectDetailBean> {
         statusDescTV.setText(order.getReservationStatusDesc());
         order_project.setText(order.getGoods().getName());
         order_project.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
+        countTV.setText(""+order.getTimes());
         String status = order.getReservationStatus();
         switch (status) {
             case "0":

@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class OrderProjectDetailBean implements Serializable {
     private String projectId;
     private int surplusNum;
+    private int times;
     private String status;
     private String relateStatus;
     private String relateStatusDesc;
@@ -47,6 +48,14 @@ public class OrderProjectDetailBean implements Serializable {
 
     public void setRelateStatusDesc(String relateStatusDesc) {
         this.relateStatusDesc = relateStatusDesc;
+    }
+
+    public int getTimes() {
+        return times;
+    }
+
+    public void setTimes(int times) {
+        this.times = times;
     }
 
     @Override

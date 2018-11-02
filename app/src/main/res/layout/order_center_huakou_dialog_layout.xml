@@ -11,13 +11,13 @@
         android:layout_height="wrap_content">
         
         <ImageView
-            android:layout_margin="33px"
+            android:layout_margin="34dp"
             android:id="@+id/image"
-            android:layout_width="200px"
-            android:layout_height="200px" />
+            android:layout_width="200dp"
+            android:layout_height="200dp" />
 
         <TextView
-            android:textSize="28px"
+            android:textSize="28dp"
             android:textColor="#000000"
             android:id="@+id/name"
             android:lines="2"
@@ -32,23 +32,23 @@
             android:layout_below="@id/name"
             android:layout_width="match_parent"
             android:orientation="horizontal"
-            android:layout_height="60px">
+            android:layout_height="60dp">
 
             <TextView
                 android:layout_gravity="center_vertical"
                 android:text="次数 X"
-                android:textSize="28px"
-                android:layout_marginRight="15px"
+                android:textSize="28dp"
+                android:layout_marginRight="16dp"
                 android:textColor="#666666"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <LinearLayout
                 android:id="@+id/operation"
-                android:layout_width="60dp"
-                android:layout_height="20dp"
+                android:layout_width="120dp"
+                android:layout_height="40dp"
                 android:layout_gravity="center_vertical"
-                android:layout_marginRight="15dp"
+                android:layout_marginRight="30dp"
                 android:background="@drawable/order_center_huakou_times_selector"
                 >
 
@@ -60,14 +60,14 @@
                     android:gravity="center">
 
                     <View
-                        android:layout_width="9dp"
-                        android:layout_height="2dp"
+                        android:layout_width="18dp"
+                        android:layout_height="4dp"
                         android:background="@mipmap/minus" />
 
                 </LinearLayout>
 
                 <View
-                    android:layout_width="1dp"
+                    android:layout_width="2dp"
                     android:layout_height="match_parent"
                     android:background="#FFDADADA" />
 
@@ -78,10 +78,10 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:textColor="#FF000000"
-                    android:textSize="13sp" />
+                    android:textSize="26sp" />
 
                 <View
-                    android:layout_width="1dp"
+                    android:layout_width="2dp"
                     android:layout_height="match_parent"
                     android:background="#FFDADADA" />
 
@@ -93,8 +93,8 @@
                     android:gravity="center">
 
                     <View
-                        android:layout_width="8dp"
-                        android:layout_height="8dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:background="@mipmap/add" />
 
                 </LinearLayout>
@@ -107,37 +107,37 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/image"
-            android:layout_marginLeft="20px"
+            android:layout_marginLeft="20dp"
             android:layout_toRightOf="@id/image"
-            money:cent_size="30px"
+            money:cent_size="30dp"
             money:money_color="#FF0000"
             money:money_text="0.00"
-            money:point_padding_left="2px"
-            money:point_padding_right="10px"
+            money:point_padding_left="2dp"
+            money:point_padding_right="10dp"
             money:prefix_color="#FF0000"
-            money:prefix_padding="4px"
-            money:prefix_size="26px"
-            money:yuan_size="32px" />
+            money:prefix_padding="4dp"
+            money:prefix_size="26dp"
+            money:yuan_size="32dp" />
         
     </RelativeLayout>
     
     <View style="@style/divider_1"
         android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_marginLeft="31px"
-        android:layout_marginRight="31px"
+        android:layout_height="2dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
         />
 
     <TextView
         android:id="@+id/ok"
-        android:layout_width="100px"
-        android:layout_height="33px"
+        android:layout_width="100dp"
+        android:layout_height="34dp"
         android:background="@drawable/search_btn_bg"
         android:gravity="center"
         android:text="确定"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10px"
-        android:layout_marginBottom="10px"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:textColor="@color/white"
-        android:textSize="10sp" />
+        android:textSize="20dp" />
 </LinearLayout>

@@ -371,7 +371,7 @@ public class OrderFormCenterActivity extends BaseActivity<OrderFormCenterPresent
                                         .build());
                         ((TextView) view.findViewById(R.id.name)).setText(goodsOrderBean.getName());
                         MoneyView moneyView = view.findViewById(R.id.price);
-                        moneyView.setMoneyText(ArmsUtils.formatLong(orderBean.getPayMoney()));
+                        moneyView.setMoneyText(ArmsUtils.formatLong(orderBean.getTotalPrice()));
                         view.findViewById(R.id.ok).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -385,7 +385,7 @@ public class OrderFormCenterActivity extends BaseActivity<OrderFormCenterPresent
                 .setDimAmount(0.5f)
                 .isCenter(true)
                 .setCancelOutside(false)
-                .setWidth(556)
+                .setWidth(ArmsUtils.dip2px(OrderFormCenterActivity.this, 556))
                 .show();
     }
 

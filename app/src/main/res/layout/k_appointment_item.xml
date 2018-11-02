@@ -129,7 +129,7 @@
         <TextView
             android:id="@+id/time"
             style="@style/recycler_item_style"
-            android:layout_width="230px"
+            android:layout_width="245px"
             android:layout_height="match_parent"
             android:text="时间"
             app:layout_auto_baseheight="width" />

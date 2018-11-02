@@ -129,6 +129,9 @@ public class ChoiceTimePresenter extends BasePresenter<ChoiceTimeContract.Model,
                                 appointments.clear();
                             }
                             appointments.addAll(response.getReservationDateList());
+                            if(appointments.size() > 0){
+                                mRootView.getCache().put("appointmentsDate", appointments.get(0).getDate());
+                            }
                             mRootView.setLoadedAllItems(response.getNextPageIndex() == -1);
                             preEndIndex = appointments.size();//更新之前列表总长度,用于确定加载更多的起始位置
                             lastPageIndex = appointments.size() / 10 + 1;
