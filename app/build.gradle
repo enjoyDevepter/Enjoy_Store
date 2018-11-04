@@ -68,7 +68,7 @@ android {
     //给apk添加对应的版本号：
     applicationVariants.all { variant ->
         variant.outputs.all {
-            outputFileName = "hibeauty-${buildType.name}-${defaultConfig.versionName}.apk"
+            outputFileName = "hibeauty-store-${buildType.name}-${defaultConfig.versionName}.apk"
         }
     }
 }

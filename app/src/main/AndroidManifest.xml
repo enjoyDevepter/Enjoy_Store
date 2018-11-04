@@ -55,6 +55,13 @@
             //开发者申请的key
         </meta-data>
 
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5b84ca1ef43e481641000018" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="${UMENG_CHANNEL_VALUE}" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="cn.ehanmy.store.fileprovider"
