@@ -32,10 +32,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 import cn.ehanmy.hospital.mvp.contract.UserContract;
 import cn.ehanmy.hospital.mvp.model.entity.User;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
@@ -120,7 +120,7 @@ public class UserPresenter extends BasePresenter<UserContract.Model, UserContrac
                         mRootView.showLoading();//显示下拉刷新的进度条
                     else
                         mRootView.startLoadMore();//显示上拉加载更多的进度条
-                }).subscribeOn(AndroidSchedulers.mainThread())
+                })
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(() -> {
                     if (pullToRefresh)
@@ -128,6 +128,7 @@ public class UserPresenter extends BasePresenter<UserContract.Model, UserContrac
                     else
                         mRootView.endLoadMore();//隐藏上拉加载更多的进度条
                 })
+                .retryWhen(new RetryWithDelay(3, 2))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))//使用 Rxlifecycle,使 Disposable 和 Activity 一起销毁
                 .subscribe(new ErrorHandleSubscriber<List<User>>(mErrorHandler) {
                     @Override

@@ -4,17 +4,19 @@ import android.app.Application;
 import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.OnLifecycleEvent;
 
-import com.jess.arms.integration.AppManager;
 import com.jess.arms.di.scope.ActivityScope;
-import com.jess.arms.mvp.BasePresenter;
 import com.jess.arms.http.imageloader.ImageLoader;
-import com.jess.arms.utils.ArmsUtils;
+import com.jess.arms.integration.AppManager;
+import com.jess.arms.mvp.BasePresenter;
 import com.jess.arms.utils.RxLifecycleUtils;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import cn.ehanmy.hospital.mvp.contract.ActivityAddContract;
 import cn.ehanmy.hospital.mvp.model.entity.QiniuRequest;
 import cn.ehanmy.hospital.mvp.model.entity.QiniuResponse;
 import cn.ehanmy.hospital.mvp.model.entity.UserBean;
@@ -23,22 +25,13 @@ import cn.ehanmy.hospital.mvp.model.entity.activity.AddActivityRequest;
 import cn.ehanmy.hospital.mvp.model.entity.activity.AddActivityResponse;
 import cn.ehanmy.hospital.mvp.model.entity.activity.ChangeActivityInfoRequest;
 import cn.ehanmy.hospital.mvp.model.entity.activity.ChangeActivityInfoResponse;
-import cn.ehanmy.hospital.mvp.model.entity.response.BaseResponse;
-import cn.ehanmy.hospital.mvp.model.entity.user.ChangePasswordResponse;
 import cn.ehanmy.hospital.util.CacheUtil;
 import cn.ehanmy.hospital.util.ImageUploadManager;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
-
-import javax.inject.Inject;
-
-import cn.ehanmy.hospital.mvp.contract.ActivityAddContract;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 
 import static cn.ehanmy.hospital.mvp.ui.activity.ActivityAddActivity.KEY_FOR_APPOINTENT;
 
@@ -142,11 +135,12 @@ public class ActivityAddPresenter extends BasePresenter<ActivityAddContract.Mode
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(disposable -> {
                     mRootView.showLoading();//显示下拉刷新的进度条
-                }).subscribeOn(AndroidSchedulers.mainThread())
+                })
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(() -> {
                     mRootView.hideLoading();//隐藏下拉刷新的进度条
                 })
+                .retryWhen(new RetryWithDelay(3, 2))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))//使用 Rxlifecycle,使 Disposable 和 Activity 一起销毁
                 .subscribe(new ErrorHandleSubscriber<AddActivityResponse>(mErrorHandler) {
                     @Override
@@ -174,11 +168,12 @@ public class ActivityAddPresenter extends BasePresenter<ActivityAddContract.Mode
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(disposable -> {
                     mRootView.showLoading();//显示下拉刷新的进度条
-                }).subscribeOn(AndroidSchedulers.mainThread())
+                })
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(() -> {
                     mRootView.hideLoading();//隐藏下拉刷新的进度条
                 })
+                .retryWhen(new RetryWithDelay(3, 2))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))//使用 Rxlifecycle,使 Disposable 和 Activity 一起销毁
                 .subscribe(new ErrorHandleSubscriber<ChangeActivityInfoResponse>(mErrorHandler) {
                     @Override

@@ -3,18 +3,18 @@ package cn.ehanmy.hospital.mvp.presenter;
 import android.app.Application;
 import android.text.TextUtils;
 
-import com.jess.arms.integration.AppManager;
 import com.jess.arms.di.scope.ActivityScope;
-import com.jess.arms.mvp.BasePresenter;
 import com.jess.arms.http.imageloader.ImageLoader;
+import com.jess.arms.integration.AppManager;
+import com.jess.arms.mvp.BasePresenter;
 import com.jess.arms.utils.RxLifecycleUtils;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
+import cn.ehanmy.hospital.mvp.contract.ShopAppointmentContract;
 import cn.ehanmy.hospital.mvp.model.ShopAppointmentModel;
-import cn.ehanmy.hospital.mvp.model.UserAppointmentModel;
-import cn.ehanmy.hospital.mvp.model.entity.Order;
-import cn.ehanmy.hospital.mvp.model.entity.ShopAppointment;
 import cn.ehanmy.hospital.mvp.model.entity.UserBean;
 import cn.ehanmy.hospital.mvp.model.entity.shop_appointment.CancelShopAppointmentRequest;
 import cn.ehanmy.hospital.mvp.model.entity.shop_appointment.CancelShopAppointmentResponse;
@@ -22,22 +22,14 @@ import cn.ehanmy.hospital.mvp.model.entity.shop_appointment.ConfirmShopAppointme
 import cn.ehanmy.hospital.mvp.model.entity.shop_appointment.ConfirmShopAppointmentResponse;
 import cn.ehanmy.hospital.mvp.model.entity.shop_appointment.GetShopAppointmentPageRequest;
 import cn.ehanmy.hospital.mvp.model.entity.shop_appointment.GetShopAppointmentPageResponse;
-import cn.ehanmy.hospital.mvp.model.entity.user_appointment.GetUserAppointmentPageRequest;
-import cn.ehanmy.hospital.mvp.model.entity.user_appointment.GetUserAppointmentPageResponse;
 import cn.ehanmy.hospital.mvp.model.entity.shop_appointment.OrderProjectDetailBean;
-import cn.ehanmy.hospital.mvp.model.entity.user_appointment.HuakouRequest;
-import cn.ehanmy.hospital.mvp.model.entity.user_appointment.HuakouResponse;
 import cn.ehanmy.hospital.mvp.ui.adapter.ShopAppointmentAdapter;
-import cn.ehanmy.hospital.mvp.ui.adapter.UserAppointmentAdapter;
 import cn.ehanmy.hospital.util.CacheUtil;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
-
-import javax.inject.Inject;
-
-import cn.ehanmy.hospital.mvp.contract.ShopAppointmentContract;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
+import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
 
 
 @ActivityScope
@@ -50,6 +42,12 @@ public class ShopAppointmentPresenter extends BasePresenter<ShopAppointmentContr
     ImageLoader mImageLoader;
     @Inject
     AppManager mAppManager;
+    @Inject
+    ShopAppointmentAdapter mAdapter;
+    @Inject
+    List<OrderProjectDetailBean> orderBeanList;
+    private String currType = ShopAppointmentModel.SEARCH_TYPE_APPOINTMENT;
+    private int nextPageIndex = 1;
 
     @Inject
     public ShopAppointmentPresenter(ShopAppointmentContract.Model model, ShopAppointmentContract.View rootView) {
@@ -65,12 +63,6 @@ public class ShopAppointmentPresenter extends BasePresenter<ShopAppointmentContr
         this.mApplication = null;
     }
 
-
-    @Inject
-    ShopAppointmentAdapter mAdapter;
-    @Inject
-    List<OrderProjectDetailBean> orderBeanList;
-
     public void requestOrderList(String type){
         requestOrderList(1,type,true);
     }
@@ -83,9 +75,6 @@ public class ShopAppointmentPresenter extends BasePresenter<ShopAppointmentContr
     public void nextPage(){
         requestOrderList(nextPageIndex,currType,false);
     }
-
-    private String currType = ShopAppointmentModel.SEARCH_TYPE_APPOINTMENT;
-    private int nextPageIndex = 1;
 
     private void requestOrderList(int pageIndex,String type,final boolean clear) {
         GetShopAppointmentPageRequest request = new GetShopAppointmentPageRequest();
@@ -108,7 +97,7 @@ public class ShopAppointmentPresenter extends BasePresenter<ShopAppointmentContr
 //                        mRootView.showLoading();//显示下拉刷新的进度条
                     }else
                         mRootView.startLoadMore();//显示上拉加载更多的进度条
-                }).subscribeOn(AndroidSchedulers.mainThread())
+                })
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(() -> {
                     if (clear)
@@ -116,6 +105,7 @@ public class ShopAppointmentPresenter extends BasePresenter<ShopAppointmentContr
                     else
                         mRootView.endLoadMore();//隐藏上拉加载更多的进度条
                 })
+                .retryWhen(new RetryWithDelay(3, 2))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))//使用 Rxlifecycle,使 Disposable 和 Activity 一起销毁
                 .subscribe(new ErrorHandleSubscriber<GetShopAppointmentPageResponse>(mErrorHandler) {
                     @Override
@@ -151,11 +141,12 @@ public class ShopAppointmentPresenter extends BasePresenter<ShopAppointmentContr
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(disposable -> {
                     mRootView.showLoading();//显示下拉刷新的进度条
-                }).subscribeOn(AndroidSchedulers.mainThread())
+                })
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(() -> {
                     mRootView.hideLoading();//隐藏下拉刷新的进度条
                 })
+                .retryWhen(new RetryWithDelay(3, 2))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))//使用 Rxlifecycle,使 Disposable 和 Activity 一起销毁
                 .subscribe(new ErrorHandleSubscriber<CancelShopAppointmentResponse>(mErrorHandler) {
                     @Override
@@ -182,11 +173,12 @@ public class ShopAppointmentPresenter extends BasePresenter<ShopAppointmentContr
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(disposable -> {
                     mRootView.showLoading();//显示下拉刷新的进度条
-                }).subscribeOn(AndroidSchedulers.mainThread())
+                })
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(() -> {
                     mRootView.hideLoading();//隐藏下拉刷新的进度条
                 })
+                .retryWhen(new RetryWithDelay(3, 2))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))//使用 Rxlifecycle,使 Disposable 和 Activity 一起销毁
                 .subscribe(new ErrorHandleSubscriber<ConfirmShopAppointmentResponse>(mErrorHandler) {
                     @Override

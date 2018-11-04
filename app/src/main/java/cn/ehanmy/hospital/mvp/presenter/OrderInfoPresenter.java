@@ -5,33 +5,30 @@ import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.OnLifecycleEvent;
 import android.support.v7.widget.RecyclerView;
 
-import com.jess.arms.integration.AppManager;
 import com.jess.arms.di.scope.ActivityScope;
-import com.jess.arms.mvp.BasePresenter;
 import com.jess.arms.http.imageloader.ImageLoader;
+import com.jess.arms.integration.AppManager;
+import com.jess.arms.mvp.BasePresenter;
 import com.jess.arms.utils.RxLifecycleUtils;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
+import cn.ehanmy.hospital.mvp.contract.OrderInfoContract;
 import cn.ehanmy.hospital.mvp.model.entity.UserBean;
 import cn.ehanmy.hospital.mvp.model.entity.order.GetBuyInfoRequest;
 import cn.ehanmy.hospital.mvp.model.entity.order.GetBuyInfoResponse;
 import cn.ehanmy.hospital.mvp.model.entity.order.GoodsOrderBean;
-import cn.ehanmy.hospital.mvp.model.entity.order.OrderBean;
 import cn.ehanmy.hospital.mvp.model.entity.order.OrderInfoRequest;
 import cn.ehanmy.hospital.mvp.model.entity.order.OrderInfoResponse;
-import cn.ehanmy.hospital.mvp.model.entity.order.OrderListResponse;
 import cn.ehanmy.hospital.mvp.ui.activity.OrderInfoActivity;
 import cn.ehanmy.hospital.util.CacheUtil;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
-
-import javax.inject.Inject;
-
-import cn.ehanmy.hospital.mvp.contract.OrderInfoContract;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
+import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
 
 
 @ActivityScope
@@ -44,6 +41,11 @@ public class OrderInfoPresenter extends BasePresenter<OrderInfoContract.Model, O
     ImageLoader mImageLoader;
     @Inject
     AppManager mAppManager;
+    @Inject
+    RecyclerView.Adapter mAdapter;
+    @Inject
+    List<GoodsOrderBean> orderBeanList;
+    private int nextPageIndex = 1;
 
     @Inject
     public OrderInfoPresenter(OrderInfoContract.Model model, OrderInfoContract.View rootView) {
@@ -77,11 +79,12 @@ public class OrderInfoPresenter extends BasePresenter<OrderInfoContract.Model, O
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(disposable -> {
                     mRootView.showLoading();//显示下拉刷新的进度条
-                }).subscribeOn(AndroidSchedulers.mainThread())
+                })
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(() -> {
                     mRootView.hideLoading();
                 })
+                .retryWhen(new RetryWithDelay(3, 2))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))//使用 Rxlifecycle,使 Disposable 和 Activity 一起销毁
                 .subscribe(new ErrorHandleSubscriber<OrderInfoResponse>(mErrorHandler) {
                     @Override
@@ -95,12 +98,6 @@ public class OrderInfoPresenter extends BasePresenter<OrderInfoContract.Model, O
                 });
     }
 
-    @Inject
-    RecyclerView.Adapter mAdapter;
-    @Inject
-    List<GoodsOrderBean> orderBeanList;
-
-
     public void requestOrderList(){
         requestOrderList(1,true);
     }
@@ -108,8 +105,6 @@ public class OrderInfoPresenter extends BasePresenter<OrderInfoContract.Model, O
     public void nextPage(){
         requestOrderList(nextPageIndex,false);
     }
-
-    private int nextPageIndex = 1;
 
     private void requestOrderList(int pageIndex,final boolean clear) {
         GetBuyInfoRequest request = new GetBuyInfoRequest();
@@ -128,7 +123,7 @@ public class OrderInfoPresenter extends BasePresenter<OrderInfoContract.Model, O
                         //                        mRootView.showLoading();//显示下拉刷新的进度条
                     }else
                         mRootView.startLoadMore();//显示上拉加载更多的进度条
-                }).subscribeOn(AndroidSchedulers.mainThread())
+                })
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(() -> {
                     if (clear)
@@ -136,6 +131,7 @@ public class OrderInfoPresenter extends BasePresenter<OrderInfoContract.Model, O
                     else
                         mRootView.endLoadMore();//隐藏上拉加载更多的进度条
                 })
+                .retryWhen(new RetryWithDelay(3, 2))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))//使用 Rxlifecycle,使 Disposable 和 Activity 一起销毁
                 .subscribe(new ErrorHandleSubscriber<GetBuyInfoResponse>(mErrorHandler) {
                     @Override

@@ -34,6 +34,7 @@ import com.jess.arms.integration.lifecycle.ActivityLifecycleable;
 import com.jess.arms.mvp.IPresenter;
 import com.jess.arms.utils.ArmsUtils;
 import com.trello.rxlifecycle2.android.ActivityEvent;
+import com.umeng.analytics.MobclickAgent;
 
 import javax.inject.Inject;
 
@@ -108,6 +109,17 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
         initData(savedInstanceState);
     }
 
+    @Override
+    protected void onResume() {
+        MobclickAgent.onResume(this);
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        MobclickAgent.onPause(this);
+        super.onPause();
+    }
 
     /**
      * 是否使用沉浸式状态栏,默认为使用(true)，
