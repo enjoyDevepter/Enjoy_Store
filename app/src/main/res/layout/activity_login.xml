@@ -53,7 +53,6 @@
                     android:background="@android:color/transparent"
                     android:hint="请输入账号"
                     android:imeOptions="actionNext"
-                    android:text="D00000001"
                     android:textSize="28px" />
 
             </LinearLayout>
@@ -99,7 +98,6 @@
                     android:hint="请输入密码"
                     android:imeOptions="actionDone"
                     android:inputType="textPassword"
-                    android:text="123456"
                     android:textSize="28px" />
 
             </LinearLayout>

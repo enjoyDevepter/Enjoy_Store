@@ -16,6 +16,7 @@ public class RegisterRequest extends BaseRequest {
     private String code;
     private int cmd = 10060;
     private String token;
+    private String realName;
 
     public String getStep1Token() {
         return step1Token;
@@ -89,6 +90,14 @@ public class RegisterRequest extends BaseRequest {
         this.token = token;
     }
 
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
+
     @Override
     public String toString() {
         return "RegisterRequest{" +
@@ -101,6 +110,7 @@ public class RegisterRequest extends BaseRequest {
                 ", code='" + code + '\'' +
                 ", cmd=" + cmd +
                 ", token='" + token + '\'' +
+                ", realName='" + realName + '\'' +
                 '}';
     }
 }

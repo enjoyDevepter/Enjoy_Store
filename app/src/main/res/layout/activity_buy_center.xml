@@ -40,7 +40,6 @@
                 android:background="@drawable/search_edit_bg"
                 android:imeOptions="actionSearch"
                 android:paddingLeft="10px"
-                android:text="13121251463"
                 android:textSize="26px" />
 
             <FrameLayout

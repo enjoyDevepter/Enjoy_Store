@@ -104,6 +104,7 @@ public class RegisterPresenter extends BasePresenter<RegisterContract.Model, Reg
         request.setCode((String) mRootView.getCache().get("code"));
         request.setSex((String) mRootView.getCache().get("sex"));
         request.setNickName((String) mRootView.getCache().get("nickName"));
+        request.setRealName((String) mRootView.getCache().get("realName"));
         request.setToken(user.getToken());
         mModel.register(request)
                 .subscribeOn(Schedulers.io())
