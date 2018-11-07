@@ -19,9 +19,9 @@ public class BaseRequest implements Serializable {
     private String sequence = UUID.randomUUID().toString();
     private String ip = DeviceUtils.getIPAddress(ArmsUtils.getContext());
     private String timestamp = sdf.format(System.currentTimeMillis()).toString();
-    private String channel = "cx";
-    private String childChannel = "91f";
-    private String version = String.valueOf(1.0);
+    private String channel = "hibeauty_store";
+    private String childChannel = "android_store";
+    private String version = "1.0.0";
     private String clientVersion = DeviceUtils.getVersionName(ArmsUtils.getContext());
     private String deviceNumber = DeviceUtils.getIMEI(ArmsUtils.getContext());
 
