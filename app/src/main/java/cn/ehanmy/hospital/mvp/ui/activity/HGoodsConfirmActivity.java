@@ -162,7 +162,10 @@ public class HGoodsConfirmActivity extends BaseActivity<HGoodsConfirmPresenter> 
                 killMyself();
                 break;
             case R.id.hospital_layout:
-                ArmsUtils.startActivity(ChoiceHospitalActivity.class);
+                Intent hospitalIntent = new Intent(this, ChoiceHospitalActivity.class);
+                hospitalIntent.putExtra("goodsId", response.getGoods().getGoodsId());
+                hospitalIntent.putExtra("merchId", response.getGoods().getMerchId());
+                ArmsUtils.startActivity(hospitalIntent);
                 break;
             case R.id.time_layout:
                 Intent intent = new Intent(this, ChoiceTimeActivity.class);

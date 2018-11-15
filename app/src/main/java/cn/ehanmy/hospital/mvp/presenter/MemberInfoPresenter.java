@@ -91,8 +91,6 @@ public class MemberInfoPresenter extends BasePresenter<MemberInfoContract.Model,
                     public void onNext(MemberInfoByIdResponse s) {
                         if (s.isSuccess()) {
                             mRootView.updateMemberInfo(s.getMember());
-                        } else {
-                            mRootView.showMessage(s.getRetDesc());
                         }
                     }
                 });
@@ -146,8 +144,6 @@ public class MemberInfoPresenter extends BasePresenter<MemberInfoContract.Model,
                             mAdapter.notifyDataSetChanged();
                             mRootView.updateRecyclerViewHeight();
                             mRootView.hideLoading();
-                        } else {
-                            mRootView.showMessage(response.getRetDesc());
                         }
                     }
                 });

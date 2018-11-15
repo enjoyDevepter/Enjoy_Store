@@ -6,7 +6,7 @@ import cn.ehanmy.hospital.mvp.model.entity.request.BaseRequest;
 
 
 public class HospitalListRequest extends BaseRequest {
-    private int cmd = 601;
+    private int cmd = 10159;
     private int pageIndex = 1;
     private int pageSize = 10;
     private String provinceId;

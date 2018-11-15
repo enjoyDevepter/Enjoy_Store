@@ -197,7 +197,9 @@ public class MemberInfoActivity extends BaseActivity<MemberInfoPresenter> implem
             sex = "女";
         }
         this.sex.setText(sex);
-        area.setText(memberBean.getCity().getName());
+        if (null != memberBean.getCity()) {
+            area.setText(memberBean.getCity().getName());
+        }
         addr.setText(memberBean.getAddress());
         age.setText("" + memberBean.getAge());
     }

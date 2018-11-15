@@ -86,7 +86,7 @@ public class ChoiceTimePresenter extends BasePresenter<ChoiceTimeContract.Model,
         String from = mRootView.getActivity().getIntent().getStringExtra("from");
 
         if ("hAppointment".equals(from)) { // 医美预约
-            request.setCmd(10106);
+            request.setCmd(10160);
         } else if ("placeOrder".equals(from)) { // 下单中心
             request.setCmd(10160);
         } else if ("makeUserAppointment".equals(from)) {

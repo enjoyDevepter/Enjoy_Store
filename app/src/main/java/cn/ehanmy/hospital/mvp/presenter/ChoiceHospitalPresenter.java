@@ -67,7 +67,7 @@ public class ChoiceHospitalPresenter extends BasePresenter<ChoiceHospitalContrac
 
     private void getAllAddressList() {
         SimpleRequest request = new SimpleRequest();
-        request.setCmd(902);
+        request.setCmd(10157);
 
         mModel.getAllAddressList(request)
                 .subscribeOn(Schedulers.io())
